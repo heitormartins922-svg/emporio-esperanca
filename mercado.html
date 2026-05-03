@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- SEO -->
+  <title>Empório Esperança – Mercado no Bairro Esperança, Uberlândia</title>
+  <meta name="description" content="Mercado Empório Esperança no Bairro Esperança. Produtos frescos, entrega rápida, frete grátis para Bairro Esperança e Santa Rosa. Peça pelo WhatsApp!" />
+  <meta name="keywords" content="mercado, empório, bairro esperança, santa rosa, delivery, uberlândia, hortifrúti, carnes, bebidas" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Empório Esperança – Mercado com Entrega" />
+  <meta property="og:description" content="Produtos frescos e qualidade garantida. Frete grátis no Bairro Esperança e Santa Rosa!" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --orange:      #F97316;
+      --orange-h:    #EA580C;
+      --orange-soft: #FFF7ED;
+      --green:       #14532D;
+      --green-mid:   #166534;
+      --green-light: #DCFCE7;
+      --text:        #111827;
+      --muted:       #6B7280;
+      --border:      #E5E7EB;
+      --bg:          #F9FAFB;
+      --white:       #FFFFFF;
+      --r:           12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+    /* ── TICKER ── */
+    .ticker-bar { background: var(--green); padding: 8px 0; overflow: hidden; }
+    .ticker-track { display: flex; gap: 64px; width: max-content; animation: ticker 28s linear infinite; }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,.85); font-size: 13px; font-weight: 500; white-space: nowrap; }
+    .ticker-item svg { color: var(--orange); flex-shrink: 0; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── HEADER ── */
+    header { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .header-inner { max-width: 1280px; margin: 0 auto; padding: 16px 32px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 32px; }
+    .header-left  { display: flex; align-items: center; justify-content: flex-start; }
+    .header-right { display: flex; align-items: center; justify-content: flex-end; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .logo-mark { width: 44px; height: 44px; background: var(--green); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--white); transition: transform .3s; }
+    .logo-mark:hover { transform: rotate(-6deg) scale(1.05); }
+    .logo-name { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .logo-sub  { font-size: 11px; color: var(--muted); font-weight: 400; }
+    .search-wrap { width: 100%; max-width: 340px; position: relative; }
+    .search-wrap input { width: 100%; padding: 10px 42px 10px 16px; background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 14px; color: var(--text); outline: none; transition: border-color .2s, box-shadow .2s; }
+    .search-wrap input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249,115,22,.12); background: var(--white); }
+    .search-wrap input::placeholder { color: var(--muted); }
+    .search-icon { position: absolute; right: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+    .btn-cart { display: flex; align-items: center; gap: 10px; background: var(--orange); color: var(--white); border: none; padding: 11px 20px; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background .2s, transform .15s; flex-shrink: 0; }
+    .btn-cart:hover { background: var(--orange-h); transform: translateY(-1px); }
+    .btn-cart:active { transform: translateY(0); }
+    .btn-cart.bump { animation: bump .3s ease; }
+    @keyframes bump { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+    .cart-count { background: var(--white); color: var(--orange); font-size: 12px; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .cart-count.pulse { animation: badgePulse .4s ease; }
+    @keyframes badgePulse { 0%{transform:scale(1)} 50%{transform:scale(1.4)} 100%{transform:scale(1)} }
+
+    /* ── CAT BAR ── */
+    .cat-bar { background: var(--white); border-bottom: 1px solid var(--border); }
+    .cat-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; }
+    .cat-btn { flex: 1; text-align: center; padding: 13px 8px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 500; color: var(--muted); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; transition: color .2s, border-color .2s; }
+    .cat-btn:hover { color: var(--text); }
+    .cat-btn.active { color: var(--orange); border-bottom-color: var(--orange); font-weight: 600; }
+
+    /* ── HERO ── */
+    .hero { background: var(--green); padding: 72px 48px; overflow: hidden; position: relative; }
+    .hero::after { content: ''; position: absolute; right: -80px; top: -80px; width: 400px; height: 400px; background: rgba(255,255,255,.04); border-radius: 50%; }
+    .hero-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; position: relative; z-index: 1; }
+    .hero-text { animation: heroIn .7s ease both; }
+    @keyframes heroIn { from { opacity:0; transform:translateX(-30px); } to { opacity:1; transform:none; } }
+    .hero-text h1 { font-size: 34px; font-weight: 800; color: var(--white); line-height: 1.2; margin-bottom: 10px; }
+    .hero-text h1 span { color: var(--orange); }
+    .hero-text p { font-size: 15px; color: rgba(255,255,255,.65); font-weight: 400; }
+    .hero-pills { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; animation: heroIn .7s .15s ease both; }
+    .pill { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); color: var(--white); padding: 9px 16px; border-radius: 999px; font-size: 13px; font-weight: 500; backdrop-filter: blur(4px); transition: background .2s; }
+    .pill:hover { background: rgba(255,255,255,.18); }
+    .pill svg { color: var(--orange); }
+
+    /* ── DELIVERY INFO STRIP ── */
+    .delivery-strip { background: var(--orange-soft); border-bottom: 1px solid #FED7AA; }
+    .delivery-strip-inner { max-width: 1280px; margin: 0 auto; padding: 14px 48px; display: flex; align-items: center; justify-content: center; gap: 32px; flex-wrap: wrap; }
+    .dstrip-item { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 500; color: #92400E; }
+    .dstrip-item svg { color: var(--orange); flex-shrink: 0; }
+    .dstrip-item strong { color: var(--orange-h); }
+    .dstrip-divider { width: 1px; height: 20px; background: #FED7AA; }
+
+    /* ── REVEAL ANIMATIONS ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    .stagger > * { opacity: 0; transform: translateY(22px); transition: opacity .55s ease, transform .55s ease; }
+    .stagger.in > *:nth-child(1)  { transition-delay: 0s; }
+    .stagger.in > *:nth-child(2)  { transition-delay: .08s; }
+    .stagger.in > *:nth-child(3)  { transition-delay: .16s; }
+    .stagger.in > *:nth-child(4)  { transition-delay: .24s; }
+    .stagger.in > *:nth-child(5)  { transition-delay: .32s; }
+    .stagger.in > *:nth-child(6)  { transition-delay: .40s; }
+    .stagger.in > *:nth-child(7)  { transition-delay: .48s; }
+    .stagger.in > *:nth-child(8)  { transition-delay: .56s; }
+    .stagger.in > *:nth-child(9)  { transition-delay: .64s; }
+    .stagger.in > *:nth-child(10) { transition-delay: .72s; }
+    .stagger.in > *:nth-child(11) { transition-delay: .80s; }
+    .stagger.in > *:nth-child(12) { transition-delay: .88s; }
+    .stagger.in > * { opacity: 1; transform: none; }
+
+    /* ── MAIN ── */
+    .main { max-width: 1280px; margin: 0 auto; padding: 60px 48px 96px; }
+    .section-heading { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 28px; display: flex; align-items: center; gap: 10px; }
+    .section-heading svg { color: var(--orange); }
+
+    /* ── CATEGORY CARDS ── */
+    .cat-cards-section { margin-bottom: 64px; }
+    .cat-cards-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 16px; }
+    .cat-card { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 22px 8px 18px; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--r); cursor: pointer; transition: border-color .2s, transform .2s, box-shadow .2s; }
+    .cat-card:hover { border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,.07); }
+    .cat-card.active { border-color: var(--orange); background: var(--orange-soft); }
+    .cat-card-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; transition: transform .2s; }
+    .cat-card:hover .cat-card-icon { transform: scale(1.1); }
+    .cat-card-label { font-size: 12px; font-weight: 600; color: var(--text); text-align: center; line-height: 1.2; }
+    .cat-card.active .cat-card-label { color: var(--orange-h); }
+
+    /* ── PROMOS ── */
+    .promos-wrap { margin-bottom: 68px; }
+    .promos-scroll { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .promo-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; cursor: pointer; transition: transform .25s, box-shadow .25s; position: relative; }
+    .promo-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+    .promo-img { height: 150px; position: relative; overflow: hidden; }
+    .promo-img-inner { width: 100%; height: 100%; transition: transform .4s ease; }
+    .promo-card:hover .promo-img-inner { transform: scale(1.06); }
+    .promo-discount-badge { position: absolute; top: 10px; right: 10px; background: var(--orange); color: var(--white); font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 999px; z-index: 2; }
+    .promo-body { padding: 18px; }
+    .promo-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .promo-old  { font-size: 12px; color: var(--muted); text-decoration: line-through; }
+    .promo-price { font-size: 22px; font-weight: 700; color: var(--orange); margin-bottom: 10px; }
+
+    /* countdown */
+    .countdown-wrap { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); padding-top: 10px; margin-top: 4px; }
+    .countdown-wrap svg { color: var(--orange); flex-shrink: 0; }
+    .countdown-val { font-weight: 700; color: var(--orange-h); font-size: 13px; font-variant-numeric: tabular-nums; }
+
+    /* ── SORT BAR ── */
+    .sort-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+    .sort-bar .section-heading { margin-bottom: 0; }
+    .sort-select { padding: 8px 14px; border: 1.5px solid var(--border); border-radius: 9px; font-family: 'Poppins', sans-serif; font-size: 13px; color: var(--text); background: var(--white); outline: none; cursor: pointer; transition: border-color .2s; }
+    .sort-select:focus { border-color: var(--orange); }
+
+    /* ── PRODUCTS GRID ── */
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; }
+    .product-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); overflow: hidden; transition: transform .25s, box-shadow .25s; }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+    .product-img { height: 180px; position: relative; overflow: hidden; }
+    .product-img-inner { width: 100%; height: 100%; transition: transform .4s ease; }
+    .product-card:hover .product-img-inner { transform: scale(1.06); }
+    .product-body { padding: 18px; }
+    .product-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; line-height: 1.3; }
+    .product-unit { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+    .product-row { display: flex; align-items: flex-end; justify-content: space-between; }
+    .price-old  { font-size: 11px; color: var(--muted); text-decoration: line-through; }
+    .price-main { font-size: 18px; font-weight: 700; color: var(--green-mid); }
+    .btn-add { width: 36px; height: 36px; background: var(--orange); color: var(--white); border: none; border-radius: 9px; font-size: 22px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .2s, transform .15s; }
+    .btn-add:hover { background: var(--orange-h); transform: scale(1.1); }
+    .btn-add:active { transform: scale(.95); }
+    .no-results { grid-column: 1/-1; text-align: center; padding: 60px 0; color: var(--muted); font-size: 15px; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { background: var(--white); border-top: 1px solid var(--border); padding: 72px 48px; }
+    .testimonials-inner { max-width: 1280px; margin: 0 auto; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 28px; }
+    .testimonial-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); padding: 24px; transition: box-shadow .2s; }
+    .testimonial-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.07); }
+    .stars { display: flex; gap: 3px; margin-bottom: 12px; }
+    .star { color: #FBBF24; font-size: 16px; }
+    .testimonial-text { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 10px; }
+    .author-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--green); color: var(--white); font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .author-name { font-size: 14px; font-weight: 600; }
+    .author-loc  { font-size: 12px; color: var(--muted); }
+
+    /* ── INFO STRIP ── */
+    .info-strip { background: var(--white); border-top: 1px solid var(--border); }
+    .info-inner { max-width: 1280px; margin: 0 auto; padding: 72px 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 48px; }
+    .info-block h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .info-block h3 svg { color: var(--orange); }
+    .hours-list { list-style: none; }
+    .hours-list li { font-size: 14px; padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .hours-list li:last-child { border: none; }
+    .hours-list li .day  { color: var(--muted); }
+    .hours-list li .time { font-weight: 600; color: var(--green-mid); }
+    .delivery-note { margin-top: 16px; background: var(--orange-soft); border-left: 3px solid var(--orange); padding: 11px 14px; border-radius: 0 8px 8px 0; font-size: 13px; color: #92400E; line-height: 1.5; }
+    .btn-wa { display: inline-flex; align-items: center; gap: 10px; margin-top: 16px; background: #25D366; color: var(--white); text-decoration: none; font-weight: 600; font-size: 14px; padding: 12px 22px; border-radius: 10px; transition: background .2s, transform .15s; }
+    .btn-wa:hover { background: #128C7E; transform: translateY(-1px); }
+    .pay-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .pay-list li { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+    .pay-icon { width: 36px; height: 36px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--green-mid); }
+    .area-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .area-tag { background: var(--green-light); color: var(--green-mid); font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 999px; display: flex; align-items: center; gap: 5px; }
+    .area-free-label { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.6; }
+    .sobre-text { font-size: 14px; color: var(--muted); line-height: 1.8; }
+    .sobre-text p + p { margin-top: 10px; }
+    .sobre-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--green-light); color: var(--green-mid); font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 999px; margin-top: 14px; }
+
+    /* ── POLICY BOX ── */
+    .policy-box { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin-top: 20px; font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .policy-box strong { color: var(--text); display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+
+    /* ── SOBRE SECTION ── */
+    .sobre-section { background: var(--white); border-top: 1px solid var(--border); padding: 80px 48px; }
+    .sobre-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .sobre-img-wrap { border-radius: 18px; overflow: hidden; aspect-ratio: 4/3; background: linear-gradient(135deg, var(--green) 0%, #1A6B3E 60%, var(--green-mid) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: rgba(255,255,255,.45); font-size: 13px; text-align: center; padding: 32px; position: relative; }
+    .sobre-img-wrap::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, rgba(255,255,255,.025) 0px, rgba(255,255,255,.025) 1px, transparent 1px, transparent 18px); }
+    .sobre-img-wrap svg { opacity: .35; }
+    .sobre-img-wrap span { font-size: 13px; font-weight: 500; }
+    .sobre-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.4px; color: var(--orange); margin-bottom: 12px; display: flex; align-items: center; gap: 7px; }
+    .sobre-eyebrow svg { color: var(--orange); }
+    .sobre-headline { font-size: 38px; font-weight: 800; color: var(--text); line-height: 1.12; margin-bottom: 22px; }
+    .sobre-headline span { color: var(--orange); }
+    .sobre-desc { font-size: 15px; color: var(--muted); line-height: 1.85; }
+    .sobre-desc p + p { margin-top: 12px; }
+    .sobre-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; margin-bottom: 24px; }
+    .sobre-badge2 { display: inline-flex; align-items: center; gap: 6px; background: var(--green-light); color: var(--green-mid); font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 999px; }
+    .sobre-badge2 svg { flex-shrink: 0; }
+    .sobre-policy { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .sobre-policy strong { color: var(--text); display: flex; align-items: center; gap: 6px; margin-bottom: 6px; font-size: 13px; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--green); padding: 22px 24px; text-align: center; color: rgba(255,255,255,.55); font-size: 13px; }
+    footer strong { color: var(--white); }
+
+    /* ── CART PANEL ── */
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 200; opacity: 0; pointer-events: none; transition: opacity .25s; }
+    .overlay.open { opacity: 1; pointer-events: all; }
+    .cart-panel { position: fixed; top: 0; right: -440px; width: 420px; max-width: 100vw; height: 100%; background: var(--white); z-index: 201; display: flex; flex-direction: column; transition: right .3s cubic-bezier(.4,0,.2,1); box-shadow: -4px 0 24px rgba(0,0,0,.12); }
+    .cart-panel.open { right: 0; }
+    .panel-head { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .panel-head h2 { font-size: 17px; font-weight: 700; }
+    .btn-x { width: 32px; height: 32px; background: var(--bg); border: none; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--muted); transition: background .15s; }
+    .btn-x:hover { background: var(--border); color: var(--text); }
+    .cart-body { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .cart-empty-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--muted); }
+    .cart-empty-state svg { color: var(--border); }
+    .cart-empty-state p { font-size: 15px; }
+    .cart-item { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; animation: slideIn .25s ease; }
+    @keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:none; } }
+    .cart-item-thumb { width: 48px; height: 48px; border-radius: 8px; flex-shrink: 0; overflow: hidden; }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-info b { font-size: 13px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; }
+    .cart-item-info small { font-size: 12px; color: var(--orange); font-weight: 600; }
+    .qty-ctrl { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .qty-ctrl span { font-size: 14px; font-weight: 600; min-width: 20px; text-align: center; }
+    .btn-q { width: 28px; height: 28px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color .15s, color .15s; }
+    .btn-q:hover { border-color: var(--orange); color: var(--orange); }
+    .panel-foot { padding: 16px 20px; border-top: 1px solid var(--border); }
+    .min-order-warn { background: var(--orange-soft); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: #92400E; margin-bottom: 10px; display: none; }
+    .min-order-warn.show { display: block; }
+    .total-row { display: flex; justify-content: space-between; font-size: 17px; font-weight: 700; margin-bottom: 14px; }
+    .total-row span:last-child { color: var(--green-mid); }
+    .btn-checkout { width: 100%; padding: 13px; background: var(--orange); color: var(--white); border: none; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background .2s; }
+    .btn-checkout:hover { background: var(--orange-h); }
+    .btn-checkout:disabled { background: #D1D5DB; cursor: not-allowed; }
+
+    /* ── CHECKOUT MODAL ── */
+    .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 300; display: none; align-items: center; justify-content: center; padding: 20px; }
+    .modal-bg.open { display: flex; animation: fadeIn .2s ease; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .modal { background: var(--white); border-radius: 16px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; animation: modalUp .3s ease; }
+    @keyframes modalUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
+    .modal-head { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: var(--white); border-radius: 16px 16px 0 0; z-index: 1; }
+    .modal-head h2 { font-size: 17px; font-weight: 700; }
+    .modal-body { padding: 24px; }
+    .field { margin-bottom: 18px; }
+    .field label { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-bottom: 8px; }
+    .field input, .field textarea { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 9px; font-family: 'Poppins', sans-serif; font-size: 14px; color: var(--text); outline: none; transition: border-color .2s, box-shadow .2s; }
+    .field input:focus, .field textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249,115,22,.1); }
+    .field textarea { resize: vertical; min-height: 72px; }
+    .toggle-row { display: flex; gap: 10px; }
+    .toggle-btn { flex: 1; padding: 12px 8px; border: 1.5px solid var(--border); border-radius: 10px; background: var(--white); font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; transition: all .2s; color: var(--muted); }
+    .toggle-btn svg { width: 24px; height: 24px; }
+    .toggle-btn:hover { border-color: var(--orange); color: var(--text); }
+    .toggle-btn.sel { border-color: var(--orange); background: var(--orange-soft); color: var(--orange-h); }
+    .pay-options { display: flex; flex-direction: column; gap: 8px; }
+    .pay-opt { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; transition: all .2s; }
+    .pay-opt:hover { border-color: var(--orange); background: var(--orange-soft); }
+    .pay-opt.sel { border-color: var(--orange); background: var(--orange-soft); }
+    .pay-opt input[type=radio] { accent-color: var(--orange); width: 16px; height: 16px; flex-shrink: 0; }
+    .pay-opt svg { color: var(--green-mid); }
+    .pay-opt b { font-size: 14px; display: block; }
+    .pay-opt small { font-size: 12px; color: var(--muted); }
+    .warn-box { background: var(--orange-soft); border-left: 3px solid var(--orange); padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13px; color: #92400E; margin-bottom: 18px; line-height: 1.5; }
+    .order-summary { background: var(--bg); border-radius: 10px; padding: 16px; margin-bottom: 18px; }
+    .order-summary h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); margin-bottom: 12px; }
+    .sum-item { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; }
+    .sum-line { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; color: var(--muted); }
+    .sum-total { display: flex; justify-content: space-between; font-size: 16px; font-weight: 700; border-top: 1px solid var(--border); margin-top: 10px; padding-top: 10px; }
+    .sum-total span:last-child { color: var(--green-mid); }
+    .frete-tag { font-weight: 700; color: var(--green-mid); }
+    .btn-wa-send { width: 100%; padding: 14px; background: #25D366; color: var(--white); border: none; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background .2s; }
+    .btn-wa-send:hover { background: #128C7E; }
+
+    /* ── FLOATING BUTTONS ── */
+    .fab-wa { position: fixed; bottom: 28px; right: 28px; z-index: 150; width: 56px; height: 56px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,.45); cursor: pointer; text-decoration: none; transition: transform .2s, box-shadow .2s; animation: waPulse 2.5s ease-in-out infinite; }
+    .fab-wa:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,.6); animation: none; }
+    @keyframes waPulse { 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45)} 50%{box-shadow:0 4px 32px rgba(37,211,102,.75)} }
+
+    .btn-top { position: fixed; bottom: 96px; right: 28px; z-index: 150; width: 44px; height: 44px; background: var(--white); border: 1.5px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,.1); color: var(--muted); opacity: 0; pointer-events: none; transition: opacity .3s, transform .2s; }
+    .btn-top.show { opacity: 1; pointer-events: all; }
+    .btn-top:hover { background: var(--orange); border-color: var(--orange); color: var(--white); transform: translateY(-2px); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .cat-cards-grid { grid-template-columns: repeat(4, 1fr); }
+      .promos-scroll  { grid-template-columns: repeat(3, 1fr); }
+      .delivery-strip-inner { padding: 14px 24px; gap: 16px; }
+      .dstrip-divider { display: none; }
+      .testimonials { padding: 48px 24px; }
+      .sobre-inner { grid-template-columns: 1fr; gap: 36px; }
+      .sobre-section { padding: 56px 32px; }
+      .sobre-headline { font-size: 28px; }
+    }
+    @media (max-width: 600px) {
+      .header-inner { padding: 12px 16px; grid-template-columns: auto auto; gap: 12px; }
+      .header-left { display: none; }
+      .logo-sub { display: none; }
+      .hero { padding: 40px 20px; }
+      .hero-text h1 { font-size: 24px; }
+      .hero-pills { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .pill { font-size: 12px; padding: 7px 12px; }
+      .main { padding: 32px 20px 56px; }
+      .cat-cards-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+      .cat-card { padding: 12px 4px 10px; }
+      .cat-card-icon { width: 40px; height: 40px; border-radius: 10px; }
+      .cat-card-label { font-size: 10px; }
+      .promos-scroll { grid-template-columns: 1fr; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .cart-panel { width: 100vw; }
+      .cat-btn { font-size: 11px; padding: 11px 4px; }
+      .info-inner { padding: 48px 20px; gap: 36px; }
+      .fab-wa { bottom: 20px; right: 20px; width: 50px; height: 50px; }
+      .btn-top { bottom: 80px; right: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker-bar">
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="search-wrap">
+        <input id="searchInput" type="text" placeholder="Buscar produtos…" oninput="buscar(this.value)" />
+        <span class="search-icon">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+        </span>
+      </div>
+    </div>
+    <a class="logo" href="#">
+      <div class="logo-mark">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+      </div>
+      <div>
+        <div class="logo-name">Empório Esperança</div>
+        <div class="logo-sub">Frescos todos os dias</div>
+      </div>
+    </a>
+    <div class="header-right">
+      <button class="btn-cart" id="btnCart" onclick="openCart()">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        Carrinho <span class="cart-count" id="badge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- CATEGORIES BAR -->
+<div class="cat-bar">
+  <div class="cat-inner" id="catBar"></div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1>Bem-vindo ao<br/><span>Empório Esperança</span></h1>
+      <p>Qualidade garantida, direto na sua porta.</p>
+    </div>
+    <div class="hero-pills">
+      <div class="pill"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Seg–Sáb 08h – 20h30</div>
+      <div class="pill"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Dom 08h – 14h</div>
+      <div class="pill"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Entrega disponível</div>
+      <div class="pill"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Cartão · Pix · Dinheiro</div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERY INFO STRIP -->
+<div class="delivery-strip">
+  <div class="delivery-strip-inner">
+    <div class="dstrip-item">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+      Pedido mínimo: <strong>R$ 69,00</strong>
+    </div>
+    <div class="dstrip-divider"></div>
+    <div class="dstrip-item">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      Frete grátis: <strong>Bairro Esperança e Santa Rosa</strong>
+    </div>
+    <div class="dstrip-divider"></div>
+    <div class="dstrip-item">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Entrega: <strong>solicitar 2h antes do fechamento</strong>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- CATEGORY CARDS -->
+  <div class="cat-cards-section reveal">
+    <div class="section-heading" style="margin-bottom:16px">
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Categorias
+    </div>
+    <div class="cat-cards-grid stagger" id="catCards"></div>
+  </div>
+
+  <!-- PROMOS -->
+  <div class="section-heading reveal">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    Promoções
+  </div>
+  <div class="promos-wrap reveal">
+    <div class="promos-scroll stagger" id="promos"></div>
+  </div>
+
+  <!-- MAIS VENDIDOS -->
+  <div class="section-heading reveal">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+    Mais Vendidos
+  </div>
+  <div class="products-grid stagger" id="bestsellers" style="margin-bottom:68px"></div>
+
+  <!-- TODOS OS PRODUTOS -->
+  <div class="sort-bar reveal">
+    <div class="section-heading" id="sectionTitle" style="margin-bottom:0">
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 3H8a2 2 0 00-2 2v2h12V5a2 2 0 00-2-2z"/></svg>
+      Todos os produtos
+    </div>
+    <select class="sort-select" id="sortSelect" onchange="sortProducts(this.value)">
+      <option value="default">Relevância</option>
+      <option value="price-asc">Menor preço</option>
+      <option value="price-desc">Maior preço</option>
+      <option value="discount">Maior desconto</option>
+    </select>
+  </div>
+  <div class="products-grid stagger" id="grid"></div>
+
+</main>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="testimonials-inner">
+    <div class="section-heading reveal">
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      O que nossos clientes dizem
+    </div>
+    <div class="testimonials-grid stagger">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Compro toda semana no Empório Esperança. Produtos sempre frescos e entrega rápida no bairro. Recomendo muito!"</p>
+        <div class="testimonial-author"><div class="author-avatar">A</div><div><div class="author-name">Ana Paula</div><div class="author-loc">Bairro Esperança</div></div></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Preços ótimos e sempre tem o que preciso. O atendimento pelo WhatsApp é super rápido. Adorei a facilidade de fazer o pedido!"</p>
+        <div class="testimonial-author"><div class="author-avatar">C</div><div><div class="author-name">Carlos Eduardo</div><div class="author-loc">Santa Rosa</div></div></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Finalmente um mercado de qualidade perto de casa. Desde que abriram, não preciso mais ir até o centro pra fazer minhas compras."</p>
+        <div class="testimonial-author"><div class="author-avatar">M</div><div><div class="author-name">Maria José</div><div class="author-loc">Bairro Esperança</div></div></div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★☆</div>
+        <p class="testimonial-text">"Gosto muito das promoções de hortifrúti. As carnes são de ótima qualidade. Vale muito a pena conhecer o Empório!"</p>
+        <div class="testimonial-author"><div class="author-avatar">R</div><div><div class="author-name">Roberto Silva</div><div class="author-loc">Santa Rosa</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE NÓS -->
+<section class="sobre-section">
+  <div class="sobre-inner reveal">
+    <div class="sobre-img-wrap">
+      <svg width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      <span>Foto do nosso mercado<br/>em breve</span>
+    </div>
+    <div class="sobre-content">
+      <div class="sobre-eyebrow">
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Sobre Nós
+      </div>
+      <h2 class="sobre-headline">Lugar feito<br/><span>para sua família</span></h2>
+      <div class="sobre-desc">
+        <p>O Empório Esperança nasceu da vontade de levar qualidade e acessibilidade para quem mora no bairro. Antes distribuidora de bebidas, hoje somos um mercado completo com foco em atender a comunidade com preços justos e produtos frescos.</p>
+        <p>Nossa missão é melhorar o comércio local, sendo uma opção prática e confiável para as famílias do Bairro Esperança e região.</p>
+      </div>
+      <div class="sobre-badges">
+        <span class="sobre-badge2"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>Negócio local, feito para o bairro</span>
+        <span class="sobre-badge2"><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Desde o Bairro Esperança</span>
+      </div>
+      <div class="sobre-policy">
+        <strong><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Política de Entrega</strong>
+        Entregas realizadas nos bairros Esperança e Santa Rosa com frete grátis. Pedido mínimo de R$&nbsp;69,00. Para cancelamentos ou dúvidas, entre em contato pelo WhatsApp antes do preparo do pedido.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFO STRIP -->
+<section class="info-strip">
+  <div class="info-inner">
+
+    <div class="info-block reveal">
+      <h3><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Horário de Funcionamento</h3>
+      <ul class="hours-list">
+        <li><span class="day">Segunda a Sábado</span><span class="time">08h00 – 20h30</span></li>
+        <li><span class="day">Domingo</span><span class="time">08h00 – 14h00</span></li>
+      </ul>
+      <div class="delivery-note">Pedidos para entrega devem ser feitos com no mínimo <strong>2 horas</strong> antes do fechamento.</div>
+    </div>
+
+    <div class="info-block reveal">
+      <h3><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Área de Entrega</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:8px">Frete grátis nos bairros:</p>
+      <div class="area-tags">
+        <span class="area-tag"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Bairro Esperança</span>
+        <span class="area-tag"><svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Santa Rosa</span>
+      </div>
+      <p class="area-free-label">Pedido mínimo para entrega: <strong>R$ 69,00</strong><br/>Para outros bairros, entre em contato pelo WhatsApp.</p>
+    </div>
+
+    <div class="info-block reveal">
+      <h3><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .82h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Fale Conosco</h3>
+      <p style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:4px">Atendimento pelo WhatsApp:</p>
+      <a class="btn-wa" href="https://wa.me/5534998839911" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        (34) 9 9883-9911
+      </a>
+    </div>
+
+    <div class="info-block reveal">
+      <h3><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Formas de Pagamento</h3>
+      <ul class="pay-list">
+        <li><div class="pay-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>Cartão de Crédito</li>
+        <li><div class="pay-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>Cartão de Débito</li>
+        <li><div class="pay-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M17 17h3v3"/></svg></div>Pix</li>
+        <li><div class="pay-icon"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/></svg></div>Dinheiro (retirada)</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  © 2025 <strong>Empório Esperança</strong> · Bairro Esperança · (34) 9 9883-9911
+</footer>
+
+<!-- CART PANEL -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="panel-head">
+    <h2>Meu Carrinho</h2>
+    <button class="btn-x" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody"></div>
+  <div class="panel-foot" id="panelFoot" style="display:none">
+    <div class="min-order-warn" id="minWarn">Pedido mínimo de <strong>R$ 69,00</strong> para entrega. Adicione mais itens!</div>
+    <div class="total-row"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
+    <button class="btn-checkout" id="btnCheckout" onclick="openCheckout()">Finalizar Pedido →</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Finalizar Pedido</h2>
+      <button class="btn-x" onclick="closeCheckout()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Tipo do pedido</label>
+        <div class="toggle-row">
+          <button class="toggle-btn sel" id="btnRet" onclick="setTipo('retirada')">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Retirada
+          </button>
+          <button class="toggle-btn" id="btnEnt" onclick="setTipo('entrega')">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+            Entrega
+          </button>
+        </div>
+      </div>
+      <div class="warn-box" id="warnEnt" style="display:none">
+        Pedidos para entrega com <strong>2h de antecedência</strong> ao fechamento. Pedido mínimo: <strong>R$ 69,00</strong>. Frete grátis: Bairro Esperança e Santa Rosa.
+      </div>
+      <div class="field"><label>Seu nome</label><input type="text" id="fNome" placeholder="Nome completo" /></div>
+      <div class="field"><label>WhatsApp</label><input type="tel" id="fTel" placeholder="(34) 9 0000-0000" /></div>
+      <div class="field" id="fEndGroup" style="display:none">
+        <label>Endereço de entrega</label>
+        <input type="text" id="fEnd" placeholder="Rua, número, bairro" />
+      </div>
+      <div class="field">
+        <label>Forma de pagamento</label>
+        <div class="pay-options">
+          <label class="pay-opt sel" onclick="setPay(this,'credito')"><input type="radio" name="pay" value="credito" checked /><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg><div><b>Cartão de Crédito</b><small>Na entrega ou retirada</small></div></label>
+          <label class="pay-opt" onclick="setPay(this,'debito')"><input type="radio" name="pay" value="debito" /><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg><div><b>Cartão de Débito</b><small>Na entrega ou retirada</small></div></label>
+          <label class="pay-opt" onclick="setPay(this,'pix')"><input type="radio" name="pay" value="pix" /><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3M17 17h3v3"/></svg><div><b>Pix</b><small>Transferência instantânea</small></div></label>
+          <label class="pay-opt" id="optDin" onclick="setPay(this,'dinheiro')"><input type="radio" name="pay" value="dinheiro" /><svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/></svg><div><b>Dinheiro</b><small>Somente para retirada</small></div></label>
+        </div>
+      </div>
+      <div class="field"><label>Observações (opcional)</label><textarea id="fObs" placeholder="Ex: troco para R$ 50, sem cebola…"></textarea></div>
+      <div class="order-summary">
+        <h4>Resumo do pedido</h4>
+        <div id="sumItems"></div>
+        <div class="sum-line" id="sumFrete"><span>Frete</span><span class="frete-tag" id="freteVal">—</span></div>
+        <div class="sum-total"><span>Total</span><span id="sumTotal">R$ 0,00</span></div>
+      </div>
+      <button class="btn-wa-send" onclick="sendWA()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Enviar pelo WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- FLOATING WA -->
+<a class="fab-wa" href="https://wa.me/5534998839911" target="_blank" title="Falar no WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- BACK TO TOP -->
+<button class="btn-top" id="btnTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Voltar ao topo">
+  <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script>
+  const WA = '5534998839911';
+  const MIN_ORDER = 69;
+  const FREE_AREAS = ['esperança', 'esperanca', 'santa rosa'];
+
+  // ── IMAGE GENERATOR ──────────────────────────────────
+  function makeImg(cfg) {
+    const { c1, c2, shape } = cfg;
+    const shapes = {
+      circle:  `<circle cx="100" cy="75" r="44" fill="rgba(255,255,255,0.18)"/>`,
+      rect:    `<rect x="40" y="30" width="120" height="90" rx="12" fill="rgba(255,255,255,0.16)"/>`,
+      leaf:    `<ellipse cx="100" cy="75" rx="50" ry="36" transform="rotate(-20 100 75)" fill="rgba(255,255,255,0.18)"/>`,
+      bottle:  `<rect x="80" y="20" width="40" height="110" rx="20" fill="rgba(255,255,255,0.18)"/>`,
+      bag:     `<path d="M60 50 Q60 30 100 30 Q140 30 140 50 L148 120 H52 Z" fill="rgba(255,255,255,0.18)"/>`,
+    };
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="150">
+      <defs>
+        <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="${c1}"/><stop offset="100%" stop-color="${c2}"/>
+        </linearGradient>
+        <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+          <circle cx="10" cy="10" r="1.5" fill="rgba(255,255,255,0.08)"/>
+        </pattern>
+      </defs>
+      <rect width="200" height="150" fill="url(#g)"/>
+      <rect width="200" height="150" fill="url(#dots)"/>
+      ${shapes[shape] || ''}
+    </svg>`;
+    return `data:image/svg+xml;base64,${btoa(svg)}`;
+  }
+
+  // ── DATA ──────────────────────────────────────────────
+  const cats = [
+    { id:'todos',      label:'Todos' },
+    { id:'hortifruti', label:'Hortifrúti' },
+    { id:'laticinios', label:'Laticínios' },
+    { id:'carnes',     label:'Carnes' },
+    { id:'mercearia',  label:'Mercearia' },
+    { id:'bebidas',    label:'Bebidas' },
+    { id:'limpeza',    label:'Limpeza' },
+    { id:'padaria',    label:'Padaria' },
+  ];
+
+  const catMeta = {
+    todos:      { bg:'#F3F4F6', color:'#6B7280', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>` },
+    hortifruti: { bg:'#DCFCE7', color:'#16A34A', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 010 20M12 2C6.5 2 2 6.5 2 12M12 12c0-5 3-9 6-10M12 12c2 3 2 7 0 10"/></svg>` },
+    laticinios: { bg:'#DBEAFE', color:'#2563EB', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 2h8l2 6H6L8 2z"/><path d="M6 8v12a2 2 0 002 2h8a2 2 0 002-2V8"/><path d="M10 12h4"/></svg>` },
+    carnes:     { bg:'#FEE2E2', color:'#DC2626', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>` },
+    mercearia:  { bg:'#FEF3C7', color:'#D97706', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 10V20a1 1 0 01-1 1H4a1 1 0 01-1-1V10"/><path d="M1 4h22v6H1z"/><path d="M10 21V10"/></svg>` },
+    bebidas:    { bg:'#CFFAFE', color:'#0891B2', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 2h8l1 5H7L8 2z"/><path d="M7 7v13a1 1 0 001 1h8a1 1 0 001-1V7"/><path d="M11 11v4M13 13H11"/></svg>` },
+    limpeza:    { bg:'#EDE9FE', color:'#7C3AED', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 22l4-4M12.5 2.5l9 9-4 4-9-9 4-4zM7 18l-4 4"/></svg>` },
+    padaria:    { bg:'#FFF7ED', color:'#EA580C', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>` },
+  };
+
+  const items = [
+    { id:1,  nome:'Tomate Caqui',       cat:'hortifruti', unit:'kg',      preco:4.99,  old:7.90,  promo:true,  bestseller:true,  img: makeImg({c1:'#EF4444',c2:'#991B1B',shape:'circle'}) },
+    { id:2,  nome:'Frango Inteiro',      cat:'carnes',     unit:'kg',      preco:14.90, old:19.90, promo:true,  bestseller:true,  img: makeImg({c1:'#F59E0B',c2:'#B45309',shape:'rect'}) },
+    { id:3,  nome:'Leite Integral 1L',   cat:'laticinios', unit:'caixa',   preco:4.49,  old:5.99,  promo:true,  bestseller:false, img: makeImg({c1:'#3B82F6',c2:'#1D4ED8',shape:'bottle'}) },
+    { id:4,  nome:'Banana Prata',        cat:'hortifruti', unit:'kg',      preco:3.99,  bestseller:true,  img: makeImg({c1:'#EAB308',c2:'#A16207',shape:'leaf'}) },
+    { id:5,  nome:'Alface Crespa',       cat:'hortifruti', unit:'unid.',   preco:2.50,  bestseller:false, img: makeImg({c1:'#22C55E',c2:'#15803D',shape:'leaf'}) },
+    { id:6,  nome:'Queijo Mussarela',    cat:'laticinios', unit:'kg',      preco:34.90, bestseller:true,  img: makeImg({c1:'#FCD34D',c2:'#D97706',shape:'rect'}) },
+    { id:7,  nome:'Carne Moída',         cat:'carnes',     unit:'kg',      preco:28.90, bestseller:true,  img: makeImg({c1:'#DC2626',c2:'#7F1D1D',shape:'rect'}) },
+    { id:8,  nome:'Filé de Tilápia',     cat:'carnes',     unit:'kg',      preco:19.90, bestseller:false, img: makeImg({c1:'#60A5FA',c2:'#1E40AF',shape:'leaf'}) },
+    { id:9,  nome:'Arroz 5kg',           cat:'mercearia',  unit:'saco',    preco:22.90, bestseller:true,  img: makeImg({c1:'#D4A96A',c2:'#92400E',shape:'bag'}) },
+    { id:10, nome:'Feijão Carioca 1kg',  cat:'mercearia',  unit:'pcte',    preco:8.90,  bestseller:false, img: makeImg({c1:'#78350F',c2:'#451A03',shape:'bag'}) },
+    { id:11, nome:'Refrigerante 2L',     cat:'bebidas',    unit:'garrafa', preco:7.99,  bestseller:true,  img: makeImg({c1:'#374151',c2:'#111827',shape:'bottle'}) },
+    { id:12, nome:'Água Mineral 1,5L',   cat:'bebidas',    unit:'garrafa', preco:2.50,  bestseller:false, img: makeImg({c1:'#7DD3FC',c2:'#0369A1',shape:'bottle'}) },
+    { id:13, nome:'Detergente 500ml',    cat:'limpeza',    unit:'frasco',  preco:2.49,  bestseller:false, img: makeImg({c1:'#06B6D4',c2:'#0E7490',shape:'bottle'}) },
+    { id:14, nome:'Pão Francês',         cat:'padaria',    unit:'kg',      preco:12.90, bestseller:true,  img: makeImg({c1:'#D97706',c2:'#78350F',shape:'rect'}) },
+    { id:15, nome:'Pão de Forma',        cat:'padaria',    unit:'pcte',    preco:6.90,  bestseller:false, img: makeImg({c1:'#F59E0B',c2:'#B45309',shape:'bag'}) },
+  ];
+
+  let cart = [];
+  let activeCat = 'todos';
+  let tipo = 'retirada';
+  let pay  = 'credito';
+  let sortMode = 'default';
+
+  const fmt = v => 'R$ ' + v.toFixed(2).replace('.', ',');
+  const totalCart = () => cart.reduce((s,c) => s + c.preco * c.qty, 0);
+  const totalQty  = () => cart.reduce((s,c) => s + c.qty, 0);
+
+  function isFreeArea(addr) {
+    const a = addr.toLowerCase();
+    return FREE_AREAS.some(z => a.includes(z));
+  }
+
+  // ── TICKER ─────────────────────────────────────────────
+  function buildTicker() {
+    const svgClock   = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
+    const svgTruck   = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`;
+    const svgPhone   = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 0111.19 18.85 19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .82h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>`;
+    const svgCard    = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>`;
+    const msgs = [
+      { icon: svgClock, text: 'Seg – Sáb: 08h00 às 20h30' },
+      { icon: svgClock, text: 'Domingo: 08h00 às 14h00' },
+      { icon: svgTruck, text: 'Frete grátis: Bairro Esperança e Santa Rosa' },
+      { icon: svgTruck, text: 'Pedido mínimo para entrega: R$ 69,00' },
+      { icon: svgPhone, text: 'WhatsApp: (34) 9 9883-9911' },
+      { icon: svgCard,  text: 'Cartão · Pix · Dinheiro' },
+    ];
+    const all = [...msgs, ...msgs];
+    document.getElementById('ticker').innerHTML = all.map(m =>
+      `<div class="ticker-item">${m.icon}<span>${m.text}</span></div>`
+    ).join('');
+  }
+
+  // ── CATEGORY CARDS ─────────────────────────────────────
+  function renderCatCards(activeId) {
+    const c = document.getElementById('catCards');
+    c.innerHTML = cats.map(cat => {
+      const m = catMeta[cat.id];
+      return `<div class="cat-card${cat.id===activeId?' active':''}" onclick="filterCatCard('${cat.id}')">
+        <div class="cat-card-icon" style="background:${m.bg};color:${m.color}">${m.icon}</div>
+        <span class="cat-card-label">${cat.label}</span>
+      </div>`;
+    }).join('');
+    setTimeout(() => c.classList.add('in'), 50);
+  }
+
+  function filterCatCard(id) {
+    activeCat = id;
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    const btn = [...document.querySelectorAll('.cat-btn')].find(b => b.getAttribute('onclick').includes(`'${id}'`));
+    if (btn) btn.classList.add('active');
+    renderCatCards(id);
+    const cat = cats.find(c => c.id === id);
+    updateSectionTitle(cat.label);
+    renderGrid(getSortedList(id === 'todos' ? items : items.filter(p => p.cat === id)));
+    document.getElementById('sectionTitle').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function filterCat(id, el) {
+    activeCat = id;
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    renderCatCards(id);
+    const cat = cats.find(c => c.id === id);
+    updateSectionTitle(cat.label);
+    renderGrid(getSortedList(id === 'todos' ? items : items.filter(p => p.cat === id)));
+  }
+
+  function updateSectionTitle(label) {
+    document.getElementById('sectionTitle').innerHTML = `<svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path d="M16 3H8a2 2 0 00-2 2v2h12V5a2 2 0 00-2-2z"/></svg> ${label}`;
+  }
+
+  // ── SORT ───────────────────────────────────────────────
+  function sortProducts(mode) {
+    sortMode = mode;
+    const list = activeCat === 'todos' ? items : items.filter(p => p.cat === activeCat);
+    renderGrid(getSortedList(list));
+  }
+
+  function getSortedList(list) {
+    const arr = [...list];
+    if (sortMode === 'price-asc')  return arr.sort((a,b) => a.preco - b.preco);
+    if (sortMode === 'price-desc') return arr.sort((a,b) => b.preco - a.preco);
+    if (sortMode === 'discount')   return arr.sort((a,b) => {
+      const da = a.old ? (1 - a.preco/a.old) : 0;
+      const db = b.old ? (1 - b.preco/b.old) : 0;
+      return db - da;
+    });
+    return arr;
+  }
+
+  function buscar(q) {
+    const v = q.trim().toLowerCase();
+    const list = v ? items.filter(p => p.nome.toLowerCase().includes(v))
+                   : (activeCat==='todos' ? items : items.filter(p => p.cat===activeCat));
+    updateSectionTitle(v ? `Resultados para "${q}"` : 'Todos os produtos');
+    renderGrid(getSortedList(list));
+  }
+
+  // ── COUNTDOWN ──────────────────────────────────────────
+  function getPromoEnd() {
+    const d = new Date();
+    d.setHours(23, 59, 59, 0);
+    return d;
+  }
+
+  function fmtCountdown(ms) {
+    if (ms <= 0) return '00:00:00';
+    const s = Math.floor(ms/1000);
+    const h = String(Math.floor(s/3600)).padStart(2,'0');
+    const m = String(Math.floor((s%3600)/60)).padStart(2,'0');
+    const sc = String(s%60).padStart(2,'0');
+    return `${h}:${m}:${sc}`;
+  }
+
+  let promoEnd = getPromoEnd();
+  function tickCountdown() {
+    const now = Date.now();
+    const remaining = promoEnd - now;
+    document.querySelectorAll('.countdown-val').forEach(el => {
+      el.textContent = fmtCountdown(remaining);
+    });
+  }
+
+  // ── INIT ───────────────────────────────────────────────
+  function init() {
+    buildTicker();
+
+    // cat bar
+    document.getElementById('catBar').innerHTML = cats.map(c =>
+      `<button class="cat-btn${c.id==='todos'?' active':''}" onclick="filterCat('${c.id}',this)">${c.label}</button>`
+    ).join('');
+
+    renderCatCards('todos');
+
+    // promos with countdown
+    document.getElementById('promos').innerHTML = items.filter(i => i.promo).map(p => {
+      const pct = Math.round((1 - p.preco/p.old) * 100);
+      return `
+        <div class="promo-card" onclick="addToCart(${p.id})">
+          <div class="promo-img">
+            <img class="promo-img-inner" src="${p.img}" alt="${p.nome}" width="210" height="150" />
+            <span class="promo-discount-badge">-${pct}%</span>
+          </div>
+          <div class="promo-body">
+            <div class="promo-name">${p.nome}</div>
+            <div class="promo-old">De ${fmt(p.old)}</div>
+            <div class="promo-price">${fmt(p.preco)}</div>
+            <div class="countdown-wrap">
+              <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Oferta termina em <span class="countdown-val">--:--:--</span>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+
+    // bestsellers
+    const bs = items.filter(i => i.bestseller);
+    document.getElementById('bestsellers').innerHTML = productCards(bs);
+
+    renderGrid(items);
+    initReveal();
+
+    // countdown tick
+    tickCountdown();
+    setInterval(tickCountdown, 1000);
+
+    // back to top
+    window.addEventListener('scroll', () => {
+      document.getElementById('btnTop').classList.toggle('show', window.scrollY > 400);
+    });
+  }
+
+  function productCards(list) {
+    if (!list.length) return '<p class="no-results">Nenhum produto encontrado.</p>';
+    return list.map(p => `
+      <div class="product-card">
+        <div class="product-img">
+          <img class="product-img-inner" src="${p.img}" alt="${p.nome}" width="220" height="180" loading="lazy" />
+          ${p.promo ? `<span style="position:absolute;top:10px;left:10px;background:var(--orange);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;text-transform:uppercase;letter-spacing:.3px;z-index:2">Oferta</span>` : ''}
+          ${p.bestseller && !p.promo ? `<span style="position:absolute;top:10px;left:10px;background:var(--green-mid);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;text-transform:uppercase;letter-spacing:.3px;z-index:2">+ Vendido</span>` : ''}
+        </div>
+        <div class="product-body">
+          <div class="product-name">${p.nome}</div>
+          <div class="product-unit">${p.unit}</div>
+          <div class="product-row">
+            <div>
+              ${p.old ? `<div class="price-old">${fmt(p.old)}</div>` : ''}
+              <div class="price-main">${fmt(p.preco)}</div>
+            </div>
+            <button class="btn-add" onclick="event.stopPropagation();addToCart(${p.id})">+</button>
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  function renderGrid(list) {
+    const g = document.getElementById('grid');
+    g.className = 'products-grid stagger';
+    g.innerHTML = productCards(list);
+    g.querySelectorAll('.product-card').forEach(el => observer.observe(el));
+    setTimeout(() => g.classList.add('in'), 50);
+  }
+
+  // ── CART ───────────────────────────────────────────────
+  function addToCart(id) {
+    const p = items.find(i => i.id === id);
+    const c = cart.find(i => i.id === id);
+    c ? c.qty++ : cart.push({...p, qty:1});
+    refreshBadge();
+    refreshCartBody();
+    const btn = document.getElementById('btnCart');
+    btn.classList.remove('bump');
+    void btn.offsetWidth;
+    btn.classList.add('bump');
+  }
+
+  function dec(id) {
+    const idx = cart.findIndex(i => i.id === id);
+    if (idx < 0) return;
+    cart[idx].qty > 1 ? cart[idx].qty-- : cart.splice(idx, 1);
+    refreshBadge();
+    refreshCartBody();
+  }
+
+  function refreshBadge() {
+    const b = document.getElementById('badge');
+    b.textContent = totalQty();
+    b.classList.remove('pulse');
+    void b.offsetWidth;
+    b.classList.add('pulse');
+  }
+
+  function refreshCartBody() {
+    const body = document.getElementById('cartBody');
+    const foot = document.getElementById('panelFoot');
+    const total = totalCart();
+
+    if (!cart.length) {
+      body.innerHTML = `<div class="cart-empty-state"><svg width="56" height="56" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg><p>Carrinho vazio</p></div>`;
+      foot.style.display = 'none';
+      return;
+    }
+
+    foot.style.display = 'block';
+    body.innerHTML = cart.map(c => `
+      <div class="cart-item">
+        <div class="cart-item-thumb"><img src="${c.img}" alt="${c.nome}" width="48" height="48" style="width:100%;height:100%;object-fit:cover"/></div>
+        <div class="cart-item-info"><b>${c.nome}</b><small>${fmt(c.preco*c.qty)}</small></div>
+        <div class="qty-ctrl">
+          <button class="btn-q" onclick="dec(${c.id})">−</button>
+          <span>${c.qty}</span>
+          <button class="btn-q" onclick="addToCart(${c.id})">+</button>
+        </div>
+      </div>`).join('');
+
+    document.getElementById('cartTotal').textContent = fmt(total);
+
+    // min order warning (only for delivery)
+    const warn = document.getElementById('minWarn');
+    if (tipo === 'entrega' && total < MIN_ORDER) {
+      warn.classList.add('show');
+      warn.innerHTML = `Faltam <strong>${fmt(MIN_ORDER - total)}</strong> para o pedido mínimo de entrega (R$ 69,00).`;
+    } else {
+      warn.classList.remove('show');
+    }
+  }
+
+  function openCart() {
+    document.getElementById('overlay').classList.add('open');
+    document.getElementById('cartPanel').classList.add('open');
+    refreshCartBody();
+  }
+  function closeCart() {
+    document.getElementById('overlay').classList.remove('open');
+    document.getElementById('cartPanel').classList.remove('open');
+  }
+
+  // ── CHECKOUT ───────────────────────────────────────────
+  function openCheckout() {
+    if (tipo === 'entrega' && totalCart() < MIN_ORDER) {
+      alert(`Pedido mínimo para entrega é R$ 69,00. Adicione mais ${fmt(MIN_ORDER - totalCart())} para continuar.`);
+      return;
+    }
+    closeCart();
+    renderSummary();
+    document.getElementById('modalBg').classList.add('open');
+  }
+
+  function closeCheckout() { document.getElementById('modalBg').classList.remove('open'); }
+
+  function renderSummary() {
+    const end = document.getElementById('fEnd')?.value || '';
+    const free = tipo === 'retirada' || isFreeArea(end);
+    document.getElementById('sumItems').innerHTML = cart.map(c =>
+      `<div class="sum-item"><span>${c.nome} ×${c.qty}</span><span>${fmt(c.preco*c.qty)}</span></div>`
+    ).join('');
+    document.getElementById('freteVal').textContent = tipo === 'retirada' ? '—' : (free ? 'Grátis' : 'A combinar');
+    document.getElementById('sumTotal').textContent = fmt(totalCart());
+  }
+
+  function setTipo(t) {
+    tipo = t;
+    document.getElementById('btnRet').classList.toggle('sel', t==='retirada');
+    document.getElementById('btnEnt').classList.toggle('sel', t==='entrega');
+    document.getElementById('fEndGroup').style.display = t==='entrega' ? 'block' : 'none';
+    document.getElementById('warnEnt').style.display   = t==='entrega' ? 'block' : 'none';
+    document.getElementById('optDin').style.display    = t==='retirada' ? 'flex' : 'none';
+    if (t==='entrega' && pay==='dinheiro') {
+      pay = 'credito';
+      document.querySelector('input[value="credito"]').checked = true;
+      document.querySelectorAll('.pay-opt').forEach(o => o.classList.remove('sel'));
+      document.querySelector('.pay-opt').classList.add('sel');
+    }
+    refreshCartBody();
+    renderSummary();
+  }
+
+  function setPay(el, v) {
+    pay = v;
+    document.querySelectorAll('.pay-opt').forEach(o => o.classList.remove('sel'));
+    el.classList.add('sel');
+  }
+
+  function sendWA() {
+    const nome = document.getElementById('fNome').value.trim();
+    const tel  = document.getElementById('fTel').value.trim();
+    const end  = document.getElementById('fEnd').value.trim();
+    const obs  = document.getElementById('fObs').value.trim();
+
+    if (!nome) { alert('Informe seu nome.'); return; }
+    if (!tel)  { alert('Informe seu WhatsApp.'); return; }
+    if (tipo==='entrega' && !end) { alert('Informe o endereço de entrega.'); return; }
+    if (tipo==='entrega' && totalCart() < MIN_ORDER) { alert(`Pedido mínimo de R$ 69,00 para entrega. Faltam ${fmt(MIN_ORDER-totalCart())}.`); return; }
+    if (!cart.length) { alert('Carrinho vazio!'); return; }
+
+    const free = tipo==='retirada' || isFreeArea(end);
+    const payLabel = { credito:'Cartão de Crédito', debito:'Cartão de Débito', pix:'Pix', dinheiro:'Dinheiro' };
+    let msg = `*PEDIDO – EMPÓRIO ESPERANÇA*\n\n`;
+    msg += `👤 Nome: ${nome}\n📱 Tel: ${tel}\n`;
+    msg += `🚚 Tipo: ${tipo==='entrega' ? 'Entrega' : 'Retirada na loja'}\n`;
+    if (tipo==='entrega') msg += `📍 Endereço: ${end}\n🚛 Frete: ${free ? 'Grátis' : 'A combinar'}\n`;
+    msg += `💳 Pagamento: ${payLabel[pay]}\n\n📋 Itens:\n`;
+    cart.forEach(c => msg += `  • ${c.nome} ×${c.qty} — ${fmt(c.preco*c.qty)}\n`);
+    msg += `\n💰 Total: ${fmt(totalCart())}`;
+    if (obs) msg += `\n\n📝 Obs: ${obs}`;
+
+    window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank');
+  }
+
+  // ── SCROLL REVEAL ──────────────────────────────────────
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+
+  function initReveal() {
+    document.querySelectorAll('.reveal, .stagger').forEach(el => observer.observe(el));
+  }
+
+  init();
+</script>
+</body>
+</html>
