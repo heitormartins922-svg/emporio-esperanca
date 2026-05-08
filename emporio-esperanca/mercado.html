@@ -33,61 +33,88 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+    html { scroll-behavior: smooth; background: var(--bg); }
+    body { font-family: 'Poppins', sans-serif; background: none; isolation: isolate; color: var(--text); overflow-x: hidden; }
 
     /* ── TICKER ── */
-    .ticker-bar { background: var(--green); padding: 8px 0; overflow: hidden; }
-    .ticker-track { display: flex; gap: 64px; width: max-content; animation: ticker 28s linear infinite; }
-    .ticker-track:hover { animation-play-state: paused; }
-    .ticker-item { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,.85); font-size: 13px; font-weight: 500; white-space: nowrap; }
-    .ticker-item svg { color: var(--orange); flex-shrink: 0; }
-    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
     /* ── HEADER ── */
-    header { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
-    .header-inner { max-width: 1280px; margin: 0 auto; padding: 16px 32px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 32px; }
-    .header-left  { display: flex; align-items: center; justify-content: flex-start; }
-    .header-right { display: flex; align-items: center; justify-content: flex-end; }
-    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
-    .logo-mark { width: 44px; height: 44px; background: var(--green); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--white); transition: transform .3s; }
-    .logo-mark:hover { transform: rotate(-6deg) scale(1.05); }
-    .logo-name { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.2; }
-    .logo-sub  { font-size: 11px; color: var(--muted); font-weight: 400; }
-    .search-wrap { width: 100%; max-width: 340px; position: relative; }
-    .search-wrap input { width: 100%; padding: 10px 42px 10px 16px; background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 14px; color: var(--text); outline: none; transition: border-color .2s, box-shadow .2s; }
-    .search-wrap input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249,115,22,.12); background: var(--white); }
-    .search-wrap input::placeholder { color: var(--muted); }
-    .search-icon { position: absolute; right: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
-    .btn-cart { display: flex; align-items: center; gap: 10px; background: var(--orange); color: var(--white); border: none; padding: 11px 20px; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background .2s, transform .15s; flex-shrink: 0; }
-    .btn-cart:hover { background: var(--orange-h); transform: translateY(-1px); }
-    .btn-cart:active { transform: translateY(0); }
-    .btn-cart.bump { animation: bump .3s ease; }
-    @keyframes bump { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
-    .cart-count { background: var(--white); color: var(--orange); font-size: 12px; font-weight: 700; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-    .cart-count.pulse { animation: badgePulse .4s ease; }
+    /* ── TOP BAR (desktop only) ── */
+    .top-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 200; background: var(--white); border-bottom: 1px solid var(--border); transform: translateY(0); transition: transform .35s cubic-bezier(.4,0,.2,1); }
+    .top-bar.hidden { transform: translateY(-100%); }
+    .top-bar-inner { max-width: 1280px; margin: 0 auto; padding: 11px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .top-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+    .top-logo-mark { width: 38px; height: 38px; background: var(--green); border-radius: 9px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; }
+    .top-logo-name { font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.2; }
+    .top-logo-sub  { font-size: 11px; color: var(--muted); }
+    .top-nav { display: flex; align-items: center; gap: 4px; }
+    .top-btn { width: 40px; height: 40px; border-radius: 9px; border: none; background: none; color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s, color .2s; position: relative; text-decoration: none; font-family: 'Poppins', sans-serif; flex-shrink: 0; }
+    .top-btn:hover { background: var(--bg); color: var(--text); }
+    .top-btn-cart { display: flex; align-items: center; gap: 8px; background: var(--orange); color: #fff; border: none; padding: 9px 14px; border-radius: 9px; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; transition: background .2s; flex-shrink: 0; }
+    .top-btn-cart:hover { background: var(--orange-h); }
+    .top-badge { background: #fff; color: var(--orange); font-size: 11px; font-weight: 700; min-width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .top-wa { display: flex; align-items: center; gap: 7px; background: #25D366; color: #fff; text-decoration: none; padding: 9px 14px; border-radius: 9px; font-size: 13px; font-weight: 600; font-family: 'Poppins', sans-serif; transition: background .2s; flex-shrink: 0; }
+    .top-wa:hover { background: #128C7E; }
+    @media (max-width: 768px) { .top-bar { display: none; } }
+    @media (min-width: 769px) { .hero { margin-top: 64px; } }
+
+    .search-overlay { position: fixed; top: 0; left: 0; right: 0; background: var(--white); border-bottom: 1px solid var(--border); padding: 0 32px; max-height: 0; overflow: hidden; transition: max-height .25s ease, padding .25s ease; z-index: 300; }
+    .search-overlay.open { max-height: 70px; padding: 12px 32px; }
+    .search-overlay-inner { max-width: 1280px; margin: 0 auto; position: relative; }
+    .search-overlay input { width: 100%; padding: 10px 42px 10px 16px; background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 14px; color: var(--text); outline: none; transition: border-color .2s, box-shadow .2s; }
+    .search-overlay input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(249,115,22,.12); background: var(--white); }
+    .search-overlay input::placeholder { color: var(--muted); }
+    .search-overlay-icon { position: absolute; right: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+
+    /* ── FLOATING NAV ── */
+    .float-nav { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(0); z-index: 250; display: flex; align-items: center; gap: 4px; padding: 6px; background: linear-gradient(180deg, rgba(23,23,23,.88) 0%, rgba(13,13,13,.93) 100%); border-radius: 99px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 8px 32px rgba(0,0,0,.35); opacity: 1; transition: opacity .35s ease, transform .35s ease; }
+    @media (min-width: 769px) { .float-nav { opacity: 0; pointer-events: none; transform: translateX(-50%) translateY(16px); } .float-nav.visible { opacity: 1; pointer-events: all; transform: translateX(-50%) translateY(0); } }
+    .float-btn { width: 50px; height: 50px; border-radius: 99px; border: none; background: none; color: rgba(255,255,255,.55); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .25s, color .25s; position: relative; text-decoration: none; flex-shrink: 0; font-family: 'Poppins', sans-serif; }
+    .float-btn:hover { background: rgba(255,255,255,.1); color: #fff; }
+    .float-btn.active { background: rgba(255,255,255,.14); color: #fff; }
+    .float-badge { position: absolute; top: 7px; right: 7px; background: var(--orange); color: #fff; font-size: 10px; font-weight: 700; min-width: 16px; height: 16px; border-radius: 99px; padding: 0 4px; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    .float-badge.pulse { animation: badgePulse .4s ease; }
     @keyframes badgePulse { 0%{transform:scale(1)} 50%{transform:scale(1.4)} 100%{transform:scale(1)} }
+    .float-divider { width: 1px; height: 28px; background: rgba(255,255,255,.1); margin: 0 2px; flex-shrink: 0; }
 
     /* ── CAT BAR ── */
-    .cat-bar { background: var(--white); border-bottom: 1px solid var(--border); }
-    .cat-inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; }
-    .cat-btn { flex: 1; text-align: center; padding: 13px 8px; font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 500; color: var(--muted); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; transition: color .2s, border-color .2s; }
-    .cat-btn:hover { color: var(--text); }
-    .cat-btn.active { color: var(--orange); border-bottom-color: var(--orange); font-weight: 600; }
+    .cat-bar { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-bottom: 20px; }
+    .cat-bar::-webkit-scrollbar { display: none; }
+    .cat-inner { display: flex; justify-content: center; min-width: max-content; }
+    .cat-toggle { display: inline-flex; position: relative; background: #F3F4F6; border: 1px solid rgba(26,26,26,.09); border-radius: 999px; padding: 5px; }
+    .cat-toggle-indicator { position: absolute; top: 5px; bottom: 5px; left: 5px; background: var(--white); border-radius: 999px; box-shadow: 0 1px 6px rgba(0,0,0,.12); transition: left .38s cubic-bezier(.34,1.56,.64,1), width .38s cubic-bezier(.34,1.56,.64,1); pointer-events: none; z-index: 0; }
+    .cat-toggle-btn { position: relative; z-index: 1; padding: 8px 22px; border: none; background: none; border-radius: 999px; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 500; color: var(--muted); cursor: pointer; white-space: nowrap; transition: color .25s; }
+    .cat-toggle-btn:hover { color: var(--text); }
+    .cat-toggle-btn.active { color: var(--text); font-weight: 600; }
 
-    /* ── HERO ── */
-    .hero { background: var(--green); padding: 72px 48px; overflow: hidden; position: relative; }
-    .hero::after { content: ''; position: absolute; right: -80px; top: -80px; width: 400px; height: 400px; background: rgba(255,255,255,.04); border-radius: 50%; }
-    .hero-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; position: relative; z-index: 1; }
-    .hero-text { animation: heroIn .7s ease both; }
-    @keyframes heroIn { from { opacity:0; transform:translateX(-30px); } to { opacity:1; transform:none; } }
-    .hero-text h1 { font-size: 34px; font-weight: 800; color: var(--white); line-height: 1.2; margin-bottom: 10px; }
-    .hero-text h1 span { color: var(--orange); }
-    .hero-text p { font-size: 15px; color: rgba(255,255,255,.65); font-weight: 400; }
-    .hero-pills { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; animation: heroIn .7s .15s ease both; }
-    .pill { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18); color: var(--white); padding: 9px 16px; border-radius: 999px; font-size: 13px; font-weight: 500; backdrop-filter: blur(4px); transition: background .2s; }
-    .pill:hover { background: rgba(255,255,255,.18); }
-    .pill svg { color: var(--orange); }
+    /* ── HERO CAROUSEL ── */
+    .hero { overflow: hidden; background: var(--bg); position: relative; }
+    .hero-track { display: flex; transition: transform .45s cubic-bezier(.4,0,.2,1); will-change: transform; }
+    .hero-slide { min-width: 100%; flex-shrink: 0; display: flex; justify-content: center; padding: 16px 32px; }
+    .hero-banner { width: 100%; max-width: 1280px; min-height: 260px; border-radius: 20px; display: flex; align-items: center; justify-content: space-between; padding: 48px 64px; position: relative; overflow: hidden; gap: 32px; }
+    .hero-banner::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, rgba(255,255,255,.04) 0, rgba(255,255,255,.04) 1px, transparent 1px, transparent 20px); pointer-events: none; }
+    .hero-text { position: relative; z-index: 1; flex: 1; }
+    .hero-eyebrow { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; opacity: .75; margin-bottom: 10px; }
+    .hero-headline { font-size: 36px; font-weight: 800; line-height: 1.1; margin-bottom: 12px; }
+    .hero-sub { font-size: 15px; opacity: .85; line-height: 1.55; margin-bottom: 24px; max-width: 360px; }
+    .hero-cta { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 999px; font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 700; text-decoration: none; transition: transform .2s, opacity .2s; }
+    .hero-cta:hover { transform: translateY(-2px); opacity: .9; }
+    .hero-illus { position: relative; z-index: 1; flex-shrink: 0; opacity: .92; }
+    @media (max-width: 700px) {
+      .hero-slide { padding: 12px 16px; }
+      .hero-banner { padding: 32px 28px; min-height: 200px; }
+      .hero-headline { font-size: 24px; }
+      .hero-illus { display: none; }
+      .hero-sub { font-size: 13px; margin-bottom: 18px; }
+    }
+    .hero-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,.45); border: none; color: #fff; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .2s, transform .2s; z-index: 10; }
+    .hero-arrow:hover { background: rgba(0,0,0,.72); transform: translateY(-50%) scale(1.08); }
+    .hero-arrow.prev { left: 16px; }
+    .hero-arrow.next { right: 16px; }
+    .hero-dots { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; z-index: 10; }
+    .hero-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.45); border: none; cursor: pointer; padding: 0; transition: background .2s, transform .2s; }
+    .hero-dot.active { background: #fff; transform: scale(1.25); }
+
 
     /* ── DELIVERY INFO STRIP ── */
     .delivery-strip { background: var(--orange-soft); border-bottom: 1px solid #FED7AA; }
@@ -120,16 +147,6 @@
     .section-heading { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 28px; display: flex; align-items: center; gap: 10px; }
     .section-heading svg { color: var(--orange); }
 
-    /* ── CATEGORY CARDS ── */
-    .cat-cards-section { margin-bottom: 64px; }
-    .cat-cards-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 16px; }
-    .cat-card { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 22px 8px 18px; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--r); cursor: pointer; transition: border-color .2s, transform .2s, box-shadow .2s; }
-    .cat-card:hover { border-color: var(--orange); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,.07); }
-    .cat-card.active { border-color: var(--orange); background: var(--orange-soft); }
-    .cat-card-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; transition: transform .2s; }
-    .cat-card:hover .cat-card-icon { transform: scale(1.1); }
-    .cat-card-label { font-size: 12px; font-weight: 600; color: var(--text); text-align: center; line-height: 1.2; }
-    .cat-card.active .cat-card-label { color: var(--orange-h); }
 
     /* ── PROMOS ── */
     .promos-wrap { margin-bottom: 68px; }
@@ -172,10 +189,20 @@
     .btn-add { width: 36px; height: 36px; background: var(--orange); color: var(--white); border: none; border-radius: 9px; font-size: 22px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .2s, transform .15s; }
     .btn-add:hover { background: var(--orange-h); transform: scale(1.1); }
     .btn-add:active { transform: scale(.95); }
+    .gram-wrap { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+    .gram-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+    .gram-input { flex: 1; padding: 7px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; font-family: inherit; color: var(--text); outline: none; transition: border-color .2s; min-width: 0; -moz-appearance: textfield; }
+    .gram-input::-webkit-outer-spin-button, .gram-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .gram-input:focus { border-color: var(--green); }
+    .gram-input.error { border-color: var(--orange); animation: shake .3s; }
+    .gram-input::placeholder { color: var(--muted); }
+    .gram-suffix { font-size: 13px; font-weight: 600; color: var(--muted); flex-shrink: 0; }
+    .gram-note { font-size: 10.5px; color: var(--orange); display: flex; align-items: flex-start; gap: 4px; line-height: 1.45; }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-4px)} 75%{transform:translateX(4px)} }
     .no-results { grid-column: 1/-1; text-align: center; padding: 60px 0; color: var(--muted); font-size: 15px; }
 
     /* ── TESTIMONIALS ── */
-    .testimonials { background: var(--white); border-top: 1px solid var(--border); padding: 72px 48px; }
+    .testimonials { background: var(--white); border-top: 1px solid var(--border); padding: 72px 48px; content-visibility: auto; contain-intrinsic-size: 0 500px; }
     .testimonials-inner { max-width: 1280px; margin: 0 auto; }
     .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 28px; }
     .testimonial-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r); padding: 24px; transition: box-shadow .2s; }
@@ -189,7 +216,7 @@
     .author-loc  { font-size: 12px; color: var(--muted); }
 
     /* ── INFO STRIP ── */
-    .info-strip { background: var(--white); border-top: 1px solid var(--border); }
+    .info-strip { background: var(--white); border-top: 1px solid var(--border); content-visibility: auto; contain-intrinsic-size: 0 400px; }
     .info-inner { max-width: 1280px; margin: 0 auto; padding: 72px 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 48px; }
     .info-block h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
     .info-block h3 svg { color: var(--orange); }
@@ -216,7 +243,7 @@
     .policy-box strong { color: var(--text); display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
 
     /* ── SOBRE SECTION ── */
-    .sobre-section { background: var(--white); border-top: 1px solid var(--border); padding: 80px 48px; }
+    .sobre-section { background: var(--white); border-top: 1px solid var(--border); padding: 80px 48px; content-visibility: auto; contain-intrinsic-size: 0 600px; }
     .sobre-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
     .sobre-img-wrap { border-radius: 18px; overflow: hidden; aspect-ratio: 4/3; background: linear-gradient(135deg, var(--green) 0%, #1A6B3E 60%, var(--green-mid) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: rgba(255,255,255,.45); font-size: 13px; text-align: center; padding: 32px; position: relative; }
     .sobre-img-wrap::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, rgba(255,255,255,.025) 0px, rgba(255,255,255,.025) 1px, transparent 1px, transparent 18px); }
@@ -308,104 +335,226 @@
     .btn-wa-send { width: 100%; padding: 14px; background: #25D366; color: var(--white); border: none; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background .2s; }
     .btn-wa-send:hover { background: #128C7E; }
 
-    /* ── FLOATING BUTTONS ── */
-    .fab-wa { position: fixed; bottom: 28px; right: 28px; z-index: 150; width: 56px; height: 56px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,.45); cursor: pointer; text-decoration: none; transition: transform .2s, box-shadow .2s; animation: waPulse 2.5s ease-in-out infinite; }
-    .fab-wa:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,.6); animation: none; }
-    @keyframes waPulse { 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45)} 50%{box-shadow:0 4px 32px rgba(37,211,102,.75)} }
-
-    .btn-top { position: fixed; bottom: 96px; right: 28px; z-index: 150; width: 44px; height: 44px; background: var(--white); border: 1.5px solid var(--border); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 10px rgba(0,0,0,.1); color: var(--muted); opacity: 0; pointer-events: none; transition: opacity .3s, transform .2s; }
+    .fab-wa { position: fixed; bottom: 100px; right: 24px; z-index: 150; width: 52px; height: 52px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,.45); cursor: pointer; text-decoration: none; transition: transform .2s, box-shadow .2s, opacity .3s; opacity: 0; pointer-events: none; }
+    .fab-wa.show { opacity: 1; pointer-events: all; }
+    .fab-wa:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,.6); }
+    .btn-top { position: fixed; bottom: 164px; right: 24px; z-index: 150; width: 40px; height: 40px; background: rgba(23,23,23,.8); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: rgba(255,255,255,.7); opacity: 0; pointer-events: none; transition: opacity .3s, transform .2s; }
     .btn-top.show { opacity: 1; pointer-events: all; }
-    .btn-top:hover { background: var(--orange); border-color: var(--orange); color: var(--white); transform: translateY(-2px); }
+    .btn-top:hover { background: rgba(249,115,22,.9); border-color: transparent; color: #fff; transform: translateY(-2px); }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
-      .cat-cards-grid { grid-template-columns: repeat(4, 1fr); }
-      .promos-scroll  { grid-template-columns: repeat(3, 1fr); }
+
+      .promos-scroll  { grid-template-columns: repeat(2, 1fr); }
       .delivery-strip-inner { padding: 14px 24px; gap: 16px; }
       .dstrip-divider { display: none; }
       .testimonials { padding: 48px 24px; }
       .sobre-inner { grid-template-columns: 1fr; gap: 36px; }
       .sobre-section { padding: 56px 32px; }
       .sobre-headline { font-size: 28px; }
+      .main { padding: 40px 32px 72px; }
     }
     @media (max-width: 600px) {
-      .header-inner { padding: 12px 16px; grid-template-columns: auto auto; gap: 12px; }
-      .header-left { display: none; }
+      .header-inner { padding: 12px 16px; grid-template-columns: auto auto auto; justify-content: space-between; gap: 0; }
       .logo-sub { display: none; }
-      .hero { padding: 40px 20px; }
-      .hero-text h1 { font-size: 24px; }
-      .hero-pills { grid-template-columns: 1fr 1fr; gap: 8px; }
-      .pill { font-size: 12px; padding: 7px 12px; }
-      .main { padding: 32px 20px 56px; }
-      .cat-cards-grid { grid-template-columns: repeat(4, 1fr); gap: 8px; }
-      .cat-card { padding: 12px 4px 10px; }
-      .cat-card-icon { width: 40px; height: 40px; border-radius: 10px; }
-      .cat-card-label { font-size: 10px; }
+      .cat-toggle-btn { font-size: 14px; padding: 7px 15px; }
+      .main { padding: 24px 16px 56px; }
       .promos-scroll { grid-template-columns: 1fr; }
-      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .product-img { height: 140px; }
+      .sort-bar { flex-direction: column; align-items: flex-start; }
+      .hero-slide img { border-radius: 10px; max-height: 38vh; }
+      .sobre-section { padding: 40px 16px; }
+      .sobre-headline { font-size: 22px; }
+      .testimonials { padding: 40px 16px; }
       .cart-panel { width: 100vw; }
-      .cat-btn { font-size: 11px; padding: 11px 4px; }
-      .info-inner { padding: 48px 20px; gap: 36px; }
-      .fab-wa { bottom: 20px; right: 20px; width: 50px; height: 50px; }
-      .btn-top { bottom: 80px; right: 20px; }
+      .info-inner { padding: 40px 16px; gap: 32px; }
+      .float-nav { bottom: 16px; }
+      .fab-wa { bottom: 90px; right: 16px; width: 46px; height: 46px; }
+      .btn-top { bottom: 148px; right: 16px; }
+    }
+    /* ── RETRO GRID ── */
+    .retro-grid {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+      perspective: 250px;
+    }
+    .retro-grid-plane {
+      position: absolute;
+      left: -50%; right: -50%; top: 0; bottom: 0;
+      transform-origin: 50% 100%;
+      transform: rotateX(55deg);
+    }
+    .retro-grid-lines {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(15,92,46,.13) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15,92,46,.13) 1px, transparent 1px);
+      background-size: 56px 56px;
+      animation: retroMove 8s linear infinite;
+    }
+    @keyframes retroMove {
+      to { background-position: 0 56px; }
+    }
+    .retro-grid-fade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, var(--bg) 0%, transparent 55%);
     }
   </style>
 </head>
 <body>
 
-<!-- TICKER -->
-<div class="ticker-bar">
-  <div class="ticker-track" id="ticker"></div>
+<!-- RETRO GRID BACKGROUND -->
+<div class="retro-grid" aria-hidden="true">
+  <div class="retro-grid-plane">
+    <div class="retro-grid-lines"></div>
+  </div>
+  <div class="retro-grid-fade"></div>
 </div>
 
-<!-- HEADER -->
-<header>
-  <div class="header-inner">
-    <div class="header-left">
-      <div class="search-wrap">
-        <input id="searchInput" type="text" placeholder="Buscar produtos…" oninput="buscar(this.value)" />
-        <span class="search-icon">
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
-        </span>
-      </div>
-    </div>
-    <a class="logo" href="#">
-      <div class="logo-mark">
-        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+<!-- FLOATING NAV -->
+<nav class="float-nav" id="floatNav">
+  <!-- Home -->
+  <button class="float-btn active" id="fnHome" onclick="window.scrollTo({top:0,behavior:'smooth'});setActive('fnHome')" aria-label="Início">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 21V12h6v9"/></svg>
+  </button>
+  <!-- Busca -->
+  <button class="float-btn" id="fnSearch" onclick="toggleSearch();setActive('fnSearch')" aria-label="Buscar">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+  </button>
+  <div class="float-divider"></div>
+  <!-- Promoções -->
+  <button class="float-btn" id="fnPromos" onclick="document.getElementById('promos').scrollIntoView({behavior:'smooth'});setActive('fnPromos')" aria-label="Promoções">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+  </button>
+  <!-- Carrinho -->
+  <button class="float-btn" id="btnCart" onclick="openCart();setActive('fnCart')" aria-label="Carrinho">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+    <span class="float-badge" id="badge" style="display:none">0</span>
+  </button>
+</nav>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-overlay-inner">
+    <input id="searchInput" type="text" placeholder="Buscar produtos…" oninput="buscar(this.value)" autocomplete="off" />
+    <span class="search-overlay-icon">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+    </span>
+  </div>
+</div>
+
+<!-- TOP BAR -->
+<header class="top-bar" id="topBar">
+  <div class="top-bar-inner">
+    <a class="top-logo" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+      <div class="top-logo-mark">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
       </div>
       <div>
-        <div class="logo-name">Empório Esperança</div>
-        <div class="logo-sub">Frescos todos os dias</div>
+        <div class="top-logo-name">Empório Esperança</div>
+        <div class="top-logo-sub">Frescos todos os dias</div>
       </div>
     </a>
-    <div class="header-right">
-      <button class="btn-cart" id="btnCart" onclick="openCart()">
-        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-        Carrinho <span class="cart-count" id="badge">0</span>
+    <nav class="top-nav">
+      <button class="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Início">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 21V12h6v9"/></svg>
       </button>
-    </div>
+      <button class="top-btn" onclick="toggleSearch()" title="Buscar">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button class="top-btn" onclick="document.getElementById('promos').scrollIntoView({behavior:'smooth'})" title="Promoções">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      </button>
+      <button class="top-btn-cart" id="btnCartTop" onclick="openCart()">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <span class="top-badge" id="badgeTop">0</span>
+      </button>
+      <a class="top-wa" href="https://wa.me/5534998839911" target="_blank">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L.057 23.882a.5.5 0 00.614.612l6.197-1.438A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.021-1.378l-.36-.214-3.73.866.891-3.629-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
+        WhatsApp
+      </a>
+    </nav>
   </div>
 </header>
 
-<!-- CATEGORIES BAR -->
-<div class="cat-bar">
-  <div class="cat-inner" id="catBar"></div>
-</div>
+<!-- HERO CAROUSEL -->
+<section class="hero" id="heroCarousel">
+  <div class="hero-track" id="heroTrack">
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-text">
-      <h1>Bem-vindo ao<br/><span>Empório Esperança</span></h1>
-      <p>Qualidade garantida, direto na sua porta.</p>
+    <!-- Slide 1 — Delivery -->
+    <div class="hero-slide">
+      <div class="hero-banner" style="background:linear-gradient(135deg,#C43E07 0%,#E8500A 55%,#f97316 100%);color:#fff;">
+        <div class="hero-text">
+          <div class="hero-eyebrow">Delivery</div>
+          <div class="hero-headline">Peça agora,<br>receba em casa!</div>
+          <div class="hero-sub">Entregamos no Bairro Esperança e Santa Rosa. Rápido e sem complicação.</div>
+          <a class="hero-cta" href="https://wa.me/5534999999999" style="background:#fff;color:#C43E07;">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L.057 23.882a.5.5 0 00.614.612l6.197-1.438A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.021-1.378l-.36-.214-3.73.866.891-3.629-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
+            Fazer Pedido
+          </a>
+        </div>
+        <div class="hero-illus">
+          <svg width="180" height="180" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+      </div>
     </div>
-    <div class="hero-pills">
-      <div class="pill"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Seg–Sáb 08h – 20h30</div>
-      <div class="pill"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Dom 08h – 14h</div>
-      <div class="pill"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>Entrega disponível</div>
-      <div class="pill"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>Cartão · Pix · Dinheiro</div>
+
+    <!-- Slide 2 — Diferenciais -->
+    <div class="hero-slide">
+      <div class="hero-banner" style="background:linear-gradient(135deg,#14532D 0%,#166534 55%,#15803D 100%);color:#fff;">
+        <div class="hero-text">
+          <div class="hero-eyebrow">Por que escolher a gente</div>
+          <div class="hero-headline">Qualidade que<br>você confia</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;opacity:.9;">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#4ade80" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Produtos frescos todos os dias
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;opacity:.9;">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#4ade80" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Aceita PIX, débito e crédito
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px;opacity:.9;">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#4ade80" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Atendimento pelo WhatsApp
+            </div>
+          </div>
+        </div>
+        <div class="hero-illus">
+          <svg width="160" height="160" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </div>
+      </div>
     </div>
+
+    <!-- Slide 3 — Frete Grátis -->
+    <div class="hero-slide">
+      <div class="hero-banner" style="background:linear-gradient(135deg,#0e4429 0%,#14532D 50%,#1a6b3c 100%);color:#fff;">
+        <div class="hero-text">
+          <div class="hero-eyebrow">Entrega sem custo</div>
+          <div class="hero-headline">Frete grátis<br>pra você!</div>
+          <div class="hero-sub">Bairro Esperança e Santa Rosa.<br>Peça pelo WhatsApp agora.</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;">
+            <span style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:5px 14px;font-size:12px;font-weight:600;">📍 Bairro Esperança</span>
+            <span style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:5px 14px;font-size:12px;font-weight:600;">📍 Santa Rosa</span>
+          </div>
+        </div>
+        <div class="hero-illus">
+          <svg width="160" height="160" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.22)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+      </div>
+    </div>
+
   </div>
+  <button class="hero-arrow prev" id="heroPrev" aria-label="Anterior">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+  </button>
+  <button class="hero-arrow next" id="heroNext" aria-label="Próximo">
+    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+  </button>
+  <div class="hero-dots" id="heroDots"></div>
 </section>
 
 <!-- DELIVERY INFO STRIP -->
@@ -431,13 +580,9 @@
 <!-- MAIN -->
 <main class="main">
 
-  <!-- CATEGORY CARDS -->
-  <div class="cat-cards-section reveal">
-    <div class="section-heading" style="margin-bottom:16px">
-      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Categorias
-    </div>
-    <div class="cat-cards-grid stagger" id="catCards"></div>
+  <!-- CATEGORIES TOGGLE -->
+  <div class="cat-bar">
+    <div class="cat-inner" id="catBar"></div>
   </div>
 
   <!-- PROMOS -->
@@ -473,44 +618,12 @@
 
 </main>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials">
-  <div class="testimonials-inner">
-    <div class="section-heading reveal">
-      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-      O que nossos clientes dizem
-    </div>
-    <div class="testimonials-grid stagger">
-      <div class="testimonial-card">
-        <div class="stars">★★★★★</div>
-        <p class="testimonial-text">"Compro toda semana no Empório Esperança. Produtos sempre frescos e entrega rápida no bairro. Recomendo muito!"</p>
-        <div class="testimonial-author"><div class="author-avatar">A</div><div><div class="author-name">Ana Paula</div><div class="author-loc">Bairro Esperança</div></div></div>
-      </div>
-      <div class="testimonial-card">
-        <div class="stars">★★★★★</div>
-        <p class="testimonial-text">"Preços ótimos e sempre tem o que preciso. O atendimento pelo WhatsApp é super rápido. Adorei a facilidade de fazer o pedido!"</p>
-        <div class="testimonial-author"><div class="author-avatar">C</div><div><div class="author-name">Carlos Eduardo</div><div class="author-loc">Santa Rosa</div></div></div>
-      </div>
-      <div class="testimonial-card">
-        <div class="stars">★★★★★</div>
-        <p class="testimonial-text">"Finalmente um mercado de qualidade perto de casa. Desde que abriram, não preciso mais ir até o centro pra fazer minhas compras."</p>
-        <div class="testimonial-author"><div class="author-avatar">M</div><div><div class="author-name">Maria José</div><div class="author-loc">Bairro Esperança</div></div></div>
-      </div>
-      <div class="testimonial-card">
-        <div class="stars">★★★★☆</div>
-        <p class="testimonial-text">"Gosto muito das promoções de hortifrúti. As carnes são de ótima qualidade. Vale muito a pena conhecer o Empório!"</p>
-        <div class="testimonial-author"><div class="author-avatar">R</div><div><div class="author-name">Roberto Silva</div><div class="author-loc">Santa Rosa</div></div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- SOBRE NÓS -->
 <section class="sobre-section">
   <div class="sobre-inner reveal">
     <div class="sobre-img-wrap">
-      <svg width="64" height="64" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-      <span>Foto do nosso mercado<br/>em breve</span>
+      <img src="sobre-teste.png" alt="Empório Esperança" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" />
     </div>
     <div class="sobre-content">
       <div class="sobre-eyebrow">
@@ -654,8 +767,8 @@
 </div>
 
 <!-- FLOATING WA -->
-<a class="fab-wa" href="https://wa.me/5534998839911" target="_blank" title="Falar no WhatsApp">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+<a class="fab-wa" id="fabWa" href="https://wa.me/5534998839911" target="_blank" aria-label="WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L.057 23.882a.5.5 0 00.614.612l6.197-1.438A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.021-1.378l-.36-.214-3.73.866.891-3.629-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
 </a>
 
 <!-- BACK TO TOP -->
@@ -663,7 +776,80 @@
   <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
 </button>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 <script>
+  // ── FIREBASE ─────────────────────────────────────────
+  firebase.initializeApp({
+    apiKey:            "AIzaSyCQGWHlrb8cQZHdIbSqq5ZxEJed91jGHt0",
+    authDomain:        "esperanca-emporio.firebaseapp.com",
+    projectId:         "esperanca-emporio",
+    storageBucket:     "esperanca-emporio.firebasestorage.app",
+    messagingSenderId: "603259578955",
+    appId:             "1:603259578955:web:7705d11135e0f861a63bce"
+  });
+  const dbOnline  = firebase.firestore();
+  const colOnline = dbOnline.collection('sales');
+
+  function registrarVendaOnline(nome, total, payMethod, itens) {
+    const descricao = 'Pedido online – ' + nome + ': ' +
+      itens.map(c => c.unit === 'kg'
+        ? c.nome + ' ' + c.grams + 'g'
+        : c.nome + ' ×' + c.qty
+      ).join(', ');
+
+    colOnline.add({
+      value:         total,
+      description:   descricao,
+      paymentMethod: payMethod,
+      timestamp:     firebase.firestore.FieldValue.serverTimestamp(),
+      dateKey:       new Date().toISOString().slice(0, 10),
+      source:        'online'
+    }).catch(function() {});
+  }
+
+  // ── HERO CAROUSEL ────────────────────────────────────
+  (function() {
+    const track  = document.getElementById('heroTrack');
+    const prev   = document.getElementById('heroPrev');
+    const next   = document.getElementById('heroNext');
+    const dotsEl = document.getElementById('heroDots');
+    if (!track) return;
+
+    const slides = track.querySelectorAll('.hero-slide');
+    const total  = slides.length;
+    let current  = 0;
+    let timer;
+
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'hero-dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => go(i));
+      dotsEl.appendChild(d);
+    });
+
+    if (total <= 1) {
+      prev.style.display = next.style.display = dotsEl.style.display = 'none';
+    }
+
+    function go(idx) {
+      current = (idx + total) % total;
+      track.style.transform = `translateX(-${current * 100}%)`;
+      dotsEl.querySelectorAll('.hero-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+      resetTimer();
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      if (total > 1) timer = setInterval(() => go(current + 1), 5000);
+    }
+
+    prev.addEventListener('click', () => go(current - 1));
+    next.addEventListener('click', () => go(current + 1));
+    resetTimer();
+  })();
+
   const WA = '5534998839911';
   const MIN_ORDER = 69;
   const FREE_AREAS = ['esperança', 'esperanca', 'santa rosa'];
@@ -742,7 +928,8 @@
   let sortMode = 'default';
 
   const fmt = v => 'R$ ' + v.toFixed(2).replace('.', ',');
-  const totalCart = () => cart.reduce((s,c) => s + c.preco * c.qty, 0);
+  const itemTotal = c => c.unit === 'kg' ? c.preco * (c.grams || 0) / 1000 : c.preco * c.qty;
+  const totalCart = () => cart.reduce((s,c) => s + itemTotal(c), 0);
   const totalQty  = () => cart.reduce((s,c) => s + c.qty, 0);
 
   function isFreeArea(addr) {
@@ -750,59 +937,25 @@
     return FREE_AREAS.some(z => a.includes(z));
   }
 
-  // ── TICKER ─────────────────────────────────────────────
-  function buildTicker() {
-    const svgClock   = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`;
-    const svgTruck   = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>`;
-    const svgPhone   = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2A19.79 19.79 0 0111.19 18.85 19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .82h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>`;
-    const svgCard    = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>`;
-    const msgs = [
-      { icon: svgClock, text: 'Seg – Sáb: 08h00 às 20h30' },
-      { icon: svgClock, text: 'Domingo: 08h00 às 14h00' },
-      { icon: svgTruck, text: 'Frete grátis: Bairro Esperança e Santa Rosa' },
-      { icon: svgTruck, text: 'Pedido mínimo para entrega: R$ 69,00' },
-      { icon: svgPhone, text: 'WhatsApp: (34) 9 9883-9911' },
-      { icon: svgCard,  text: 'Cartão · Pix · Dinheiro' },
-    ];
-    const all = [...msgs, ...msgs];
-    document.getElementById('ticker').innerHTML = all.map(m =>
-      `<div class="ticker-item">${m.icon}<span>${m.text}</span></div>`
-    ).join('');
-  }
+
 
   // ── CATEGORY CARDS ─────────────────────────────────────
-  function renderCatCards(activeId) {
-    const c = document.getElementById('catCards');
-    c.innerHTML = cats.map(cat => {
-      const m = catMeta[cat.id];
-      return `<div class="cat-card${cat.id===activeId?' active':''}" onclick="filterCatCard('${cat.id}')">
-        <div class="cat-card-icon" style="background:${m.bg};color:${m.color}">${m.icon}</div>
-        <span class="cat-card-label">${cat.label}</span>
-      </div>`;
-    }).join('');
-    setTimeout(() => c.classList.add('in'), 50);
-  }
-
-  function filterCatCard(id) {
-    activeCat = id;
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-    const btn = [...document.querySelectorAll('.cat-btn')].find(b => b.getAttribute('onclick').includes(`'${id}'`));
-    if (btn) btn.classList.add('active');
-    renderCatCards(id);
-    const cat = cats.find(c => c.id === id);
-    updateSectionTitle(cat.label);
-    renderGrid(getSortedList(id === 'todos' ? items : items.filter(p => p.cat === id)));
-    document.getElementById('sectionTitle').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
   function filterCat(id, el) {
     activeCat = id;
-    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.cat-toggle-btn').forEach(b => b.classList.remove('active'));
     el.classList.add('active');
-    renderCatCards(id);
+    moveIndicator(id);
     const cat = cats.find(c => c.id === id);
     updateSectionTitle(cat.label);
     renderGrid(getSortedList(id === 'todos' ? items : items.filter(p => p.cat === id)));
+  }
+
+  function moveIndicator(id) {
+    const btn = document.querySelector(`.cat-toggle-btn[data-cat="${id}"]`);
+    const ind = document.getElementById('catIndicator');
+    if (!btn || !ind) return;
+    ind.style.left  = btn.offsetLeft + 'px';
+    ind.style.width = btn.offsetWidth + 'px';
   }
 
   function updateSectionTitle(label) {
@@ -863,14 +1016,14 @@
 
   // ── INIT ───────────────────────────────────────────────
   function init() {
-    buildTicker();
 
     // cat bar
-    document.getElementById('catBar').innerHTML = cats.map(c =>
-      `<button class="cat-btn${c.id==='todos'?' active':''}" onclick="filterCat('${c.id}',this)">${c.label}</button>`
-    ).join('');
-
-    renderCatCards('todos');
+    document.getElementById('catBar').innerHTML =
+      `<div class="cat-toggle" id="catToggle">
+        <div class="cat-toggle-indicator" id="catIndicator"></div>
+        ${cats.map(c => `<button class="cat-toggle-btn${c.id==='todos'?' active':''}" data-cat="${c.id}" onclick="filterCat('${c.id}',this)">${c.label}</button>`).join('')}
+      </div>`;
+    requestAnimationFrame(() => moveIndicator('todos'));
 
     // promos with countdown
     document.getElementById('promos').innerHTML = items.filter(i => i.promo).map(p => {
@@ -878,7 +1031,7 @@
       return `
         <div class="promo-card" onclick="addToCart(${p.id})">
           <div class="promo-img">
-            <img class="promo-img-inner" src="${p.img}" alt="${p.nome}" width="210" height="150" />
+            <img class="promo-img-inner" src="${p.img}" alt="${p.nome}" width="210" height="150" loading="lazy" decoding="async" />
             <span class="promo-discount-badge">-${pct}%</span>
           </div>
           <div class="promo-body">
@@ -905,8 +1058,16 @@
     setInterval(tickCountdown, 1000);
 
     // back to top
+    let _lastY = 0;
     window.addEventListener('scroll', () => {
-      document.getElementById('btnTop').classList.toggle('show', window.scrollY > 400);
+      const y = window.scrollY;
+      const scrolled = y > 400;
+      const topBarHidden = y > 80 && y > _lastY;
+      document.getElementById('btnTop').classList.toggle('show', scrolled);
+      document.getElementById('fabWa').classList.toggle('show', scrolled);
+      document.getElementById('topBar').classList.toggle('hidden', topBarHidden);
+      document.getElementById('floatNav').classList.toggle('visible', topBarHidden);
+      _lastY = y;
     });
   }
 
@@ -925,10 +1086,21 @@
           <div class="product-row">
             <div>
               ${p.old ? `<div class="price-old">${fmt(p.old)}</div>` : ''}
-              <div class="price-main">${fmt(p.preco)}</div>
+              <div class="price-main">${fmt(p.preco)}${p.unit==='kg'?'<span style="font-size:12px;font-weight:400;color:var(--muted)">/kg</span>':''}</div>
             </div>
             <button class="btn-add" onclick="event.stopPropagation();addToCart(${p.id})">+</button>
           </div>
+          ${p.unit === 'kg' ? `
+          <div class="gram-wrap">
+            <div class="gram-row">
+              <input class="gram-input" type="number" id="gram-${p.id}" placeholder="ex: 500" min="50" step="50" onclick="event.stopPropagation()">
+              <span class="gram-suffix">g</span>
+            </div>
+            <div class="gram-note">
+              <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Pode haver pequena margem de erro na pesagem
+            </div>
+          </div>` : ''}
         </div>
       </div>`).join('');
   }
@@ -944,14 +1116,44 @@
   // ── CART ───────────────────────────────────────────────
   function addToCart(id) {
     const p = items.find(i => i.id === id);
-    const c = cart.find(i => i.id === id);
-    c ? c.qty++ : cart.push({...p, qty:1});
+    if (p.unit === 'kg') {
+      const inp = document.getElementById(`gram-${id}`);
+      let grams;
+      if (inp) {
+        grams = parseInt(inp.value);
+        if (!grams || grams < 50) {
+          inp.classList.add('error');
+          inp.focus();
+          setTimeout(() => inp.classList.remove('error'), 600);
+          return;
+        }
+      } else {
+        const g = prompt(`Quantos gramas de "${p.nome}"?\n\nDigite apenas o número (ex: 500 para 500g).\nAtenção: pode haver pequena margem de erro na pesagem.`);
+        if (!g) return;
+        grams = parseInt(g);
+        if (!grams || grams < 50) { alert('Informe uma quantidade válida (mínimo 50g).'); return; }
+      }
+      const existing = cart.find(i => i.id === id);
+      if (existing) { existing.grams = grams; }
+      else { cart.push({...p, qty:1, grams}); }
+    } else {
+      const c = cart.find(i => i.id === id);
+      c ? c.qty++ : cart.push({...p, qty:1});
+    }
     refreshBadge();
     refreshCartBody();
     const btn = document.getElementById('btnCart');
     btn.classList.remove('bump');
     void btn.offsetWidth;
     btn.classList.add('bump');
+  }
+
+  function adjustGrams(id, delta) {
+    const c = cart.find(i => i.id === id);
+    if (!c) return;
+    c.grams = Math.max(50, (c.grams || 50) + delta);
+    refreshBadge();
+    refreshCartBody();
   }
 
   function dec(id) {
@@ -963,11 +1165,21 @@
   }
 
   function refreshBadge() {
+    const qty = totalQty();
     const b = document.getElementById('badge');
-    b.textContent = totalQty();
+    b.textContent = qty;
+    b.style.display = qty > 0 ? 'flex' : 'none';
     b.classList.remove('pulse');
     void b.offsetWidth;
     b.classList.add('pulse');
+    const bt = document.getElementById('badgeTop');
+    if (bt) bt.textContent = qty;
+  }
+
+  function setActive(id) {
+    document.querySelectorAll('.float-btn').forEach(b => b.classList.remove('active'));
+    const el = document.getElementById(id);
+    if (el) el.classList.add('active');
   }
 
   function refreshCartBody() {
@@ -982,7 +1194,16 @@
     }
 
     foot.style.display = 'block';
-    body.innerHTML = cart.map(c => `
+    body.innerHTML = cart.map(c => c.unit === 'kg' ? `
+      <div class="cart-item">
+        <div class="cart-item-thumb"><img src="${c.img}" alt="${c.nome}" width="48" height="48" style="width:100%;height:100%;object-fit:cover"/></div>
+        <div class="cart-item-info"><b>${c.nome}</b><small>${c.grams}g (aprox.) — ${fmt(itemTotal(c))}</small></div>
+        <div class="qty-ctrl">
+          <button class="btn-q" onclick="adjustGrams(${c.id},-50)">−</button>
+          <span style="font-size:11px;min-width:32px;text-align:center">${c.grams}g</span>
+          <button class="btn-q" onclick="adjustGrams(${c.id},50)">+</button>
+        </div>
+      </div>` : `
       <div class="cart-item">
         <div class="cart-item-thumb"><img src="${c.img}" alt="${c.nome}" width="48" height="48" style="width:100%;height:100%;object-fit:cover"/></div>
         <div class="cart-item-info"><b>${c.nome}</b><small>${fmt(c.preco*c.qty)}</small></div>
@@ -1004,6 +1225,23 @@
       warn.classList.remove('show');
     }
   }
+
+  function toggleSearch() {
+    const overlay = document.getElementById('searchOverlay');
+    overlay.classList.toggle('open');
+    if (overlay.classList.contains('open')) {
+      setTimeout(() => document.getElementById('searchInput').focus(), 200);
+    } else {
+      document.getElementById('searchInput').value = '';
+      buscar('');
+    }
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      const overlay = document.getElementById('searchOverlay');
+      if (overlay.classList.contains('open')) { toggleSearch(); }
+    }
+  });
 
   function openCart() {
     document.getElementById('overlay').classList.add('open');
@@ -1032,7 +1270,7 @@
     const end = document.getElementById('fEnd')?.value || '';
     const free = tipo === 'retirada' || isFreeArea(end);
     document.getElementById('sumItems').innerHTML = cart.map(c =>
-      `<div class="sum-item"><span>${c.nome} ×${c.qty}</span><span>${fmt(c.preco*c.qty)}</span></div>`
+      `<div class="sum-item"><span>${c.nome} ${c.unit==='kg' ? c.grams+'g (aprox.)' : '×'+c.qty}</span><span>${fmt(itemTotal(c))}</span></div>`
     ).join('');
     document.getElementById('freteVal').textContent = tipo === 'retirada' ? '—' : (free ? 'Grátis' : 'A combinar');
     document.getElementById('sumTotal').textContent = fmt(totalCart());
@@ -1080,10 +1318,17 @@
     msg += `🚚 Tipo: ${tipo==='entrega' ? 'Entrega' : 'Retirada na loja'}\n`;
     if (tipo==='entrega') msg += `📍 Endereço: ${end}\n🚛 Frete: ${free ? 'Grátis' : 'A combinar'}\n`;
     msg += `💳 Pagamento: ${payLabel[pay]}\n\n📋 Itens:\n`;
-    cart.forEach(c => msg += `  • ${c.nome} ×${c.qty} — ${fmt(c.preco*c.qty)}\n`);
+    cart.forEach(c => {
+      if (c.unit === 'kg') {
+        msg += `  • ${c.nome} — ${c.grams}g (aprox., pode variar na pesagem) — ${fmt(itemTotal(c))}\n`;
+      } else {
+        msg += `  • ${c.nome} ×${c.qty} — ${fmt(c.preco*c.qty)}\n`;
+      }
+    });
     msg += `\n💰 Total: ${fmt(totalCart())}`;
     if (obs) msg += `\n\n📝 Obs: ${obs}`;
 
+    registrarVendaOnline(nome, totalCart(), pay, cart);
     window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
