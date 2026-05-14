@@ -11,10 +11,12 @@
   <meta property="og:title" content="Empório Esperança – Mercado com Entrega" />
   <meta property="og:description" content="Produtos frescos e qualidade garantida. Frete grátis no Bairro Esperança e Santa Rosa!" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Empório Esperança" />
+  <meta property="og:url" content="https://heitormartins922-svg.github.io/emporio-esperanca/mercado.html" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Rajdhani:wght@700&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -36,7 +38,39 @@
     html { scroll-behavior: smooth; background: var(--bg); }
     body { font-family: 'Poppins', sans-serif; background: none; isolation: isolate; color: var(--text); overflow-x: hidden; }
 
-    /* ── TICKER ── */
+    /* ── WATERMARK FUNDO ── */
+    .brand-watermark-wrap {
+      position: fixed;
+      top: 62%;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      overflow: hidden;
+      pointer-events: none;
+      user-select: none;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .brand-watermark-wrap.visible {
+      opacity: 1;
+    }
+    .brand-watermark {
+      display: inline-block;
+      white-space: nowrap;
+      font-family: 'Space Grotesk', 'Poppins', sans-serif;
+      font-size: clamp(4rem, 10vw, 9rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: #0A0A0A;
+      opacity: 0.07;
+      animation: wmScroll 24s linear infinite;
+    }
+    @keyframes wmScroll {
+      0%   { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
 
     /* ── HEADER ── */
     /* ── TOP BAR (desktop only) ── */
@@ -116,13 +150,17 @@
     .hero-dot.active { background: #fff; transform: scale(1.25); }
 
 
-    /* ── DELIVERY INFO STRIP ── */
-    .delivery-strip { background: var(--orange-soft); border-bottom: 1px solid #FED7AA; }
-    .delivery-strip-inner { max-width: 1280px; margin: 0 auto; padding: 14px 48px; display: flex; align-items: center; justify-content: center; gap: 32px; flex-wrap: wrap; }
-    .dstrip-item { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 500; color: #92400E; }
-    .dstrip-item svg { color: var(--orange); flex-shrink: 0; }
-    .dstrip-item strong { color: var(--orange-h); }
-    .dstrip-divider { width: 1px; height: 20px; background: #FED7AA; }
+    /* ── COMO PEDIR ── */
+    .como-pedir { background: var(--white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 56px 48px; }
+    .como-pedir-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .cp-card { background: var(--bg); border: 1px solid var(--border); border-radius: 18px; padding: 36px 28px; display: flex; flex-direction: column; gap: 16px; transition: box-shadow .2s, transform .2s; }
+    .cp-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.08); transform: translateY(-3px); }
+    .cp-step { font-size: 40px; font-weight: 800; color: var(--green); line-height: 1; letter-spacing: -1px; }
+    .cp-icon { width: 44px; height: 44px; background: #FFF7ED; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--orange); }
+    .cp-title { font-size: 17px; font-weight: 700; color: var(--text); }
+    .cp-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .cp-desc strong { color: var(--orange-h); }
+    @media (max-width: 900px) { .como-pedir-inner { grid-template-columns: 1fr; gap: 16px; } .como-pedir { padding: 40px 20px; } }
 
     /* ── REVEAL ANIMATIONS ── */
     .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
@@ -405,6 +443,121 @@
       inset: 0;
       background: linear-gradient(to bottom, var(--bg) 0%, transparent 55%);
     }
+
+  /* ── ESPERANÇA+ ── */
+  .eplus-section {
+    background: linear-gradient(135deg, #0A2FA8 0%, #1E4BD8 60%, #2563EB 100%);
+    padding: 80px 48px;
+  }
+  .eplus-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 48px;
+  }
+  .eplus-img-col {
+    flex: 0 0 auto;
+    animation: floatImg 3.6s ease-in-out infinite;
+    perspective: 700px;
+  }
+  .eplus-img {
+    width: 420px;
+    max-width: 100%;
+    filter: drop-shadow(0 24px 48px rgba(0,0,0,.35));
+    transition: transform 0.12s ease-out;
+    will-change: transform;
+  }
+  @keyframes floatImg {
+    0%,100% { transform: translateY(0); }
+    50%      { transform: translateY(-18px); }
+  }
+  .eplus-text-col { flex: 1; color: #fff; }
+  .eplus-badge-pill {
+    display: inline-block;
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.35);
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    padding: 4px 12px;
+    border-radius: 99px;
+    margin-bottom: 16px;
+  }
+  .eplus-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    margin: 0 0 20px;
+    color: #fff;
+  }
+  .eplus-title span { color: #fff; }
+  .eplus-desc {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,.85);
+    max-width: 460px;
+    margin: 0 0 32px;
+  }
+  .eplus-btn {
+    display: inline-block;
+    background: rgba(255,255,255,.15);
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    border: 1px solid rgba(255,255,255,.4);
+    color: #fff;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: .95rem;
+    padding: 14px 32px;
+    border-radius: 99px;
+    text-decoration: none;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.5),
+      inset 0 -1px 0 rgba(0,0,0,.08),
+      0 8px 32px rgba(0,0,0,.15);
+    transition: background .25s, transform .2s, box-shadow .25s;
+  }
+  .eplus-btn:hover {
+    background: rgba(255,255,255,.25);
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.6),
+      inset 0 -1px 0 rgba(0,0,0,.08),
+      0 12px 40px rgba(0,0,0,.2);
+  }
+  @media (max-width: 900px) {
+    .eplus-section { padding: 56px 32px; }
+    .eplus-inner { flex-direction: column; gap: 40px; text-align: center; }
+    .eplus-text-col { padding-left: 0; }
+    .eplus-img { width: 260px; }
+    .eplus-desc { max-width: 100%; }
+  }
+  @media (max-width: 600px) {
+    .eplus-section { padding: 40px 16px; }
+    .eplus-img { width: 200px; }
+  }
+
+  /* ── HERO FLOAT BG ── */
+  .hero-float-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+    border-radius: inherit;
+  }
+  .hfb-el {
+    position: absolute;
+    border-radius: 50%;
+    will-change: transform;
+    background: rgba(255,255,255,1);
+  }
   </style>
 </head>
 <body>
@@ -415,6 +568,11 @@
     <div class="retro-grid-lines"></div>
   </div>
   <div class="retro-grid-fade"></div>
+</div>
+
+<!-- WATERMARK FUNDO -->
+<div class="brand-watermark-wrap" aria-hidden="true">
+  <span class="brand-watermark">Empório Esperança</span>
 </div>
 
 <!-- FLOATING NAV -->
@@ -458,7 +616,7 @@
       </div>
       <div>
         <div class="top-logo-name">Empório Esperança</div>
-        <div class="top-logo-sub">Frescos todos os dias</div>
+        <div class="top-logo-sub" id="open-status">Frescos todos os dias</div>
       </div>
     </a>
     <nav class="top-nav">
@@ -489,43 +647,19 @@
 
     <!-- Slide 1 — Delivery -->
     <div class="hero-slide">
-      <div class="hero-banner" style="background:linear-gradient(135deg,#C43E07 0%,#E8500A 55%,#f97316 100%);color:#fff;">
-        <div class="hero-text">
-          <div class="hero-eyebrow">Delivery</div>
-          <div class="hero-headline">Peça agora,<br>receba em casa!</div>
-          <div class="hero-sub">Entregamos no Bairro Esperança e Santa Rosa. Rápido e sem complicação.</div>
-          <a class="hero-cta" href="https://wa.me/5534999999999" style="background:#fff;color:#C43E07;">
-            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L.057 23.882a.5.5 0 00.614.612l6.197-1.438A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.021-1.378l-.36-.214-3.73.866.891-3.629-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
-            Fazer Pedido
-          </a>
-        </div>
-        <div class="hero-illus">
-          <svg width="180" height="180" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        </div>
+      <div class="hero-banner" style="background:#1B2B5B;padding:0;justify-content:flex-end;align-items:flex-end;">
+        <img src="hero-delivery.png" alt="Delivery Empório Esperança" loading="eager" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+        <a class="hero-cta" href="https://wa.me/5534998839911" target="_blank" style="position:relative;z-index:2;background:#25D366;color:#fff;margin:24px 32px;">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L.057 23.882a.5.5 0 00.614.612l6.197-1.438A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.021-1.378l-.36-.214-3.73.866.891-3.629-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
+          Fazer Pedido
+        </a>
       </div>
     </div>
 
     <!-- Slide 2 — Diferenciais -->
     <div class="hero-slide">
-      <div class="hero-banner" style="background:linear-gradient(135deg,#14532D 0%,#166534 55%,#15803D 100%);color:#fff;">
-        <div class="hero-text">
-          <div class="hero-eyebrow">Por que escolher a gente</div>
-          <div class="hero-headline">Qualidade que<br>você confia</div>
-          <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
-            <div style="display:flex;align-items:center;gap:10px;font-size:14px;opacity:.9;">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#4ade80" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Produtos frescos todos os dias
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:14px;opacity:.9;">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#4ade80" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Aceita PIX, débito e crédito
-            </div>
-            <div style="display:flex;align-items:center;gap:10px;font-size:14px;opacity:.9;">
-              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#4ade80" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg> Atendimento pelo WhatsApp
-            </div>
-          </div>
-        </div>
-        <div class="hero-illus">
-          <svg width="160" height="160" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-        </div>
+      <div class="hero-banner" style="background:#14213D;padding:0;">
+        <img src="hero-diferenciais.png" alt="Diferenciais Empório Esperança" loading="eager" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
       </div>
     </div>
 
@@ -557,25 +691,36 @@
   <div class="hero-dots" id="heroDots"></div>
 </section>
 
-<!-- DELIVERY INFO STRIP -->
-<div class="delivery-strip">
-  <div class="delivery-strip-inner">
-    <div class="dstrip-item">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-      Pedido mínimo: <strong>R$ 69,00</strong>
+
+<!-- COMO PEDIR -->
+<section class="como-pedir">
+  <div class="como-pedir-inner">
+    <div class="cp-card reveal">
+      <div class="cp-step">01</div>
+      <div class="cp-icon">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+      </div>
+      <div class="cp-title">Escolha seus produtos</div>
+      <div class="cp-desc">Navegue pelo catálogo e monte seu carrinho. Pedido mínimo de <strong>R$ 69,00</strong> para entrega.</div>
     </div>
-    <div class="dstrip-divider"></div>
-    <div class="dstrip-item">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-      Frete grátis: <strong>Bairro Esperança e Santa Rosa</strong>
+    <div class="cp-card reveal">
+      <div class="cp-step">02</div>
+      <div class="cp-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L.057 23.882a.5.5 0 00.614.612l6.197-1.438A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.021-1.378l-.36-.214-3.73.866.891-3.629-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
+      </div>
+      <div class="cp-title">Faça seu pedido</div>
+      <div class="cp-desc">Finalize pelo WhatsApp com facilidade. <strong>Frete grátis</strong> para Bairro Esperança e Santa Rosa.</div>
     </div>
-    <div class="dstrip-divider"></div>
-    <div class="dstrip-item">
-      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      Entrega: <strong>solicitar 2h antes do fechamento</strong>
+    <div class="cp-card reveal">
+      <div class="cp-step">03</div>
+      <div class="cp-icon">
+        <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
+      <div class="cp-title">Receba em casa</div>
+      <div class="cp-desc">Solicite sua entrega com <strong>2h de antecedência</strong> ao fechamento. Rápido e sem complicação!</div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- MAIN -->
 <main class="main">
@@ -619,6 +764,25 @@
 </main>
 
 
+<!-- ESPERANÇA+ -->
+<section class="eplus-section reveal">
+  <div class="eplus-inner">
+    <div class="eplus-img-col">
+      <img src="e+ fundo transparente.png" alt="Estande Esperança+" class="eplus-img">
+    </div>
+    <div class="eplus-text-col">
+      <span class="eplus-badge-pill">NOVIDADE</span>
+      <h2 class="eplus-title">Esperança<span>+</span></h2>
+      <p class="eplus-desc">
+        Uma seleção especial de produtos tech, cuidado pessoal e para o lar —
+        todos da Chopin, disponíveis aqui no mercado. Qualidade e praticidade
+        que cabem no seu dia a dia.
+      </p>
+      <a href="#" class="eplus-btn">Clique mais e descubra</a>
+    </div>
+  </div>
+</section>
+
 <!-- SOBRE NÓS -->
 <section class="sobre-section">
   <div class="sobre-inner reveal">
@@ -642,6 +806,57 @@
       <div class="sobre-policy">
         <strong><svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Política de Entrega</strong>
         Entregas realizadas nos bairros Esperança e Santa Rosa com frete grátis. Pedido mínimo de R$&nbsp;69,00. Para cancelamentos ou dúvidas, entre em contato pelo WhatsApp antes do preparo do pedido.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="testimonials">
+  <div class="testimonials-inner reveal">
+    <div class="section-heading">
+      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+      Depoimentos
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="testimonial-text">"Peço pelo WhatsApp e em menos de 1 hora tá na minha porta. Produto fresco, preço bom e o atendimento é ótimo. Não troco por nada!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">M</div>
+          <div>
+            <div class="author-name">Maria Aparecida</div>
+            <div class="author-loc">Bairro Esperança</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="testimonial-text">"Hortifrúti sempre fresquinho, preço justo e entrega rápida. Compro a semana toda aqui. Recomendo muito pro pessoal do Santa Rosa!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">J</div>
+          <div>
+            <div class="author-name">João Carlos Silva</div>
+            <div class="author-loc">Santa Rosa</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">
+          <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        </div>
+        <p class="testimonial-text">"Mercado de bairro do jeito que tem que ser. Aceita Pix, entrega em casa e o pessoal é super atencioso. Já indiquei pra toda família!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div>
+            <div class="author-name">Ana Paula Ferreira</div>
+            <div class="author-loc">Bairro Esperança</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -694,7 +909,7 @@
 
 <!-- FOOTER -->
 <footer>
-  © 2025 <strong>Empório Esperança</strong> · Bairro Esperança · (34) 9 9883-9911
+  © 2026 <strong>Empório Esperança</strong> · Bairro Esperança · (34) 9 9883-9911
 </footer>
 
 <!-- CART PANEL -->
@@ -767,7 +982,7 @@
 </div>
 
 <!-- FLOATING WA -->
-<a class="fab-wa" id="fabWa" href="https://wa.me/5534998839911" target="_blank" aria-label="WhatsApp">
+<a class="fab-wa" id="fabWa" href="https://wa.me/5534998839911?text=Ol%C3%A1!%20Vim%20pelo%20site%20do%20Emp%C3%B3rio%20Esperan%C3%A7a%20e%20gostaria%20de%20fazer%20um%20pedido." target="_blank" aria-label="WhatsApp">
   <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.554 4.103 1.523 5.824L.057 23.882a.5.5 0 00.614.612l6.197-1.438A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.021-1.378l-.36-.214-3.73.866.891-3.629-.235-.374A9.818 9.818 0 1112 21.818z"/></svg>
 </a>
 
@@ -791,6 +1006,32 @@
   });
   const dbOnline  = firebase.firestore();
   const colOnline = dbOnline.collection('sales');
+
+  async function loadProducts() {
+    try {
+      const snap = await dbOnline.collection('products')
+        .where('ativo', '==', true)
+        .get();
+      if (!snap.empty) {
+        items = snap.docs.map(d => {
+          const p = d.data();
+          return {
+            id:         d.id,
+            nome:       p.nome,
+            cat:        p.cat || 'mercearia',
+            unit:       p.unit || 'unid.',
+            preco:      p.preco,
+            old:        p.old || undefined,
+            promo:      p.promo || false,
+            bestseller: p.bestseller || false,
+            img:        p.img || makeImg({ c1:'#9CA3AF', c2:'#6B7280', shape:'rect' })
+          };
+        });
+      }
+    } catch(e) {
+      console.warn('[Firestore] Usando catálogo padrão.', e);
+    }
+  }
 
   function registrarVendaOnline(nome, total, payMethod, itens) {
     const descricao = 'Pedido online – ' + nome + ': ' +
@@ -903,7 +1144,7 @@
     padaria:    { bg:'#FFF7ED', color:'#EA580C', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>` },
   };
 
-  const items = [
+  let items = [
     { id:1,  nome:'Tomate Caqui',       cat:'hortifruti', unit:'kg',      preco:4.99,  old:7.90,  promo:true,  bestseller:true,  img: makeImg({c1:'#EF4444',c2:'#991B1B',shape:'circle'}) },
     { id:2,  nome:'Frango Inteiro',      cat:'carnes',     unit:'kg',      preco:14.90, old:19.90, promo:true,  bestseller:true,  img: makeImg({c1:'#F59E0B',c2:'#B45309',shape:'rect'}) },
     { id:3,  nome:'Leite Integral 1L',   cat:'laticinios', unit:'caixa',   preco:4.49,  old:5.99,  promo:true,  bestseller:false, img: makeImg({c1:'#3B82F6',c2:'#1D4ED8',shape:'bottle'}) },
@@ -1062,11 +1303,12 @@
     window.addEventListener('scroll', () => {
       const y = window.scrollY;
       const scrolled = y > 400;
-      const topBarHidden = y > 80 && y > _lastY;
+      const topBarHidden = y > 80;
       document.getElementById('btnTop').classList.toggle('show', scrolled);
       document.getElementById('fabWa').classList.toggle('show', scrolled);
       document.getElementById('topBar').classList.toggle('hidden', topBarHidden);
       document.getElementById('floatNav').classList.toggle('visible', topBarHidden);
+      document.querySelector('.brand-watermark-wrap').classList.toggle('visible', topBarHidden);
       _lastY = y;
     });
   }
@@ -1341,7 +1583,101 @@
     document.querySelectorAll('.reveal, .stagger').forEach(el => observer.observe(el));
   }
 
-  init();
+  loadProducts().then(() => init());
+
+  function updateOpenStatus() {
+    const d = new Date();
+    const mins     = d.getHours() * 60 + d.getMinutes();
+    const closeMin = d.getDay() === 0 ? 14*60 : 20*60+30;
+    const open     = mins >= 8*60 && mins < closeMin;
+    const el       = document.getElementById('open-status');
+    if (!el) return;
+    if (open) {
+      const hh = Math.floor(closeMin / 60), mm = closeMin % 60;
+      el.textContent = `Aberto · fecha às ${hh}h${mm ? mm : ''}`;
+      el.style.color = '#22c55e';
+    } else {
+      el.textContent = 'Fechado agora';
+      el.style.color = '';
+    }
+  }
+  updateOpenStatus();
+  setInterval(updateOpenStatus, 60000);
+
+  /* ── TILT 3D ESPERANÇA+ ── */
+  (function(){
+    const col = document.querySelector('.eplus-img-col');
+    const img = document.querySelector('.eplus-img');
+    if (!col || !img) return;
+
+    col.addEventListener('mousemove', e => {
+      const r = col.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+      const rotY =  x * 22;
+      const rotX = -y * 16;
+      img.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.06)`;
+    });
+
+    col.addEventListener('mouseleave', () => {
+      img.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+    });
+  })();
+
+  /* ── HERO FLOATING PARALLAX ── */
+  (function () {
+    const hero = document.querySelector('.hero');
+    if (!hero) return;
+
+    // [w, h, depth, top%, left%, opacity, blurPx]
+    const config = [
+      [260, 260, 1.5, -15, 72,  0.13, 50],
+      [140, 140, 3,    65, -8,  0.11, 25],
+      [80,   80, 5,    12, 38,  0.10, 12],
+      [180, 180, 2,    50, 85,  0.09, 35],
+      [55,   55, 6,    78, 60,  0.15,  8],
+    ];
+
+    document.querySelectorAll('.hero-banner').forEach(banner => {
+      const layer = document.createElement('div');
+      layer.className = 'hero-float-bg';
+      config.forEach(([w, h, depth, top, left, opacity, blur]) => {
+        const el = document.createElement('div');
+        el.className = 'hfb-el';
+        el.style.cssText =
+          `width:${w}px;height:${h}px;` +
+          `top:${top}%;left:${left}%;` +
+          `opacity:${opacity};` +
+          `filter:blur(${blur}px);`;
+        el.dataset.depth = depth;
+        layer.appendChild(el);
+      });
+      banner.insertBefore(layer, banner.firstChild);
+    });
+
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const els = [...document.querySelectorAll('.hfb-el')];
+    const pos = els.map(() => ({ x: 0, y: 0 }));
+    let mx = 0, my = 0;
+
+    hero.addEventListener('mousemove', e => {
+      const r = hero.getBoundingClientRect();
+      mx = (e.clientX - r.left  - r.width  / 2) / r.width  * 2;
+      my = (e.clientY - r.top   - r.height / 2) / r.height * 2;
+    });
+    hero.addEventListener('mouseleave', () => { mx = 0; my = 0; });
+
+    (function tick() {
+      els.forEach((el, i) => {
+        const s = parseFloat(el.dataset.depth) / 20;
+        pos[i].x = lerp(pos[i].x, mx * s * 120, 0.05);
+        pos[i].y = lerp(pos[i].y, my * s * 120, 0.05);
+        el.style.transform = `translate3d(${pos[i].x}px,${pos[i].y}px,0)`;
+      });
+      requestAnimationFrame(tick);
+    })();
+  })();
+
 </script>
 </body>
 </html>
