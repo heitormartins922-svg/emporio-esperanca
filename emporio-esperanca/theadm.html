@@ -653,6 +653,26 @@
     }
 
     .b-outro { background: rgba(255,255,255,0.06); color: var(--gray); }
+
+    /* ── PRODUTOS ── */
+    .prod-toolbar { display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:4px; }
+    .prod-search  { max-width:260px; padding:9px 14px; font-size:13px; }
+
+    .prod-thumb { width:40px; height:40px; border-radius:8px; object-fit:cover; background:var(--black-3); border:1px solid var(--border); }
+    .prod-thumb-placeholder { display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:8px; background:var(--black-3); border:1px solid var(--border); color:var(--gray-2); }
+
+    .toggle-btn { background:none; border:1px solid var(--border); border-radius:6px; padding:4px 10px; font-size:10px; font-weight:700; font-family:'Outfit',sans-serif; cursor:pointer; text-transform:uppercase; letter-spacing:0.07em; transition:all 0.15s; }
+    .toggle-btn.on  { background:var(--green-dim); border-color:var(--green); color:var(--green); }
+    .toggle-btn.off { background:var(--red-dim); border-color:var(--red); color:var(--red); }
+
+    .img-edit-btn { background:none; border:1px solid var(--border); border-radius:6px; padding:4px 10px; font-size:10px; font-weight:700; font-family:'Outfit',sans-serif; color:var(--blue-mid); cursor:pointer; transition:all 0.15s; }
+    .img-edit-btn:hover { border-color:var(--blue); background:var(--blue-dim); }
+
+    /* ── MODAL IMAGEM ── */
+    .img-modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,0.72); display:flex; align-items:center; justify-content:center; z-index:200; }
+    .img-modal-box      { background:var(--black-2); border:1px solid var(--border); border-radius:16px; padding:28px; width:420px; max-width:92vw; }
+    .img-modal-title    { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.08em; margin-bottom:10px; color:var(--white); }
+    .img-modal-preview  { width:100%; max-height:200px; object-fit:contain; border-radius:10px; border:1px solid var(--border); background:var(--black-3); display:block; }
   </style>
 </head>
 <body>
@@ -688,6 +708,12 @@
           <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
         </svg>
         Relatórios
+      </div>
+      <div class="nav-item" data-page="produtos" onclick="navigate('produtos', this)">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+        </svg>
+        Produtos
       </div>
     </nav>
     <div class="sidebar-footer">TheADM v1.1 &nbsp;·&nbsp; 2025</div>
@@ -732,6 +758,7 @@
         </button>
         <span class="sync-status" id="sync-status"></span>
         <span class="sync-status" id="sync-prod-status"></span>
+        <span class="sync-status" id="auto-sync-next" style="color:var(--blue-mid);margin-left:auto"></span>
       </div>
 
       <div class="stats-grid">
@@ -979,7 +1006,60 @@
       </div>
     </section>
 
+    <!-- ── PRODUTOS ── -->
+    <section class="page" id="page-produtos">
+      <div class="page-header">
+        <h1>Produtos</h1>
+        <p id="prod-count-label">Carregando...</p>
+      </div>
+
+      <div class="prod-toolbar">
+        <input class="form-input prod-search" id="prod-search" placeholder="Buscar produto..." oninput="renderProdutos()">
+        <div class="filter-row" id="prod-cat-filter" style="margin:0"></div>
+      </div>
+
+      <div class="card" style="margin-top:20px">
+        <div class="card-title">
+          Catálogo Sincronizado
+          <span class="card-title-accent" id="prod-visible-count"></span>
+        </div>
+        <div class="rep-table-wrap">
+          <table class="rep-table" id="prod-table">
+            <thead>
+              <tr>
+                <th style="width:56px">Imagem</th>
+                <th>Nome</th>
+                <th>Categoria</th>
+                <th>Preço</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="prod-tbody">
+              <tr><td colspan="6"><div class="empty"><p>Nenhum produto carregado</p></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <!-- MODAL IMAGEM -->
+  <div class="img-modal-backdrop" id="img-modal" style="display:none" onclick="closeImgModal(event)">
+    <div class="img-modal-box">
+      <div class="img-modal-title" id="img-modal-name"></div>
+      <img class="img-modal-preview" id="img-modal-preview" src="" alt="" style="display:none">
+      <div class="form-group" style="margin-top:14px">
+        <label class="form-label">URL da Imagem</label>
+        <input class="form-input" id="img-modal-url" placeholder="https://..." oninput="previewImg()">
+      </div>
+      <div style="display:flex;gap:10px;margin-top:14px">
+        <button class="submit-btn" onclick="saveImg()">Salvar</button>
+        <button class="submit-btn" style="background:var(--black-4);color:var(--gray);border:1px solid var(--border)" onclick="closeImgModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
 
   <!-- TOAST -->
   <div class="toast" id="toast">
@@ -1050,7 +1130,7 @@
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
       document.getElementById('page-' + page).classList.add('active');
       (el || document.querySelector(`[data-page="${page}"]`)).classList.add('active');
-      const T = { dashboard:'Dashboard', 'nova-venda':'Nova Venda', despesa:'Nova Despesa', relatorios:'Relatórios' };
+      const T = { dashboard:'Dashboard', 'nova-venda':'Nova Venda', despesa:'Nova Despesa', relatorios:'Relatórios', produtos:'Produtos' };
       document.getElementById('topbar-title').textContent = T[page] || page;
       if (page === 'relatorios') {
         if (activeRepTab === 'vendas') renderReport();
@@ -1058,6 +1138,7 @@
       }
       if (page === 'nova-venda') setTimeout(() => document.getElementById('in-value').focus(), 80);
       if (page === 'despesa')    setTimeout(() => document.getElementById('in-exp-value').focus(), 80);
+      if (page === 'produtos' && !prodList.length) loadProdutos();
     }
 
     /* ── PAY SELECT ── */
@@ -1410,7 +1491,7 @@
     const SAURUS_DOMINIO = 'EMPORIOESPERANCA';
     const SAURUS_URL          = 'http://wsretaguarda.saurus.net.br/v001/serviceRetaguarda.asmx';
     const SAURUS_CADS_URL     = 'http://wscadastros.saurus.net.br/v001/serviceCadastros.asmx';
-    const SAURUS_CHAVE_CAIXA  = '2D2A0AAD-F513-49AF-88AD-CB20E79C8EA0';
+    const SAURUS_CHAVE_CAIXA  = '5F62BD9D-8774-4CF1-AEE6-53A4C00A8B8B';
 
     async function syncFromSaurus() {
       const btn      = document.getElementById('btn-sync');
@@ -1529,6 +1610,10 @@
     /* ── SAURUS PRODUTOS SYNC ── */
     const colProd = db.collection('products');
 
+    let prodList = [];
+    let prodActiveCat = 'todos';
+    let imgModalId = null;
+
     const CAT_MAP = {
       'HORTIFRUTI': 'hortifruti', 'HORTIFRUIT': 'hortifruti',
       'LATICINIOS': 'laticinios', 'LATICÍNIOS': 'laticinios',
@@ -1591,45 +1676,42 @@
 
         const dataDoc = parser.parseFromString(xmlStr, 'text/xml');
 
-        // Extrai produtos de tbProdutoDados
+        // XML do Saurus usa atributos em <row> com prefixo pro_/preco_/prom_
         const prodMap  = new Map(); // saurusId → { nome, cat, unit }
         const precMap  = new Map(); // saurusId → preco
-        const promoMap = new Map(); // saurusId → { preco_promo, preco_orig }
-        const imgMap   = new Map(); // saurusId → url
+        const promoMap = new Map(); // saurusId → { preco, old }
 
-        Array.from(dataDoc.getElementsByTagName('tbProdutoDados')).forEach(el => {
-          const sid  = el.getElementsByTagName('cProd')[0]?.textContent?.trim() ||
-                       el.getElementsByTagName('idProduto')[0]?.textContent?.trim();
-          const nome = el.getElementsByTagName('xProd')[0]?.textContent?.trim();
-          const catRaw = (el.getElementsByTagName('xGrupoProd')[0]?.textContent?.trim() ||
-                          el.getElementsByTagName('xGrupo')[0]?.textContent?.trim() || '').toUpperCase();
-          const cat  = CAT_MAP[catRaw] || 'mercearia';
-          const tipoBalanca = el.getElementsByTagName('cTipoBalanca')[0]?.textContent?.trim();
-          const unit = tipoBalanca === '1' ? 'kg' : 'unid.';
+        function catFromDesc(raw) {
+          const u = raw.toUpperCase();
+          const match = Object.entries(CAT_MAP).find(([k]) => u.includes(k));
+          return match ? match[1] : 'mercearia';
+        }
+
+        const tbProd = dataDoc.getElementsByTagName('tbProdutoDados')[0];
+        Array.from(tbProd?.getElementsByTagName('row') || []).forEach(row => {
+          const sid    = row.getAttribute('pro_idProduto');
+          const nome   = row.getAttribute('pro_descProduto');
+          const catDesc = row.getAttribute('pro_descCategoria') || '';
+          const medida = (row.getAttribute('pro_descMedida') || 'UN').toUpperCase();
+          const cat    = catFromDesc(catDesc);
+          const unit   = medida === 'KG' ? 'kg' : 'unid.';
           if (sid && nome) prodMap.set(sid, { nome, cat, unit });
         });
 
-        Array.from(dataDoc.getElementsByTagName('tbProdutoPrecos')).forEach(el => {
-          const sid   = el.getElementsByTagName('cProd')[0]?.textContent?.trim() ||
-                        el.getElementsByTagName('idProduto')[0]?.textContent?.trim();
-          const preco = parseFloat(el.getElementsByTagName('vPreco')[0]?.textContent || '0');
-          if (sid && preco > 0) precMap.set(sid, preco);
+        const tbPrecos = dataDoc.getElementsByTagName('tbProdutoPrecos')[0];
+        Array.from(tbPrecos?.getElementsByTagName('row') || []).forEach(row => {
+          const sid   = row.getAttribute('pro_idProduto');
+          const preco = parseFloat(row.getAttribute('pro_vPreco') || '0');
+          if (sid && preco > 0 && !precMap.has(sid)) precMap.set(sid, preco);
         });
 
-        Array.from(dataDoc.getElementsByTagName('tbPromocaoDados')).forEach(el => {
-          const sid      = el.getElementsByTagName('cProd')[0]?.textContent?.trim() ||
-                           el.getElementsByTagName('idProduto')[0]?.textContent?.trim();
-          const vPromo   = parseFloat(el.getElementsByTagName('vPrecoPromo')[0]?.textContent || '0');
-          const vOrig    = parseFloat(el.getElementsByTagName('vPrecoOrig')[0]?.textContent || '0');
-          if (sid && vPromo > 0) promoMap.set(sid, { preco: vPromo, old: vOrig });
-        });
-
-        Array.from(dataDoc.getElementsByTagName('tbProdutoImagens')).forEach(el => {
-          const sid = el.getElementsByTagName('cProd')[0]?.textContent?.trim() ||
-                      el.getElementsByTagName('idProduto')[0]?.textContent?.trim();
-          const url = el.getElementsByTagName('xUrl')[0]?.textContent?.trim() ||
-                      el.getElementsByTagName('url')[0]?.textContent?.trim();
-          if (sid && url) imgMap.set(sid, url);
+        // tbPromocaoDados é cabeçalho de campanha — itens estão em tbPromocaoItens
+        const tbPromoItens = dataDoc.getElementsByTagName('tbPromocaoItens')[0];
+        Array.from(tbPromoItens?.getElementsByTagName('row') || []).forEach(row => {
+          const sid    = row.getAttribute('pro_idProduto');
+          const vPromo = parseFloat(row.getAttribute('pro_vPreco') || '0');
+          const vOrig  = precMap.get(sid) || 0;
+          if (sid && vPromo > 0 && vPromo < vOrig) promoMap.set(sid, { preco: vPromo, old: vOrig });
         });
 
         let saved = 0, updated = 0;
@@ -1649,7 +1731,7 @@
             preco:     precoFinal,
             old:       precoOld,
             promo,
-            img:       imgMap.get(sid) || null,
+            img:       null,
             ativo:     true,
             updatedAt: now
           };
@@ -1691,6 +1773,120 @@
         renderFluxo();
       }
     }, err => { console.error('Firebase expenses error:', err); });
+
+    // ── AUTO-SYNC DE PRODUTOS ─────────────────────────────
+    const AUTO_PROD_INTERVAL = 6 * 60 * 60 * 1000; // 6 horas
+
+    function runAutoSync() {
+      syncProdutos();
+      const next = new Date(Date.now() + AUTO_PROD_INTERVAL);
+      const nextStr = next.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+      setTimeout(() => {
+        const el = document.getElementById('auto-sync-next');
+        if (el) el.textContent = `🔄 Auto-sync às ${nextStr}`;
+      }, 3000);
+    }
+
+    setTimeout(runAutoSync, 5000);
+    setInterval(runAutoSync, AUTO_PROD_INTERVAL);
+
+    /* ── GESTÃO DE PRODUTOS ── */
+    async function loadProdutos() {
+      document.getElementById('prod-count-label').textContent = 'Carregando...';
+      const snap = await colProd.orderBy('nome').get();
+      prodList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      buildCatFilter();
+      renderProdutos();
+    }
+
+    function buildCatFilter() {
+      const cats = ['todos', ...new Set(prodList.map(p => p.cat).filter(Boolean)).values()].sort((a, b) => a === 'todos' ? -1 : a.localeCompare(b));
+      const el = document.getElementById('prod-cat-filter');
+      el.innerHTML = cats.map(c =>
+        `<button class="filter-btn${c === 'todos' ? ' active' : ''}" onclick="setCatFilter('${c}',this)">${c === 'todos' ? 'Todos' : c.charAt(0).toUpperCase() + c.slice(1)}</button>`
+      ).join('');
+    }
+
+    function setCatFilter(cat, btn) {
+      prodActiveCat = cat;
+      document.querySelectorAll('#prod-cat-filter .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProdutos();
+    }
+
+    function renderProdutos() {
+      const q = (document.getElementById('prod-search')?.value || '').toLowerCase().trim();
+      let list = prodActiveCat === 'todos' ? prodList : prodList.filter(p => p.cat === prodActiveCat);
+      if (q) list = list.filter(p => p.nome?.toLowerCase().includes(q));
+
+      document.getElementById('prod-visible-count').textContent = `${list.length} produto${list.length !== 1 ? 's' : ''}`;
+      document.getElementById('prod-count-label').textContent = `${prodList.length} produtos sincronizados`;
+
+      const CAT_BADGE = { hortifruti:'b-pix', laticinios:'b-debito', carnes:'b-dinheiro', mercearia:'b-credito', bebidas:'b-debito', limpeza:'b-outros', padaria:'b-dinheiro' };
+
+      document.getElementById('prod-tbody').innerHTML = list.length ? list.map(p => {
+        const imgTag = p.img
+          ? `<img class="prod-thumb" src="${p.img}" alt="" onerror="this.style.display='none'">`
+          : `<div class="prod-thumb-placeholder"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>`;
+        const badgeClass = CAT_BADGE[p.cat] || 'b-outros';
+        const badge = `<span class="badge ${badgeClass}">${p.cat || '—'}</span>`;
+        const price = p.promo
+          ? `<span style="color:var(--green)">R$ ${Number(p.promo).toFixed(2)}</span>`
+          : `R$ ${Number(p.preco || 0).toFixed(2)}`;
+        const safeName = (p.nome || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        const safeImg  = (p.img  || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+        return `<tr>
+          <td>${imgTag}</td>
+          <td style="font-size:13px;font-weight:500;max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.nome || ''}</td>
+          <td>${badge}</td>
+          <td style="font-size:13px;color:var(--white)">${price}</td>
+          <td><button class="toggle-btn ${p.ativo ? 'on' : 'off'}" onclick="toggleAtivo('${p.id}',${!!p.ativo})">${p.ativo ? 'Ativo' : 'Inativo'}</button></td>
+          <td><button class="img-edit-btn" onclick="openImgModal('${p.id}','${safeName}','${safeImg}')">Imagem</button></td>
+        </tr>`;
+      }).join('') : `<tr><td colspan="6"><div class="empty"><p>Nenhum produto encontrado</p></div></td></tr>`;
+    }
+
+    async function toggleAtivo(id, current) {
+      await colProd.doc(id).update({ ativo: !current });
+      const p = prodList.find(x => x.id === id);
+      if (p) p.ativo = !current;
+      renderProdutos();
+      showToast(current ? 'Produto desativado' : 'Produto ativado');
+    }
+
+    function openImgModal(id, name, currentImg) {
+      imgModalId = id;
+      document.getElementById('img-modal-name').textContent = name;
+      document.getElementById('img-modal-url').value = currentImg;
+      const prev = document.getElementById('img-modal-preview');
+      if (currentImg) { prev.src = currentImg; prev.style.display = 'block'; }
+      else { prev.src = ''; prev.style.display = 'none'; }
+      document.getElementById('img-modal').style.display = 'flex';
+    }
+
+    function closeImgModal(e) {
+      if (e && e.target !== document.getElementById('img-modal')) return;
+      document.getElementById('img-modal').style.display = 'none';
+      imgModalId = null;
+    }
+
+    function previewImg() {
+      const url = document.getElementById('img-modal-url').value.trim();
+      const prev = document.getElementById('img-modal-preview');
+      prev.src = url;
+      prev.style.display = url ? 'block' : 'none';
+    }
+
+    async function saveImg() {
+      const url = document.getElementById('img-modal-url').value.trim();
+      await colProd.doc(imgModalId).update({ img: url || null });
+      const p = prodList.find(x => x.id === imgModalId);
+      if (p) p.img = url || null;
+      document.getElementById('img-modal').style.display = 'none';
+      imgModalId = null;
+      renderProdutos();
+      showToast('Imagem salva!');
+    }
   </script>
 </body>
 </html>
