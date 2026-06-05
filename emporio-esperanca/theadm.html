@@ -673,6 +673,82 @@
     .img-modal-box      { background:var(--black-2); border:1px solid var(--border); border-radius:16px; padding:28px; width:420px; max-width:92vw; }
     .img-modal-title    { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.08em; margin-bottom:10px; color:var(--white); }
     .img-modal-preview  { width:100%; max-height:200px; object-fit:contain; border-radius:10px; border:1px solid var(--border); background:var(--black-3); display:block; }
+
+    /* ── PEDIDOS ── */
+    .b-online   { background: rgba(0,71,255,0.18); color: var(--blue-mid); }
+    .b-entrega  { background: var(--green-dim); color: var(--green); }
+    .b-retirada { background: rgba(255,255,255,0.06); color: var(--gray); }
+
+    .pedido-card {
+      background: var(--black-3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s;
+      margin-bottom: 10px;
+    }
+    .pedido-card:hover { border-color: var(--blue); background: var(--black-4); }
+
+    .pedido-card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .pedido-card-name { font-size: 14px; font-weight: 600; color: var(--white); }
+    .pedido-card-time { font-size: 10px; color: var(--gray); margin-top: 3px; }
+    .pedido-card-val  { font-size: 15px; font-weight: 700; color: var(--green); flex-shrink: 0; }
+    .pedido-card-bot  { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .pedido-card-addr { font-size: 11px; color: var(--gray); margin-left: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 200px; }
+
+    /* ── MODAL PEDIDO ── */
+    .pedido-modal-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 300; padding: 20px;
+    }
+    .pedido-modal-box {
+      background: var(--black-2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 100%; max-width: 520px;
+      max-height: 88vh; overflow-y: auto;
+      padding: 28px;
+    }
+    .pedido-modal-head {
+      display: flex; align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 22px;
+    }
+    .pedido-modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.08em; }
+    .pedido-modal-id    { font-size: 10px; color: var(--gray); letter-spacing: 0.12em; margin-top: 3px; }
+    .pedido-modal-close {
+      background: none; border: none; color: var(--gray);
+      font-size: 18px; cursor: pointer; padding: 2px 8px;
+      border-radius: 6px; transition: color 0.15s; flex-shrink: 0;
+    }
+    .pedido-modal-close:hover { color: var(--white); }
+
+    .pedido-info-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px 18px;
+      margin-bottom: 4px;
+    }
+    .pil { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray); display: flex; align-items: center; }
+    .piv { font-size: 13px; color: var(--white); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+    .pedido-divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+    .pedido-items-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gray); margin-bottom: 8px; }
+    .pedido-item-row { display: flex; justify-content: space-between; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .pedido-item-row:last-child { border-bottom: none; }
+    .pedido-total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; font-size: 15px; font-weight: 700; }
+    .pedido-obs { margin-top: 14px; padding: 10px 14px; background: var(--black-3); border-radius: 8px; font-size: 12px; color: var(--gray); line-height: 1.5; }
+    .wa-link { display: inline-flex; align-items: center; gap: 4px; color: var(--green); text-decoration: none; font-size: 12px; font-weight: 600; }
+    .wa-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -714,6 +790,18 @@
           <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
         </svg>
         Produtos
+      </div>
+      <div class="nav-item" data-page="pedidos" onclick="navigate('pedidos', this)">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        Últimos Pedidos
+      </div>
+      <div class="nav-item" data-page="caixa" onclick="navigate('caixa', this)">
+        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+        </svg>
+        Vendas Caixa
       </div>
     </nav>
     <div class="sidebar-footer">TheADM v1.1 &nbsp;·&nbsp; 2025</div>
@@ -1043,7 +1131,73 @@
       </div>
     </section>
 
+    <!-- ── PEDIDOS ── -->
+    <section class="page" id="page-pedidos">
+      <div class="page-header">
+        <h1>Últimos Pedidos</h1>
+        <p id="pedidos-today-count">—</p>
+      </div>
+
+      <div class="filter-row" id="pedidos-filter">
+        <button class="filter-btn active" onclick="setPedidosFilter('hoje',this)">Hoje</button>
+        <button class="filter-btn" onclick="setPedidosFilter('semana',this)">Semana</button>
+        <button class="filter-btn" onclick="setPedidosFilter('mes',this)">Mês</button>
+        <button class="filter-btn" onclick="setPedidosFilter('todos',this)">Todos</button>
+      </div>
+
+      <div id="pedidos-list">
+        <div class="empty"><p>Carregando pedidos...</p></div>
+      </div>
+    </section>
+
+    <!-- ── CAIXA ── -->
+    <section class="page" id="page-caixa">
+      <div class="page-header">
+        <h1>Vendas Caixa</h1>
+        <p id="caixa-today-count">—</p>
+      </div>
+      <div class="filter-row" id="caixa-filter">
+        <button class="filter-btn active" onclick="setCaixaFilter('hoje',this)">Hoje</button>
+        <button class="filter-btn" onclick="setCaixaFilter('semana',this)">Semana</button>
+        <button class="filter-btn" onclick="setCaixaFilter('mes',this)">Mês</button>
+        <button class="filter-btn" onclick="setCaixaFilter('todos',this)">Todos</button>
+      </div>
+      <div id="caixa-list">
+        <div class="empty"><p>Carregando vendas...</p></div>
+      </div>
+    </section>
+
   </main>
+
+  <!-- MODAL CAIXA -->
+  <div class="pedido-modal-backdrop" id="caixa-modal" style="display:none" onclick="closeCaixaModal(event)">
+    <div class="pedido-modal-box">
+      <div class="pedido-modal-head">
+        <div>
+          <div class="pedido-modal-title">Venda do Caixa</div>
+          <div class="pedido-modal-id" id="cm-id"></div>
+        </div>
+        <button class="pedido-modal-close" onclick="closeCaixaModal()">✕</button>
+      </div>
+      <div id="cm-items"></div>
+    </div>
+  </div>
+
+  <!-- MODAL PEDIDO -->
+  <div class="pedido-modal-backdrop" id="pedido-modal" style="display:none" onclick="closePedidoModal(event)">
+    <div class="pedido-modal-box">
+      <div class="pedido-modal-head">
+        <div>
+          <div class="pedido-modal-title">Detalhes do Pedido</div>
+          <div class="pedido-modal-id" id="pm-id"></div>
+        </div>
+        <button class="pedido-modal-close" onclick="closePedidoModal()">✕</button>
+      </div>
+      <div class="pedido-info-grid" id="pm-info"></div>
+      <div id="pm-items"></div>
+      <div id="pm-obs"></div>
+    </div>
+  </div>
 
   <!-- MODAL IMAGEM -->
   <div class="img-modal-backdrop" id="img-modal" style="display:none" onclick="closeImgModal(event)">
@@ -1082,15 +1236,17 @@
     const colExp = db.collection('expenses');
 
     /* ── STATE ── */
-    let sales          = [];
-    let expenses       = [];
-    let selPay         = null;
-    let selCat         = null;
-    let curFilter      = 'hoje';
-    let curFluxoFilter = 'semana';
-    let activeRepTab   = 'vendas';
-    let weekChart      = null;
-    let fluxoChart     = null;
+    let sales            = [];
+    let expenses         = [];
+    let pedidos          = [];
+    let selPay           = null;
+    let selCat           = null;
+    let curFilter        = 'hoje';
+    let curFluxoFilter   = 'semana';
+    let curPedidosFilter = 'hoje';
+    let activeRepTab     = 'vendas';
+    let weekChart        = null;
+    let fluxoChart       = null;
 
     /* ── UTILS ── */
     const R = v => 'R$ ' + Number(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -1130,7 +1286,7 @@
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
       document.getElementById('page-' + page).classList.add('active');
       (el || document.querySelector(`[data-page="${page}"]`)).classList.add('active');
-      const T = { dashboard:'Dashboard', 'nova-venda':'Nova Venda', despesa:'Nova Despesa', relatorios:'Relatórios', produtos:'Produtos' };
+      const T = { dashboard:'Dashboard', 'nova-venda':'Nova Venda', despesa:'Nova Despesa', relatorios:'Relatórios', produtos:'Produtos', pedidos:'Últimos Pedidos', caixa:'Vendas Caixa' };
       document.getElementById('topbar-title').textContent = T[page] || page;
       if (page === 'relatorios') {
         if (activeRepTab === 'vendas') renderReport();
@@ -1139,6 +1295,8 @@
       if (page === 'nova-venda') setTimeout(() => document.getElementById('in-value').focus(), 80);
       if (page === 'despesa')    setTimeout(() => document.getElementById('in-exp-value').focus(), 80);
       if (page === 'produtos' && !prodList.length) loadProdutos();
+      if (page === 'pedidos') renderPedidos();
+      if (page === 'caixa')   renderCaixa();
     }
 
     /* ── PAY SELECT ── */
@@ -1555,14 +1713,15 @@
           const vProd  = parseFloat(parent.getElementsByTagName('prod_vProd')[0]?.textContent || '0');
           const vDesc  = parseFloat(parent.getElementsByTagName('prod_vDesc')[0]?.textContent || '0');
           const xProd  = parent.getElementsByTagName('prod_xProd')[0]?.textContent?.trim() || '';
+          const qCom   = parseFloat(parent.getElementsByTagName('prod_qCom')[0]?.textContent  || '1');
           const net    = Math.max(0, vProd - vDesc);
 
           if (salesMap.has(dhEmi)) {
             const s = salesMap.get(dhEmi);
             s.value += net;
-            if (xProd) s.items.push(xProd);
+            if (xProd) s.items.push({ nome: xProd, qty: qCom, valor: net });
           } else {
-            salesMap.set(dhEmi, { value: net, items: xProd ? [xProd] : [], dhEmi });
+            salesMap.set(dhEmi, { value: net, items: xProd ? [{ nome: xProd, qty: qCom, valor: net }] : [], dhEmi });
           }
         });
 
@@ -1580,7 +1739,8 @@
           const saleDate = new Date(dhEmi);
           await col.add({
             value:         Math.round(sale.value * 100) / 100,
-            description:   sale.items.join(', ') || null,
+            description:   sale.items.map(i => i.nome).join(', ') || null,
+            items:         sale.items,
             paymentMethod: 'outro',
             timestamp:     firebase.firestore.Timestamp.fromDate(saleDate),
             dateKey:       dateKey(saleDate),
@@ -1672,7 +1832,6 @@
 
         const rawBytes = Uint8Array.from(atob(resultB64), c => c.charCodeAt(0));
         const xmlStr   = pako.inflate(rawBytes, { to: 'string' });
-        console.log('[Saurus Cadastros] XML retornado:', xmlStr);
 
         const dataDoc = parser.parseFromString(xmlStr, 'text/xml');
 
@@ -1689,12 +1848,12 @@
 
         const tbProd = dataDoc.getElementsByTagName('tbProdutoDados')[0];
         Array.from(tbProd?.getElementsByTagName('row') || []).forEach(row => {
-          const sid    = row.getAttribute('pro_idProduto');
-          const nome   = row.getAttribute('pro_descProduto');
+          const sid     = row.getAttribute('pro_idProduto');
+          const nome    = row.getAttribute('pro_descProduto');
           const catDesc = row.getAttribute('pro_descCategoria') || '';
-          const medida = (row.getAttribute('pro_descMedida') || 'UN').toUpperCase();
-          const cat    = catFromDesc(catDesc);
-          const unit   = medida === 'KG' ? 'kg' : 'unid.';
+          const medida  = (row.getAttribute('pro_descMedida') || 'UN').toUpperCase();
+          const cat     = catFromDesc(catDesc);
+          const unit    = medida === 'KG' ? 'kg' : 'unid.';
           if (sid && nome) prodMap.set(sid, { nome, cat, unit });
         });
 
@@ -1714,36 +1873,37 @@
           if (sid && vPromo > 0 && vPromo < vOrig) promoMap.set(sid, { preco: vPromo, old: vOrig });
         });
 
+        // busca todos os produtos existentes de uma vez (1 read total) para evitar quota
+        const existingSnap = await colProd.get();
+        const existingBySid = new Map(existingSnap.docs.map(d => [d.data().saurusId, d]));
+
         let saved = 0, updated = 0;
         const now = firebase.firestore.FieldValue.serverTimestamp();
 
+        const ops = [];
         for (const [sid, prod] of prodMap) {
-          const promo    = promoMap.has(sid);
+          const promo      = promoMap.has(sid);
           const precoFinal = promo ? promoMap.get(sid).preco : (precMap.get(sid) || 0);
           const precoOld   = promo ? promoMap.get(sid).old   : null;
           if (precoFinal <= 0) continue;
 
-          const doc = {
-            saurusId:  sid,
-            nome:      prod.nome,
-            cat:       prod.cat,
-            unit:      prod.unit,
-            preco:     precoFinal,
-            old:       precoOld,
-            promo,
-            img:       null,
-            ativo:     true,
-            updatedAt: now
-          };
+          const docBase = { saurusId: sid, nome: prod.nome, cat: prod.cat, unit: prod.unit, preco: precoFinal, old: precoOld, promo, ativo: true, updatedAt: now };
+          const existingDoc = existingBySid.get(sid);
+          if (!existingDoc) { ops.push({ type: 'set', ref: colProd.doc(), data: { ...docBase, img: null } }); saved++; }
+          else              { ops.push({ type: 'upd', ref: colProd.doc(existingDoc.id), data: docBase }); updated++; }
+        }
 
-          const existing = await colProd.where('saurusId', '==', sid).limit(1).get();
-          if (existing.empty) { await colProd.add(doc); saved++; }
-          else { await colProd.doc(existing.docs[0].id).update(doc); updated++; }
+        // commit em lotes de 499 (limite do Firestore é 500)
+        for (let i = 0; i < ops.length; i += 499) {
+          const batch = db.batch();
+          ops.slice(i, i + 499).forEach(op => op.type === 'set' ? batch.set(op.ref, op.data) : batch.update(op.ref, op.data));
+          await batch.commit();
         }
 
         statusEl.style.color = 'var(--gray)';
         statusEl.textContent = `${saved} novo${saved !== 1 ? 's' : ''}, ${updated} atualizado${updated !== 1 ? 's' : ''} · ${new Date().toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' })}`;
         if (saved + updated > 0) showToast(`${saved + updated} produto${saved + updated !== 1 ? 's' : ''} sincronizado${saved + updated !== 1 ? 's' : ''}!`, false);
+        await loadProdutos();
 
       } catch (e) {
         statusEl.style.color = 'var(--red)';
@@ -1757,7 +1917,8 @@
 
     /* ── REAL-TIME LISTENERS ── */
     col.orderBy('timestamp','desc').onSnapshot(snap => {
-      sales = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+      sales   = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+      pedidos = sales.filter(s => s.source === 'online');
       renderStats(sales);
       renderRecent(sales);
       renderChart(sales);
@@ -1765,6 +1926,8 @@
         if (activeRepTab === 'vendas') renderReport();
         else renderFluxo();
       }
+      if (document.getElementById('page-pedidos').classList.contains('active')) renderPedidos();
+      if (document.getElementById('page-caixa').classList.contains('active'))   renderCaixa();
     }, err => { console.error('Firebase error:', err); });
 
     colExp.orderBy('timestamp','desc').onSnapshot(snap => {
@@ -1886,6 +2049,228 @@
       imgModalId = null;
       renderProdutos();
       showToast('Imagem salva!');
+    }
+
+    /* ── PEDIDOS ── */
+    function setPedidosFilter(filter, btn) {
+      curPedidosFilter = filter;
+      document.querySelectorAll('#pedidos-filter .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderPedidos();
+    }
+
+    function parseNome(desc) {
+      if (!desc) return 'Cliente';
+      const m = desc.match(/Pedido online\s*[–-]\s*(.+?):/);
+      return m ? m[1].trim() : 'Cliente';
+    }
+
+    function waLink(phone) {
+      if (!phone) return null;
+      const d = phone.replace(/\D/g, '');
+      if (d.length < 8) return null;
+      return 'https://wa.me/' + (d.startsWith('55') ? d : '55' + d);
+    }
+
+    function renderPedidos() {
+      const ws = weekStart(), ms = monthStart(), tk = todayKey();
+      const list = pedidos.filter(p => {
+        if (curPedidosFilter === 'hoje')   return p.dateKey === tk;
+        if (curPedidosFilter === 'semana') return p.timestamp && p.timestamp.toDate() >= ws;
+        if (curPedidosFilter === 'mes')    return p.timestamp && p.timestamp.toDate() >= ms;
+        return true;
+      });
+
+      const todayCount = pedidos.filter(p => p.dateKey === tk).length;
+      document.getElementById('pedidos-today-count').textContent =
+        `${todayCount} pedido${todayCount !== 1 ? 's' : ''} hoje`;
+
+      if (!list.length) {
+        document.getElementById('pedidos-list').innerHTML =
+          '<div class="empty"><p>Nenhum pedido online neste período</p></div>';
+        return;
+      }
+
+      document.getElementById('pedidos-list').innerHTML = list.map(p => {
+        const nome  = p.customerName || parseNome(p.description);
+        const addr  = p.customerAddress || null;
+        const dType = p.deliveryType || (addr ? 'entrega' : null);
+        const hora  = fmtTime(p.timestamp);
+        const addrStr = dType === 'entrega' && addr
+          ? addr
+          : dType === 'retirada' ? 'Retirada no balcão' : '—';
+        const dlvBadge = dType === 'entrega'
+          ? '<span class="badge b-entrega">Entrega</span>'
+          : dType === 'retirada'
+            ? '<span class="badge b-retirada">Retirada</span>'
+            : '';
+        return `<div class="pedido-card" onclick="openPedidoModal('${p.id}')">
+          <div class="pedido-card-top">
+            <div>
+              <div class="pedido-card-name">${nome}</div>
+              <div class="pedido-card-time">${hora}</div>
+            </div>
+            <div class="pedido-card-val">${R(p.value)}</div>
+          </div>
+          <div class="pedido-card-bot">
+            <span class="badge b-online">🌐 Online</span>
+            ${dlvBadge}
+            <span class="badge ${PAY_CLS[p.paymentMethod] || 'b-outros'}">${PAY_LABEL[p.paymentMethod] || (p.paymentMethod || '—')}</span>
+            <span class="pedido-card-addr">${addrStr}</span>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function openPedidoModal(id) {
+      const p = pedidos.find(s => s.id === id);
+      if (!p) return;
+
+      const nome  = p.customerName || parseNome(p.description);
+      const phone = p.customerPhone || null;
+      const addr  = p.customerAddress || null;
+      const dType = p.deliveryType || (addr ? 'entrega' : 'retirada');
+      const obs   = p.observations || null;
+      const wa    = waLink(phone);
+      const ts    = p.timestamp ? (p.timestamp.toDate ? p.timestamp.toDate() : new Date(p.timestamp)) : null;
+      const horario = ts
+        ? ts.toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric'}) +
+          ' às ' + ts.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'})
+        : '—';
+
+      document.getElementById('pm-id').textContent = '#' + id.slice(0, 8).toUpperCase();
+
+      document.getElementById('pm-info').innerHTML = `
+        <div class="pil">Cliente</div>
+        <div class="piv">${nome}</div>
+        <div class="pil">WhatsApp</div>
+        <div class="piv">${phone
+          ? (wa ? `${phone} <a class="wa-link" href="${wa}" target="_blank">Abrir ↗</a>` : phone)
+          : '<span style="color:var(--gray)">Não informado</span>'}</div>
+        <div class="pil">${dType === 'entrega' ? 'Endereço' : 'Entrega'}</div>
+        <div class="piv">${dType === 'entrega' && addr
+          ? addr
+          : '<span class="badge b-retirada">Retirada no balcão</span>'}</div>
+        <div class="pil">Pagamento</div>
+        <div class="piv"><span class="badge ${PAY_CLS[p.paymentMethod] || 'b-outros'}">${PAY_LABEL[p.paymentMethod] || (p.paymentMethod || '—')}</span></div>
+        <div class="pil">Horário</div>
+        <div class="piv">${horario}</div>
+      `;
+
+      let itemsHtml = '<hr class="pedido-divider"><div class="pedido-items-title">Itens do pedido</div>';
+      if (p.items && p.items.length) {
+        itemsHtml += p.items.map(it => {
+          const qtdStr = it.unit === 'kg' ? `${it.grams}g` : `×${it.qty}`;
+          return `<div class="pedido-item-row">
+            <span>${it.nome} <span style="color:var(--gray-2)">${qtdStr}</span></span>
+            <span style="font-weight:600">R$ ${Number(it.subtotal || 0).toFixed(2)}</span>
+          </div>`;
+        }).join('');
+      } else {
+        itemsHtml += `<div style="font-size:12px;color:var(--gray);padding:8px 0">${p.description || '—'}</div>`;
+      }
+      itemsHtml += `<div class="pedido-total-row"><span>Total</span><span style="color:var(--green)">${R(p.value)}</span></div>`;
+
+      document.getElementById('pm-items').innerHTML = itemsHtml;
+      document.getElementById('pm-obs').innerHTML   = obs
+        ? `<div class="pedido-obs">📝 <strong>Obs:</strong> ${obs}</div>` : '';
+
+      document.getElementById('pedido-modal').style.display = 'flex';
+    }
+
+    function closePedidoModal(e) {
+      if (e && e.target !== document.getElementById('pedido-modal')) return;
+      document.getElementById('pedido-modal').style.display = 'none';
+    }
+
+    /* ── CAIXA ── */
+    let curCaixaFilter = 'hoje';
+    let caixaSales = [];
+
+    function setCaixaFilter(filter, btn) {
+      curCaixaFilter = filter;
+      document.querySelectorAll('#caixa-filter .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCaixa();
+    }
+
+    function renderCaixa() {
+      caixaSales = sales.filter(s => s.source === 'compucenter');
+      const ws = weekStart(), ms = monthStart(), tk = todayKey();
+      const list = caixaSales.filter(s => {
+        if (curCaixaFilter === 'hoje')   return s.dateKey === tk;
+        if (curCaixaFilter === 'semana') return s.timestamp && s.timestamp.toDate() >= ws;
+        if (curCaixaFilter === 'mes')    return s.timestamp && s.timestamp.toDate() >= ms;
+        return true;
+      });
+
+      const todayCount = caixaSales.filter(s => s.dateKey === tk).length;
+      document.getElementById('caixa-today-count').textContent =
+        `${todayCount} venda${todayCount !== 1 ? 's' : ''} hoje`;
+
+      if (!list.length) {
+        document.getElementById('caixa-list').innerHTML =
+          '<div class="empty"><p>Nenhuma venda do caixa neste período</p></div>';
+        return;
+      }
+
+      document.getElementById('caixa-list').innerHTML = list.map(s => {
+        const hora     = fmtTime(s.timestamp);
+        const nItens   = s.items?.length || 0;
+        const itensStr = nItens > 0
+          ? s.items.slice(0, 2).map(i => `${i.nome}${i.qty !== 1 ? ` ×${i.qty % 1 === 0 ? i.qty : i.qty.toFixed(3)}` : ''}`).join(', ') + (nItens > 2 ? ` +${nItens - 2}` : '')
+          : (s.description || '—');
+        return `<div class="pedido-card" onclick="openCaixaModal('${s.id}')">
+          <div class="pedido-card-top">
+            <div>
+              <div class="pedido-card-name" style="font-size:12px;font-weight:400;color:var(--gray-2)">${itensStr}</div>
+              <div class="pedido-card-time">${hora}</div>
+            </div>
+            <div class="pedido-card-val">${R(s.value)}</div>
+          </div>
+          <div class="pedido-card-bot">
+            <span class="badge b-outro">🖥️ Caixa</span>
+            ${nItens > 0 ? `<span class="badge b-retirada">${nItens} item${nItens !== 1 ? 's' : ''}</span>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function openCaixaModal(id) {
+      const s = caixaSales.find(x => x.id === id);
+      if (!s) return;
+
+      const ts = s.timestamp ? (s.timestamp.toDate ? s.timestamp.toDate() : new Date(s.timestamp)) : null;
+      const horario = ts
+        ? ts.toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric'}) +
+          ' às ' + ts.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'})
+        : '—';
+
+      document.getElementById('cm-id').textContent = horario;
+
+      let html = '<hr class="pedido-divider"><div class="pedido-items-title">Itens vendidos</div>';
+      if (s.items && s.items.length) {
+        html += s.items.map(it => {
+          const qtdStr = it.qty !== 1
+            ? `×${it.qty % 1 === 0 ? it.qty : it.qty.toFixed(3)}`
+            : '';
+          return `<div class="pedido-item-row">
+            <span>${it.nome}${qtdStr ? ` <span style="color:var(--gray-2)">${qtdStr}</span>` : ''}</span>
+            <span style="font-weight:600">R$ ${Number(it.valor || 0).toFixed(2)}</span>
+          </div>`;
+        }).join('');
+      } else {
+        html += `<div style="font-size:12px;color:var(--gray);padding:8px 0">${s.description || '—'}</div>`;
+      }
+      html += `<div class="pedido-total-row"><span>Total</span><span style="color:var(--green)">${R(s.value)}</span></div>`;
+
+      document.getElementById('cm-items').innerHTML = html;
+      document.getElementById('caixa-modal').style.display = 'flex';
+    }
+
+    function closeCaixaModal(e) {
+      if (e && e.target !== document.getElementById('caixa-modal')) return;
+      document.getElementById('caixa-modal').style.display = 'none';
     }
   </script>
 </body>

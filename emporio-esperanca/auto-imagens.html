@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auto-Imagens — Empório Esperança</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <style>
+    :root {
+      --black:      #0A0A0A;
+      --black-2:    #111111;
+      --black-3:    #1A1A1A;
+      --black-4:    #222222;
+      --white:      #FFFFFF;
+      --gray:       #666666;
+      --gray-2:     #444444;
+      --blue:       #0047FF;
+      --blue-mid:   #2E6BFF;
+      --blue-dim:   rgba(0,71,255,0.14);
+      --green:      #22C55E;
+      --green-dim:  rgba(34,197,94,0.14);
+      --amber:      #F59E0B;
+      --amber-dim:  rgba(245,158,11,0.14);
+      --red:        #EF4444;
+      --red-dim:    rgba(239,68,68,0.14);
+      --border:     rgba(255,255,255,0.07);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--black-2);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.1em; line-height: 1; }
+    .logo span { color: var(--blue); }
+    .subtitle { font-size: 10px; color: var(--gray); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+
+    /* ── TABS ── */
+    .tabs { display: flex; gap: 4px; }
+    .tab-btn {
+      padding: 8px 20px;
+      font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      border-radius: 8px; border: 1px solid var(--border);
+      background: none; color: var(--gray); cursor: pointer; transition: all 0.18s;
+    }
+    .tab-btn.active { background: var(--blue-dim); border-color: var(--blue); color: var(--white); }
+    .tab-btn:hover:not(.active) { color: var(--white); border-color: var(--gray-2); }
+
+    /* ── TAB CONTENT ── */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ══════════════════════════════════════
+       TAB 1 — AUTOMÁTICO
+    ══════════════════════════════════════ */
+    .auto-wrap { max-width: 740px; margin: 0 auto; padding: 32px 20px; }
+
+    .card {
+      background: var(--black-2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px; margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.13em; color: var(--gray); margin-bottom: 18px;
+    }
+
+    .controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 22px; font-family: 'Outfit', sans-serif;
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em;
+      border-radius: 9px; border: none; cursor: pointer; transition: all 0.18s;
+    }
+    .btn-primary { background: var(--blue); color: var(--white); }
+    .btn-primary:hover:not(:disabled) { background: var(--blue-mid); }
+    .btn-danger  { background: var(--red-dim); color: var(--red); border: 1px solid var(--red); }
+    .btn-danger:hover:not(:disabled) { background: var(--red); color: var(--black); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .check-label {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--gray); cursor: pointer; user-select: none;
+    }
+    .check-label input[type=checkbox] { accent-color: var(--blue); width: 15px; height: 15px; cursor: pointer; }
+
+    .status-text { font-size: 13px; color: var(--gray); margin-bottom: 14px; min-height: 20px; }
+
+    .progress-bar-bg { height: 6px; background: var(--black-3); border-radius: 99px; overflow: hidden; margin-bottom: 8px; }
+    .progress-bar-fill { height: 100%; background: var(--blue); border-radius: 99px; transition: width 0.3s; width: 0%; }
+    .progress-label { font-size: 11px; color: var(--gray); }
+
+    .counters { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 18px; }
+    .counter-box { background: var(--black-3); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+    .counter-val { font-size: 22px; font-weight: 700; margin-bottom: 2px; }
+    .counter-lbl { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.09em; }
+    .c-green { color: var(--green); } .c-amber { color: var(--amber); } .c-gray { color: var(--gray); }
+
+    .queue-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .queue-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.13em; color: var(--gray); }
+    .queue-count { font-size: 12px; color: var(--amber); font-weight: 600; }
+
+    .review-card {
+      background: var(--black-3); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px; display: flex; gap: 16px;
+      margin-bottom: 10px; align-items: flex-start;
+    }
+    .review-img-wrap {
+      width: 110px; height: 110px; flex-shrink: 0; border-radius: 10px;
+      overflow: hidden; background: var(--black-4); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .review-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .review-info { flex: 1; min-width: 0; }
+    .review-nome-firestore { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .review-nome-api { font-size: 12px; color: var(--gray); margin-bottom: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .review-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+    .meta-pill { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 5px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .pill-score { background: var(--amber-dim); color: var(--amber); }
+    .pill-dim   { background: var(--blue-dim);  color: var(--blue-mid); }
+    .review-btns { display: flex; gap: 8px; }
+    .btn-aceitar {
+      padding: 7px 16px; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; border-radius: 7px;
+      cursor: pointer; transition: all 0.15s;
+      background: var(--green-dim); color: var(--green); border: 1px solid var(--green);
+    }
+    .btn-aceitar:hover { background: var(--green); color: var(--black); }
+    .btn-pular {
+      padding: 7px 16px; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.08em; border-radius: 7px;
+      cursor: pointer; transition: all 0.15s; background: none; color: var(--gray); border: 1px solid var(--border);
+    }
+    .btn-pular:hover { border-color: var(--gray-2); color: var(--white); }
+
+    .summary-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.08em; margin-bottom: 14px; }
+    .summary-line { font-size: 13px; color: var(--gray); line-height: 1.8; }
+    .summary-line strong { color: var(--white); }
+
+    .export-btn {
+      margin-top: 16px; padding: 9px 20px; font-family: 'Outfit', sans-serif;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      border-radius: 8px; cursor: pointer; transition: all 0.15s;
+      background: none; color: var(--blue-mid); border: 1px solid var(--blue);
+    }
+    .export-btn:hover { background: var(--blue-dim); }
+
+    .warn-box {
+      background: var(--amber-dim); border: 1px solid rgba(245,158,11,0.3);
+      border-radius: 10px; padding: 12px 16px; font-size: 12px;
+      color: var(--amber); line-height: 1.6; margin-bottom: 16px;
+    }
+
+    /* ══════════════════════════════════════
+       TAB 2 — BUSCA MANUAL
+    ══════════════════════════════════════ */
+    .busca-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      height: calc(100vh - 73px);
+    }
+
+    /* PAINEL ESQUERDO — lista de produtos */
+    .busca-left {
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+    .busca-left-top {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .busca-filter-input {
+      width: 100%; background: var(--black-3); border: 1px solid var(--border);
+      border-radius: 8px; padding: 9px 12px; font-family: 'Outfit', sans-serif;
+      font-size: 13px; color: var(--white); outline: none; transition: border-color 0.15s;
+    }
+    .busca-filter-input:focus { border-color: var(--blue); }
+    .busca-filter-input::placeholder { color: var(--gray); }
+    .busca-filtro-row { display: flex; gap: 6px; }
+    .filtro-btn {
+      flex: 1; padding: 6px 0; font-family: 'Outfit', sans-serif; font-size: 10px;
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      border-radius: 6px; border: 1px solid var(--border); background: none;
+      color: var(--gray); cursor: pointer; transition: all 0.15s;
+    }
+    .filtro-btn.active { background: var(--blue-dim); border-color: var(--blue); color: var(--white); }
+
+    .prod-list { flex: 1; overflow-y: auto; }
+    .prod-list::-webkit-scrollbar { width: 4px; }
+    .prod-list::-webkit-scrollbar-track { background: transparent; }
+    .prod-list::-webkit-scrollbar-thumb { background: var(--gray-2); border-radius: 99px; }
+
+    .prod-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px; cursor: pointer; transition: background 0.15s;
+      border-bottom: 1px solid var(--border);
+    }
+    .prod-item:hover { background: var(--black-3); }
+    .prod-item.selected { background: var(--blue-dim); border-left: 2px solid var(--blue); }
+    .prod-thumb-mini {
+      width: 36px; height: 36px; border-radius: 7px; flex-shrink: 0;
+      background: var(--black-4); border: 1px solid var(--border);
+      overflow: hidden; display: flex; align-items: center; justify-content: center;
+    }
+    .prod-thumb-mini img { width: 100%; height: 100%; object-fit: cover; }
+    .prod-thumb-mini .no-img {
+      width: 14px; height: 14px; opacity: 0.25;
+    }
+    .prod-item-nome {
+      font-size: 12px; font-weight: 500; color: var(--white); flex: 1;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .prod-item-tag {
+      font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px;
+      text-transform: uppercase; letter-spacing: 0.05em; flex-shrink: 0;
+    }
+    .tag-ok  { background: var(--green-dim);  color: var(--green); }
+    .tag-sem { background: rgba(255,255,255,0.05); color: var(--gray-2); }
+
+    .busca-loading {
+      padding: 32px 16px; text-align: center; font-size: 12px; color: var(--gray);
+    }
+
+    /* PAINEL DIREITO — pesquisa e resultados */
+    .busca-right {
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+
+    .busca-placeholder {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 10px; color: var(--gray); font-size: 13px;
+    }
+    .busca-placeholder svg { opacity: 0.2; }
+
+    .busca-panel { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+
+    .busca-panel-top {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .sel-prod-nome {
+      font-size: 15px; font-weight: 600; color: var(--white);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+    }
+    .sel-prod-nome .cat-tag {
+      font-size: 9px; font-weight: 700; padding: 3px 7px; border-radius: 4px;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      background: var(--blue-dim); color: var(--blue-mid); flex-shrink: 0;
+    }
+
+    .search-row { display: flex; gap: 8px; margin-bottom: 8px; }
+    .search-input {
+      flex: 1; background: var(--black-3); border: 1px solid var(--border);
+      border-radius: 8px; padding: 9px 13px; font-family: 'Outfit', sans-serif;
+      font-size: 13px; color: var(--white); outline: none; transition: border-color 0.15s;
+    }
+    .search-input:focus { border-color: var(--blue); }
+    .search-input::placeholder { color: var(--gray); }
+    .search-btn {
+      padding: 9px 18px; background: var(--blue); color: var(--white);
+      border: none; border-radius: 8px; font-family: 'Outfit', sans-serif;
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      cursor: pointer; transition: background 0.15s; white-space: nowrap;
+    }
+    .search-btn:hover { background: var(--blue-mid); }
+    .search-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ── URL + BOTÕES BUSCA MANUAL ── */
+    .btn-google-big {
+      width: 100%; margin: 12px 0 10px;
+      padding: 14px 20px; background: var(--blue-dim); color: var(--white);
+      border: 1px solid var(--blue); border-radius: 10px; font-family: 'Outfit', sans-serif;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.06em;
+      cursor: pointer; transition: all 0.18s; display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .btn-google-big:hover { background: var(--blue); }
+
+    .url-row-big { display: flex; gap: 8px; }
+    .url-input-big {
+      flex: 1; background: var(--black-3); border: 2px solid var(--border);
+      border-radius: 10px; padding: 12px 16px; font-family: 'Outfit', sans-serif;
+      font-size: 13px; color: var(--white); outline: none; transition: border-color 0.15s;
+    }
+    .url-input-big:focus { border-color: var(--green); }
+    .url-input-big::placeholder { color: var(--gray-2); }
+    .url-save-btn-big {
+      padding: 12px 20px; background: var(--green-dim); color: var(--green);
+      border: 1px solid var(--green); border-radius: 10px; font-family: 'Outfit', sans-serif;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.06em;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }
+    .url-save-btn-big:hover { background: var(--green); color: var(--black); }
+
+    .url-hint { font-size: 11px; color: var(--gray-2); margin-top: 8px; line-height: 1.6; }
+    .url-hint kbd {
+      background: var(--black-3); border: 1px solid var(--border); border-radius: 4px;
+      padding: 1px 5px; font-size: 10px; color: var(--white); font-family: monospace;
+    }
+
+    /* PREVIEW IMAGEM ATUAL */
+    .preview-wrap { padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .preview-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gray); align-self: flex-start; }
+    .preview-img {
+      width: 100%; max-width: 320px; aspect-ratio: 1; object-fit: contain;
+      border-radius: 12px; background: var(--black-3); border: 1px solid var(--border);
+    }
+    .preview-empty { padding: 40px 20px; text-align: center; color: var(--gray); font-size: 13px; line-height: 1.7; }
+
+    .grid-empty { padding: 32px 0; text-align: center; font-size: 13px; color: var(--gray); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── CONFIG API ── */
+    .config-row { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; margin-top: 12px; }
+    .config-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 180px; }
+    .config-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em; color: var(--gray); }
+    .config-input {
+      background: var(--black-3); border: 1px solid var(--border);
+      border-radius: 8px; padding: 9px 12px; font-family: 'Outfit', sans-serif;
+      font-size: 13px; color: var(--white); outline: none; width: 100%;
+      transition: border-color 0.15s;
+    }
+    .config-input:focus { border-color: var(--blue); }
+    .config-input::placeholder { color: var(--gray); }
+    .config-hint { font-size: 11px; color: var(--gray); margin-top: 8px; line-height: 1.5; }
+    .config-hint strong { color: var(--white); }
+    .config-ok { font-size: 12px; color: var(--green); display: none; align-items: center; gap: 8px; margin-top: 4px; }
+    .config-edit-btn {
+      background: none; border: none; color: var(--blue-mid); font-size: 11px;
+      cursor: pointer; text-decoration: underline; font-family: 'Outfit', sans-serif; padding: 0;
+    }
+
+    /* ── OPEN IN GOOGLE BUTTON ── */
+    .btn-google {
+      padding: 9px 14px; background: none; color: var(--gray);
+      border: 1px solid var(--border); border-radius: 8px; font-family: 'Outfit', sans-serif;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }
+    .btn-google:hover { border-color: var(--gray-2); color: var(--white); }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--black-2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 18px;
+      font-size: 13px; color: var(--white);
+      display: flex; align-items: center; gap: 8px;
+      opacity: 0; transform: translateY(10px);
+      transition: all 0.25s; pointer-events: none; z-index: 999;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+
+    /* RESPONSIVO */
+    @media (max-width: 700px) {
+      .busca-layout { grid-template-columns: 1fr; height: auto; }
+      .busca-left { height: 40vh; border-right: none; border-bottom: 1px solid var(--border); }
+      .busca-right { height: auto; min-height: 60vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div>
+      <div class="logo">Auto<span>Imagens</span></div>
+      <div class="subtitle">Empório Esperança — Google Custom Search</div>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-btn-auto"  onclick="showTab('auto')">Automático</button>
+      <button class="tab-btn"        id="tab-btn-busca" onclick="showTab('busca')">Busca Manual</button>
+    </div>
+  </div>
+
+  <!-- ══ TAB AUTOMÁTICO ══ -->
+  <div id="tab-auto" class="tab-content active">
+    <div class="auto-wrap">
+
+      <div class="card" id="card-api-config" style="margin-top:8px">
+        <div class="card-title">Google Custom Search API</div>
+        <div id="config-fields">
+          <div class="config-row">
+            <div class="config-group">
+              <div class="config-label">API Key</div>
+              <input class="config-input" id="cfg-apikey" type="password" placeholder="AIzaSy..." autocomplete="off">
+            </div>
+            <div class="config-group">
+              <div class="config-label">Search Engine ID (cx)</div>
+              <input class="config-input" id="cfg-cx" placeholder="xxxxxxxxx:xxxxxxxxxx" autocomplete="off">
+            </div>
+            <button class="btn btn-primary" onclick="salvarConfig()" style="align-self:flex-end">Salvar</button>
+          </div>
+          <div class="config-hint">
+            1. Crie a chave em <strong>console.cloud.google.com</strong> → Custom Search API<br>
+            2. Crie o mecanismo em <strong>programmablesearchengine.google.com</strong> (web toda + pesquisa de imagens)<br>
+            3. Cole os dois campos acima e clique Salvar.
+          </div>
+        </div>
+        <div class="config-ok" id="config-ok">
+          ✓ API configurada
+          <button class="config-edit-btn" onclick="editarConfig()">Alterar</button>
+        </div>
+      </div>
+
+      <div class="warn-box">
+        Processa todos os produtos sem imagem automaticamente. Deixe aberta até concluir.
+      </div>
+
+      <div class="card">
+        <div class="card-title">Configuração</div>
+        <div class="controls">
+          <button class="btn btn-primary" id="btn-iniciar" onclick="iniciar()">
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Iniciar
+          </button>
+          <button class="btn btn-danger" id="btn-pausar" onclick="alternarPausa()" disabled>
+            <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>
+            </svg>
+            Pausar
+          </button>
+          <label class="check-label">
+            <input type="checkbox" id="chk-auto" checked>
+            Auto-aprovar acima de 75%
+          </label>
+        </div>
+      </div>
+
+      <div class="card" id="card-progresso" style="display:none">
+        <div class="card-title">Progresso</div>
+        <div class="status-text" id="status-text">Iniciando...</div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-label" id="progress-label">0 de 0</div>
+        <div class="counters">
+          <div class="counter-box"><div class="counter-val c-green" id="cnt-aprovados">0</div><div class="counter-lbl">Aprovados</div></div>
+          <div class="counter-box"><div class="counter-val c-amber" id="cnt-revisao">0</div><div class="counter-lbl">Em revisão</div></div>
+          <div class="counter-box"><div class="counter-val c-gray"  id="cnt-nao">0</div><div class="counter-lbl">Não encontrados</div></div>
+        </div>
+      </div>
+
+      <div class="card" id="queue-section" style="display:none">
+        <div class="queue-header">
+          <div class="queue-title">Aguardando sua revisão</div>
+          <div class="queue-count" id="queue-count">0 pendentes</div>
+        </div>
+        <div id="queue-list"></div>
+      </div>
+
+      <div class="card" id="summary" style="display:none">
+        <div class="summary-title">Processamento concluído</div>
+        <div class="summary-line" id="summary-text"></div>
+        <button class="export-btn" id="btn-export" onclick="exportarNaoEncontrados()">
+          Exportar lista dos não encontrados (.txt)
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ TAB BUSCA MANUAL ══ -->
+  <div id="tab-busca" class="tab-content">
+    <div class="busca-layout">
+
+      <!-- ESQUERDO: lista de produtos -->
+      <div class="busca-left">
+        <div class="busca-left-top">
+          <input class="busca-filter-input" id="lista-filtro" placeholder="Filtrar por nome..." oninput="filtrarLista()" />
+          <div class="busca-filtro-row">
+            <button class="filtro-btn active" id="fb-sem"   onclick="setFiltroImg('sem',this)">Sem imagem</button>
+            <button class="filtro-btn"        id="fb-com"   onclick="setFiltroImg('com',this)">Com imagem</button>
+            <button class="filtro-btn"        id="fb-todos" onclick="setFiltroImg('todos',this)">Todos</button>
+          </div>
+        </div>
+        <div class="prod-list" id="prod-list">
+          <div class="busca-loading">Selecione a aba "Busca Manual" para carregar os produtos...</div>
+        </div>
+      </div>
+
+      <!-- DIREITO: busca e grade de imagens -->
+      <div class="busca-right">
+        <div class="busca-placeholder" id="busca-placeholder">
+          <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+          Selecione um produto à esquerda para buscar a imagem
+        </div>
+
+        <div class="busca-panel" id="busca-panel" style="display:none">
+          <div class="busca-panel-top">
+            <div class="sel-prod-nome" id="sel-prod-nome"></div>
+            <button class="btn-google-big" onclick="abrirGoogleImagens()">
+              <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Abrir no Google Imagens
+            </button>
+            <div class="url-row-big">
+              <input class="url-input-big" id="url-input"
+                placeholder="Cole aqui a URL da imagem e pressione Enter"
+                onkeydown="if(event.key==='Enter')salvarUrlEAvancar()" />
+              <button class="url-save-btn-big" onclick="salvarUrlEAvancar()">✓ Salvar</button>
+            </div>
+            <div class="url-hint">
+              No Google: clique na imagem → clique direito → "Copiar endereço da imagem" → cole aqui<br>
+              <kbd>Enter</kbd> salva e avança para o próximo produto automaticamente
+            </div>
+          </div>
+          <div class="img-grid-wrap">
+            <div id="img-preview-wrap" class="preview-wrap">
+              <div class="preview-empty">Selecione um produto à esquerda para começar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <div class="toast-dot"></div>
+    <span id="toast-msg">Imagem salva!</span>
+  </div>
+
+  <script>
+    firebase.initializeApp({
+      apiKey:            "AIzaSyCQGWHlrb8cQZHdIbSqq5ZxEJed91jGHt0",
+      authDomain:        "esperanca-emporio.firebaseapp.com",
+      projectId:         "esperanca-emporio",
+      storageBucket:     "esperanca-emporio.firebasestorage.app",
+      messagingSenderId: "603259578955",
+      appId:             "1:603259578955:web:7705d11135e0f861a63bce"
+    });
+    const db      = firebase.firestore();
+    const colProd = db.collection('products');
+
+    /* ══ UTILS COMPARTILHADOS ══ */
+    function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    function normalizarNome(nome) {
+      return nome.toLowerCase()
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9\s]/g, ' ')
+        .replace(/\s+/g, ' ').trim();
+    }
+
+    function stripPeso(nome) {
+      return nome
+        .replace(/\s*\d+[\.,]?\d*\s*(kg|g|ml|l|un|pc|pct|cx|garrafa|frasco|unid|lt)\.?\s*/gi, ' ')
+        .replace(/\s+/g, ' ').trim();
+    }
+
+    function calcularSimilaridade(a, b) {
+      const wa = new Set(normalizarNome(stripPeso(a)).split(' ').filter(w => w.length > 1));
+      const wb = new Set(normalizarNome(stripPeso(b)).split(' ').filter(w => w.length > 1));
+      if (!wa.size || !wb.size) return 0;
+      let inter = 0;
+      wa.forEach(w => { if (wb.has(w)) inter++; });
+      return inter / Math.max(wa.size, wb.size);
+    }
+
+    function validarImagem(url) {
+      return new Promise(resolve => {
+        if (!url) return resolve({ ok: false });
+        const img = new Image();
+        const t = setTimeout(() => resolve({ ok: false }), 8000);
+        img.onload = () => {
+          clearTimeout(t);
+          const w = img.naturalWidth, h = img.naturalHeight;
+          resolve({ ok: w >= 100 && h >= 100 && (w/h) >= 0.4 && (w/h) <= 3.0, width: w, height: h });
+        };
+        img.onerror = () => { clearTimeout(t); resolve({ ok: false }); };
+        img.src = url;
+      });
+    }
+
+    async function salvarImagem(id, url) {
+      await colProd.doc(id).update({ img: url });
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = msg;
+      el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 2600);
+    }
+
+    /* ══ CONFIG GOOGLE API ══ */
+    function getGoogleConfig() {
+      return {
+        key: localStorage.getItem('emporio_google_apikey') || '',
+        cx:  localStorage.getItem('emporio_google_cx') || ''
+      };
+    }
+
+    function carregarConfig() {
+      const { key, cx } = getGoogleConfig();
+      if (key && cx) {
+        document.getElementById('cfg-apikey').value = key;
+        document.getElementById('cfg-cx').value = cx;
+        document.getElementById('config-fields').style.display = 'none';
+        document.getElementById('config-ok').style.display = 'flex';
+      }
+    }
+
+    function salvarConfig() {
+      const key = document.getElementById('cfg-apikey').value.trim();
+      const cx  = document.getElementById('cfg-cx').value.trim();
+      if (!key || !cx) { showToast('Preencha os dois campos'); return; }
+      localStorage.setItem('emporio_google_apikey', key);
+      localStorage.setItem('emporio_google_cx', cx);
+      document.getElementById('config-fields').style.display = 'none';
+      document.getElementById('config-ok').style.display = 'flex';
+      showToast('Configuração salva!');
+    }
+
+    function editarConfig() {
+      const { key, cx } = getGoogleConfig();
+      document.getElementById('cfg-apikey').value = key;
+      document.getElementById('cfg-cx').value = cx;
+      document.getElementById('config-fields').style.display = 'block';
+      document.getElementById('config-ok').style.display = 'none';
+    }
+
+    async function buscarGoogleImagens(query, n = 10) {
+      const { key, cx } = getGoogleConfig();
+      if (!key || !cx) return [];
+      const q   = encodeURIComponent(stripPeso(query) + ' produto');
+      const url = `https://www.googleapis.com/customsearch/v1?key=${key}&cx=${cx}&q=${q}&searchType=image&num=${Math.min(n, 10)}&imgSize=medium&safe=active`;
+      try {
+        const res  = await fetch(url, { signal: AbortSignal.timeout(12000) });
+        if (res.status === 429) {
+          processando = false;
+          document.getElementById('btn-iniciar').disabled = false;
+          document.getElementById('btn-pausar').disabled  = true;
+          setStatus('⚠ Cota diária de 100 buscas esgotada. A cota reseta à meia-noite (horário Google). Tente novamente amanhã ou ative o faturamento no Google Cloud.');
+          return null;
+        }
+        if (!res.ok) { console.warn('Google CSE', res.status); return []; }
+        const data = await res.json();
+        return (data.items || []).map(item => ({
+          title:  item.title  || '',
+          imgUrl: item.link,
+          width:  item.image?.width  || 0,
+          height: item.image?.height || 0,
+        }));
+      } catch (e) { console.warn('Google fetch', e); return []; }
+    }
+
+    function abrirGoogleImagens() {
+      const query = stripPeso(prodSelecionado?.nome || document.getElementById('url-input')?.value || '');
+      if (!query) return;
+      window.open('https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(query + ' produto brasil'), '_blank');
+    }
+
+    /* ══ TABS ══ */
+    let buscaCarregada = false;
+
+    function showTab(tab) {
+      ['auto','busca'].forEach(t => {
+        document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+        document.getElementById('tab-btn-' + t).classList.toggle('active', t === tab);
+      });
+      if (tab === 'busca' && !buscaCarregada) {
+        buscaCarregada = true;
+        carregarProdutosLista();
+      }
+    }
+
+    /* ══════════════════════════════════════
+       TAB 1 — AUTOMÁTICO
+    ══════════════════════════════════════ */
+    let produtos        = [];
+    let idx             = 0;
+    let processando     = false;
+    let pausado         = false;
+    let cntAprovados    = 0;
+    let cntNao          = 0;
+    let revisaoPendente = 0;
+    let naoEncontradosLista = [];
+
+    function atualizarProgresso() {
+      const pct = produtos.length ? Math.round(idx / produtos.length * 100) : 0;
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('progress-label').textContent = `${idx} de ${produtos.length} produtos`;
+      document.getElementById('cnt-aprovados').textContent = cntAprovados;
+      document.getElementById('cnt-revisao').textContent   = revisaoPendente;
+      document.getElementById('cnt-nao').textContent       = cntNao;
+      document.getElementById('queue-count').textContent   = `${revisaoPendente} pendente${revisaoPendente !== 1 ? 's' : ''}`;
+    }
+
+    function setStatus(txt) { document.getElementById('status-text').textContent = txt; }
+
+    function adicionarCardRevisao(produto, candidato, imgInfo) {
+      document.getElementById('queue-section').style.display = 'block';
+      const scoreStr = Math.round(candidato.score * 100) + '%';
+      const dimStr   = `${imgInfo.width}×${imgInfo.height}px`;
+      const nomeApi  = candidato.title || '—';
+      const card = document.createElement('div');
+      card.className = 'review-card';
+      card.id = 'rc-' + produto.id;
+      card.innerHTML = `
+        <div class="review-img-wrap"><img src="${candidato.imgUrl}" alt="" loading="lazy"/></div>
+        <div class="review-info">
+          <div class="review-nome-firestore">${produto.nome}</div>
+          <div class="review-nome-api">Encontrado: ${nomeApi}</div>
+          <div class="review-meta">
+            <span class="meta-pill pill-score">Confiança ${scoreStr}</span>
+            <span class="meta-pill pill-dim">${dimStr}</span>
+          </div>
+          <div class="review-btns">
+            <button class="btn-aceitar" onclick="aceitarAuto('${produto.id}','${candidato.imgUrl}',this.closest('.review-card'))">✓ Aceitar</button>
+            <button class="btn-pular"   onclick="pularAuto('${produto.id}',this.closest('.review-card'))">✗ Pular</button>
+          </div>
+        </div>`;
+      document.getElementById('queue-list').appendChild(card);
+      revisaoPendente++;
+      atualizarProgresso();
+    }
+
+    async function aceitarAuto(id, url, cardEl) {
+      try { await salvarImagem(id, url); cntAprovados++; } catch {}
+      revisaoPendente--;
+      cardEl.remove();
+      atualizarProgresso();
+      atualizarItemLista(id, url);
+    }
+
+    function pularAuto(id, cardEl) {
+      revisaoPendente--;
+      naoEncontradosLista.push(id);
+      cardEl.remove();
+      atualizarProgresso();
+    }
+
+    async function processarProduto(p) {
+      const { key, cx } = getGoogleConfig();
+      if (!key || !cx) {
+        processando = false;
+        document.getElementById('btn-iniciar').disabled = false;
+        document.getElementById('btn-pausar').disabled  = true;
+        setStatus('Configure a API Key do Google acima antes de iniciar.');
+        return;
+      }
+
+      setStatus(`Buscando: ${p.nome}`);
+      const candidatos = await buscarGoogleImagens(p.nome, 10);
+
+      if (candidatos === null) return;
+
+      if (!candidatos.length) {
+        cntNao++;
+        naoEncontradosLista.push(p.nome + ' (id:' + p.id + ')');
+        return;
+      }
+
+      let melhor = candidatos[0], melhorScore = 0;
+      for (const c of candidatos) {
+        const sim = calcularSimilaridade(p.nome, c.title);
+        if (sim > melhorScore) { melhorScore = sim; melhor = { ...c, score: sim }; }
+      }
+      if (!melhor.score) melhor = { ...melhor, score: melhorScore };
+
+      const imgInfo = { ok: true, width: melhor.width || 300, height: melhor.height || 300 };
+      const autoAprovar = document.getElementById('chk-auto').checked;
+
+      if (autoAprovar && melhorScore >= 0.65) {
+        try { await salvarImagem(p.id, melhor.imgUrl); cntAprovados++; atualizarItemLista(p.id, melhor.imgUrl); }
+        catch { cntNao++; }
+      } else {
+        adicionarCardRevisao(p, melhor, imgInfo);
+      }
+    }
+
+    async function loop() {
+      while (idx < produtos.length && processando) {
+        if (pausado) { await delay(400); continue; }
+        await processarProduto(produtos[idx]);
+        idx++;
+        atualizarProgresso();
+        await delay(420);
+      }
+      if (idx >= produtos.length) {
+        processando = false;
+        document.getElementById('btn-iniciar').disabled = false;
+        document.getElementById('btn-pausar').disabled  = true;
+        mostrarResumo();
+      }
+    }
+
+    function mostrarResumo() {
+      const el = document.getElementById('summary');
+      el.style.display = 'block';
+      document.getElementById('summary-text').innerHTML =
+        `<strong>${cntAprovados}</strong> imagens salvas automaticamente.<br>
+         <strong>${revisaoPendente}</strong> aguardando revisão manual acima.<br>
+         <strong>${cntNao}</strong> produtos sem correspondência encontrada.`;
+      if (!naoEncontradosLista.length) document.getElementById('btn-export').style.display = 'none';
+    }
+
+    function exportarNaoEncontrados() {
+      const blob = new Blob([naoEncontradosLista.join('\n')], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'produtos-sem-imagem.txt';
+      a.click();
+    }
+
+    async function iniciar() {
+      if (processando) return;
+      const btn = document.getElementById('btn-iniciar');
+      btn.disabled = true; btn.textContent = 'Carregando...';
+      setStatus('Carregando produtos sem imagem do Firestore...');
+      document.getElementById('card-progresso').style.display = 'block';
+
+      try {
+        const snap = await colProd.where('img', '==', null).get();
+        produtos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      } catch (e) {
+        setStatus('Erro: ' + e.message);
+        btn.disabled = false; btn.textContent = 'Iniciar'; return;
+      }
+
+      if (!produtos.length) {
+        setStatus('Nenhum produto sem imagem encontrado!');
+        btn.disabled = false; btn.textContent = 'Iniciar'; return;
+      }
+
+      idx = 0; cntAprovados = 0; cntNao = 0; revisaoPendente = 0;
+      naoEncontradosLista = [];
+      processando = true; pausado = false;
+      document.getElementById('btn-pausar').disabled = false;
+      atualizarProgresso();
+      loop();
+    }
+
+    function alternarPausa() {
+      pausado = !pausado;
+      const btn = document.getElementById('btn-pausar');
+      btn.innerHTML = pausado
+        ? `<svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg> Retomar`
+        : `<svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> Pausar`;
+      if (pausado) setStatus('Pausado. Clique em Retomar para continuar.');
+    }
+
+    /* ══════════════════════════════════════
+       TAB 2 — BUSCA MANUAL
+    ══════════════════════════════════════ */
+    let todosProds    = [];
+    let prodsFiltrados = [];
+    let filtroImg     = 'sem';
+    let filtroNome    = '';
+    let prodSelecionado = null;
+
+    async function carregarProdutosLista() {
+      document.getElementById('prod-list').innerHTML = '<div class="busca-loading">Carregando produtos...</div>';
+      try {
+        const snap = await colProd.orderBy('nome').get();
+        todosProds = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderizarLista();
+      } catch (e) {
+        document.getElementById('prod-list').innerHTML = `<div class="busca-loading">Erro: ${e.message}</div>`;
+      }
+    }
+
+    function setFiltroImg(val, btn) {
+      filtroImg = val;
+      document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderizarLista();
+    }
+
+    function filtrarLista() {
+      filtroNome = document.getElementById('lista-filtro').value.toLowerCase().trim();
+      renderizarLista();
+    }
+
+    function renderizarLista() {
+      prodsFiltrados = todosProds.filter(p => {
+        const temImg = !!p.img;
+        if (filtroImg === 'sem'   && temImg)  return false;
+        if (filtroImg === 'com'   && !temImg) return false;
+        if (filtroNome && !normalizarNome(p.nome || '').includes(normalizarNome(filtroNome))) return false;
+        return true;
+      });
+
+      if (!prodsFiltrados.length) {
+        document.getElementById('prod-list').innerHTML = '<div class="busca-loading">Nenhum produto encontrado</div>';
+        return;
+      }
+
+      document.getElementById('prod-list').innerHTML = prodsFiltrados.map(p => {
+        const temImg = !!p.img;
+        const thumb  = temImg
+          ? `<img src="${p.img}" alt="" loading="lazy" onerror="this.style.display='none'">`
+          : `<svg class="no-img" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>`;
+        const tag = temImg
+          ? `<span class="prod-item-tag tag-ok">✓</span>`
+          : `<span class="prod-item-tag tag-sem">–</span>`;
+        const sel = prodSelecionado?.id === p.id ? ' selected' : '';
+        return `<div class="prod-item${sel}" onclick="selecionarProduto('${p.id}')">
+          <div class="prod-thumb-mini">${thumb}</div>
+          <div class="prod-item-nome">${p.nome || '—'}</div>
+          ${tag}
+        </div>`;
+      }).join('');
+    }
+
+    function selecionarProduto(id) {
+      prodSelecionado = todosProds.find(p => p.id === id) || null;
+      if (!prodSelecionado) return;
+
+      document.querySelectorAll('.prod-item').forEach(el => el.classList.remove('selected'));
+      const itemEl = [...document.querySelectorAll('.prod-item')].find(el => el.onclick?.toString().includes(id));
+      if (itemEl) { itemEl.classList.add('selected'); itemEl.scrollIntoView({ block: 'nearest' }); }
+
+      document.getElementById('busca-placeholder').style.display = 'none';
+      document.getElementById('busca-panel').style.display = 'flex';
+
+      document.getElementById('sel-prod-nome').innerHTML =
+        `${prodSelecionado.nome}${prodSelecionado.cat ? ` <span class="cat-tag">${prodSelecionado.cat}</span>` : ''}`;
+
+      const urlInput = document.getElementById('url-input');
+      urlInput.value = '';
+      urlInput.focus();
+
+      const previewWrap = document.getElementById('img-preview-wrap');
+      if (prodSelecionado.img) {
+        previewWrap.innerHTML = `
+          <div class="preview-label">Imagem atual</div>
+          <img class="preview-img" src="${prodSelecionado.img}" alt=""
+            onerror="this.outerHTML='<div class=preview-empty>Imagem salva mas URL quebrada</div>'">`;
+      } else {
+        previewWrap.innerHTML = '<div class="preview-empty">Sem imagem — abra o Google Imagens acima, copie a URL e cole aqui.</div>';
+      }
+
+      abrirGoogleImagens();
+    }
+
+    async function buscarManual() {
+      if (!prodSelecionado) return;
+      const query = document.getElementById('search-input').value.trim();
+      if (!query) return;
+
+      const { key, cx } = getGoogleConfig();
+      if (!key || !cx) {
+        document.getElementById('img-grid-content').innerHTML =
+          '<div class="grid-empty">Configure a API Key do Google na aba Automático para buscar imagens.<br>Ou use o botão ↗ Google para buscar manualmente e colar a URL abaixo.</div>';
+        document.getElementById('grid-status').textContent = '';
+        return;
+      }
+
+      const btn = document.getElementById('search-btn');
+      btn.disabled = true; btn.textContent = 'Buscando...';
+      document.getElementById('img-grid-content').innerHTML = '<div class="grid-spinner"><div class="spinner"></div></div>';
+      document.getElementById('grid-status').textContent = '';
+
+      const resultados = await buscarGoogleImagens(query, 10);
+      btn.disabled = false; btn.textContent = 'Buscar';
+
+      if (!resultados.length) {
+        document.getElementById('img-grid-content').innerHTML = '<div class="grid-empty">Nenhum resultado. Tente outro termo ou clique em ↗ Google para buscar manualmente.</div>';
+        document.getElementById('grid-status').textContent = 'Dica: tente nome sem peso/medida, ou o nome da marca.';
+        return;
+      }
+
+      document.getElementById('grid-status').textContent =
+        `${resultados.length} imagem${resultados.length !== 1 ? 's' : ''} encontrada${resultados.length !== 1 ? 's' : ''}`;
+
+      document.getElementById('img-grid-content').innerHTML = `
+        <div class="img-grid">
+          ${resultados.map(r => {
+            const sim    = calcularSimilaridade(prodSelecionado.nome, r.title);
+            const simStr = sim >= 0.10 ? Math.round(sim * 100) + '%' : '';
+            return `<div class="img-result" onclick="aplicarImagem('${r.imgUrl.replace(/'/g,"\\'")}')">
+              <div class="img-result-thumb">
+                <img src="${r.imgUrl}" alt="${r.title}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=img-err>Erro ao carregar</div>'">
+              </div>
+              <div class="img-result-info">
+                <div class="img-result-name" title="${r.title}">${r.title}</div>
+                ${simStr ? `<div class="img-result-score">${simStr} similar</div>` : ''}
+              </div>
+            </div>`;
+          }).join('')}
+        </div>`;
+    }
+
+    async function aplicarImagem(url) {
+      if (!prodSelecionado) return;
+      try {
+        await salvarImagem(prodSelecionado.id, url);
+        prodSelecionado.img = url;
+        atualizarItemLista(prodSelecionado.id, url);
+        showToast(`✓ ${prodSelecionado.nome}`);
+        proximoProduto();
+      } catch (e) {
+        showToast('Erro ao salvar: ' + e.message);
+      }
+    }
+
+    function salvarUrlEAvancar() {
+      const url = document.getElementById('url-input').value.trim();
+      if (!url) return;
+      if (!url.startsWith('http')) { showToast('URL inválida — copie o endereço direto da imagem'); return; }
+      aplicarImagem(url);
+    }
+
+    function proximoProduto() {
+      if (!prodsFiltrados.length) return;
+      const idx  = prodsFiltrados.findIndex(p => p.id === prodSelecionado?.id);
+      const next = prodsFiltrados[idx + 1];
+      if (next) selecionarProduto(next.id);
+      else showToast('Todos os produtos da lista processados!');
+    }
+
+    function atualizarItemLista(id, url) {
+      const p = todosProds.find(x => x.id === id);
+      if (p) p.img = url;
+      const el = [...document.querySelectorAll('.prod-item')].find(e => e.onclick?.toString().includes(id));
+      if (!el) return;
+      const thumb = el.querySelector('.prod-thumb-mini');
+      if (thumb) thumb.innerHTML = `<img src="${url}" alt="" loading="lazy" onerror="this.style.display='none'">`;
+      const tag = el.querySelector('.prod-item-tag');
+      if (tag) { tag.textContent = '✓'; tag.className = 'prod-item-tag tag-ok'; }
+    }
+
+    carregarConfig();
+  </script>
+</body>
+</html>

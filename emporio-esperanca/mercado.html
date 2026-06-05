@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -16,7 +16,8 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Rajdhani:wght@700&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Space+Grotesk:wght@700;800&family=Outfit:wght@600;700&display=swap" rel="stylesheet" />
+
 
   <style>
     :root {
@@ -51,9 +52,11 @@
       z-index: -1;
       opacity: 0;
       transition: opacity 0.3s ease;
+      --wm-anim-state: paused;
     }
     .brand-watermark-wrap.visible {
       opacity: 1;
+      --wm-anim-state: running;
     }
     .brand-watermark {
       display: inline-block;
@@ -66,6 +69,7 @@
       color: #0A0A0A;
       opacity: 0.07;
       animation: wmScroll 24s linear infinite;
+      animation-play-state: var(--wm-anim-state);
       will-change: transform;
     }
     @keyframes wmScroll {
@@ -113,7 +117,7 @@
     .float-divider { width: 1px; height: 28px; background: rgba(255,255,255,.1); margin: 0 2px; flex-shrink: 0; }
 
     /* ── CAT BAR ── */
-    .cat-bar { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-bottom: 20px; }
+    .cat-bar { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-bottom: 20px; position: sticky; top: 0; z-index: 50; background: var(--bg); padding: 10px 0; box-shadow: 0 2px 8px rgba(0,0,0,.05); }
     .cat-bar::-webkit-scrollbar { display: none; }
     .cat-inner { display: flex; justify-content: center; min-width: max-content; }
     .cat-toggle { display: inline-flex; position: relative; background: #F3F4F6; border: 1px solid rgba(26,26,26,.09); border-radius: 999px; padding: 5px; }
@@ -325,7 +329,8 @@
     .cart-empty-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--muted); }
     .cart-empty-state svg { color: var(--border); }
     .cart-empty-state p { font-size: 15px; }
-    .cart-item { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; animation: slideIn .25s ease; }
+    .cart-item { display: flex; align-items: center; gap: 12px; padding: 12px; border: 1px solid var(--border); border-radius: 10px; }
+    .cart-item.new { animation: slideIn .25s ease; }
     @keyframes slideIn { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:none; } }
     .cart-item-thumb { width: 48px; height: 48px; border-radius: 8px; flex-shrink: 0; overflow: hidden; }
     .cart-item-info { flex: 1; min-width: 0; }
@@ -336,8 +341,23 @@
     .btn-q { width: 28px; height: 28px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: border-color .15s, color .15s; }
     .btn-q:hover { border-color: var(--orange); color: var(--orange); }
     .panel-foot { padding: 16px 20px; border-top: 1px solid var(--border); }
-    .min-order-warn { background: var(--orange-soft); border-radius: 8px; padding: 9px 12px; font-size: 12px; color: #92400E; margin-bottom: 10px; display: none; }
-    .min-order-warn.show { display: block; }
+    /* ── CART PROGRESS ── */
+    .cart-progress { padding: 12px 16px 10px; border-bottom: 1px solid var(--border); }
+    .cart-progress-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+    .cart-progress-bar-wrap { background: var(--border); border-radius: 99px; height: 7px; overflow: hidden; }
+    .cart-progress-bar-fill { height: 100%; border-radius: 99px; background: var(--orange); transition: width .4s ease, background .3s; min-width: 4px; }
+    .cart-progress-bar-fill.done { background: #22C55E; }
+    .cart-progress-tip { font-size: 11px; color: var(--green-mid); margin-top: 7px; line-height: 1.4; }
+    /* ── GÔNDOLA DO CAIXA ── */
+    .gondola { border-top: 1px dashed var(--border); margin-top: 8px; padding-top: 12px; }
+    .gondola-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .7px; color: var(--muted); margin-bottom: 10px; }
+    .gondola-item { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+    .gondola-item img { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+    .gondola-info { flex: 1; min-width: 0; }
+    .gondola-info b { display: block; font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .gondola-info span { font-size: 12px; color: var(--orange); font-weight: 700; }
+    .gondola-btn { width: 30px; height: 30px; background: var(--green-mid); color: #fff; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .15s; }
+    .gondola-btn:hover { background: var(--green); }
     .total-row { display: flex; justify-content: space-between; font-size: 17px; font-weight: 700; margin-bottom: 14px; }
     .total-row span:last-child { color: var(--green-mid); }
     .btn-checkout { width: 100%; padding: 13px; background: var(--orange); color: var(--white); border: none; border-radius: 10px; font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: background .2s; }
@@ -470,14 +490,12 @@
   .eplus-img-col {
     flex: 0 0 auto;
     animation: floatImg 3.6s ease-in-out infinite;
-    perspective: 700px;
+    will-change: transform;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,.28));
   }
   .eplus-img {
     width: 420px;
     max-width: 100%;
-    filter: drop-shadow(0 24px 48px rgba(0,0,0,.35));
-    transition: transform 0.12s ease-out;
-    will-change: transform;
   }
   @keyframes floatImg {
     0%,100% { transform: translateY(0); }
@@ -517,9 +535,7 @@
   }
   .eplus-btn {
     display: inline-block;
-    background: rgba(255,255,255,.15);
-    backdrop-filter: blur(24px) saturate(200%);
-    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    background: rgba(255,255,255,.22);
     border: 1px solid rgba(255,255,255,.4);
     color: #fff;
     font-family: 'Outfit', sans-serif;
@@ -553,6 +569,16 @@
     .eplus-section { padding: 40px 16px; }
     .eplus-img { width: 200px; }
   }
+
+  /* ── PROFILE HINT ── */
+  .profile-hint { font-size: 11px; color: var(--muted); margin-top: -10px; margin-bottom: 14px; display: flex; align-items: center; gap: 5px; }
+  .profile-hint button { background: none; border: none; color: var(--orange-h); font-size: 11px; font-family: inherit; cursor: pointer; padding: 0; font-weight: 600; }
+  .profile-hint button:hover { text-decoration: underline; }
+
+  /* ── TOAST ── */
+  #toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(16px); background: #111827; color: #fff; font-size: 13px; font-weight: 600; padding: 10px 22px; border-radius: 999px; z-index: 500; opacity: 0; pointer-events: none; transition: opacity .22s, transform .22s; white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,.2); }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  #toast.error { background: var(--orange-h); }
 
   /* ── HERO FLOAT BG ── */
   .hero-float-bg {
@@ -611,7 +637,7 @@
 <!-- SEARCH OVERLAY -->
 <div class="search-overlay" id="searchOverlay">
   <div class="search-overlay-inner">
-    <input id="searchInput" type="text" placeholder="Buscar produtos…" oninput="buscar(this.value)" autocomplete="off" />
+    <input id="searchInput" type="text" placeholder="Buscar produtos…" oninput="debouncedBuscar(this.value)" autocomplete="off" />
     <span class="search-overlay-icon">
       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
     </span>
@@ -783,7 +809,7 @@
 <section class="eplus-section reveal">
   <div class="eplus-inner">
     <div class="eplus-img-col">
-      <img src="e+ fundo transparente.png" alt="Estande Esperança+" class="eplus-img">
+      <img src="e+ fundo transparente.png" alt="Estande Esperança+" class="eplus-img" loading="lazy" decoding="async">
     </div>
     <div class="eplus-text-col">
       <span class="eplus-badge-pill">NOVIDADE</span>
@@ -934,9 +960,20 @@
     <h2>Meu Carrinho</h2>
     <button class="btn-x" onclick="closeCart()">✕</button>
   </div>
+  <div class="cart-progress" id="cartProgress" style="display:none">
+    <div class="cart-progress-labels">
+      <span id="progressLabel">Para entrega grátis</span>
+      <span id="progressPct">0%</span>
+    </div>
+    <div class="cart-progress-bar-wrap">
+      <div class="cart-progress-bar-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <div class="cart-progress-tip" id="progressTip" style="display:none">
+      💡 Adicione 1 item Esperança+ e o mínimo cai para R$ 59,90!
+    </div>
+  </div>
   <div class="cart-body" id="cartBody"></div>
   <div class="panel-foot" id="panelFoot" style="display:none">
-    <div class="min-order-warn" id="minWarn">Pedido mínimo de <strong>R$ 69,00</strong> para entrega. Adicione mais itens!</div>
     <div class="total-row"><span>Total</span><span id="cartTotal">R$ 0,00</span></div>
     <button class="btn-checkout" id="btnCheckout" onclick="openCheckout()">Finalizar Pedido →</button>
   </div>
@@ -968,6 +1005,11 @@
       </div>
       <div class="field"><label>Seu nome</label><input type="text" id="fNome" placeholder="Nome completo" /></div>
       <div class="field"><label>WhatsApp</label><input type="tel" id="fTel" placeholder="(34) 9 0000-0000" /></div>
+      <div class="profile-hint" id="profileHint" style="display:none">
+        <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Dados salvos automaticamente —
+        <button onclick="clearProfile()">Limpar</button>
+      </div>
       <div class="field" id="fEndGroup" style="display:none">
         <label>Endereço de entrega</label>
         <input type="text" id="fEnd" placeholder="Rua, número, bairro" />
@@ -1006,6 +1048,8 @@
   <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
 </button>
 
+<div id="toast" role="alert" aria-live="polite"></div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
@@ -1020,6 +1064,13 @@
     appId:             "1:603259578955:web:7705d11135e0f861a63bce"
   });
   const dbOnline  = firebase.firestore();
+  dbOnline.enablePersistence().catch(err => {
+    if (err.code === 'failed-precondition') {
+      console.warn("Múltiplas abas abertas, persistência offline ativada apenas na primeira aba.");
+    } else if (err.code === 'unimplemented') {
+      console.warn("O navegador não suporta persistência offline.");
+    }
+  });
   const colOnline = dbOnline.collection('sales');
 
   async function loadProducts() {
@@ -1048,7 +1099,7 @@
     }
   }
 
-  function registrarVendaOnline(nome, total, payMethod, itens) {
+  function registrarVendaOnline(nome, total, payMethod, itens, tel, end, obs, deliveryType) {
     const descricao = 'Pedido online – ' + nome + ': ' +
       itens.map(c => c.unit === 'kg'
         ? c.nome + ' ' + c.grams + 'g'
@@ -1056,12 +1107,27 @@
       ).join(', ');
 
     colOnline.add({
-      value:         total,
-      description:   descricao,
-      paymentMethod: payMethod,
-      timestamp:     firebase.firestore.FieldValue.serverTimestamp(),
-      dateKey:       new Date().toISOString().slice(0, 10),
-      source:        'online'
+      value:           total,
+      description:     descricao,
+      paymentMethod:   payMethod,
+      timestamp:       firebase.firestore.FieldValue.serverTimestamp(),
+      dateKey:         new Date().toISOString().slice(0, 10),
+      source:          'online',
+      customerName:    nome,
+      customerPhone:   tel    || null,
+      customerAddress: end    || null,
+      deliveryType:    deliveryType || 'retirada',
+      observations:    obs    || null,
+      items: itens.map(c => ({
+        nome:    c.nome,
+        unit:    c.unit,
+        qty:     c.unit === 'kg' ? null : (c.qty || 1),
+        grams:   c.unit === 'kg' ? (c.grams || 0) : null,
+        preco:   c.preco,
+        subtotal: c.unit === 'kg'
+          ? Math.round(c.preco * (c.grams || 0) / 1000 * 100) / 100
+          : Math.round(c.preco * (c.qty || 1) * 100) / 100
+      }))
     }).catch(function() {});
   }
 
@@ -1107,7 +1173,11 @@
   })();
 
   const WA = '5534998839911';
-  const MIN_ORDER = 69;
+  const MIN_ORDER_DEFAULT = 69;
+  const MIN_ORDER_EPLUS   = 59.9;
+  function getMinOrder() {
+    return cart.some(c => c.cat === 'eplus') ? MIN_ORDER_EPLUS : MIN_ORDER_DEFAULT;
+  }
   const FREE_AREAS = ['esperança', 'esperanca', 'santa rosa'];
 
   // ── IMAGE GENERATOR ──────────────────────────────────
@@ -1133,12 +1203,13 @@
       <rect width="200" height="150" fill="url(#dots)"/>
       ${shapes[shape] || ''}
     </svg>`;
-    return `data:image/svg+xml;base64,${btoa(svg)}`;
+    return 'data:image/svg+xml,' + encodeURIComponent(svg);
   }
 
   // ── DATA ──────────────────────────────────────────────
   const cats = [
     { id:'todos',      label:'Todos' },
+    { id:'eplus',      label:'Esperança+' },
     { id:'hortifruti', label:'Hortifrúti' },
     { id:'laticinios', label:'Laticínios' },
     { id:'carnes',     label:'Carnes' },
@@ -1150,6 +1221,7 @@
 
   const catMeta = {
     todos:      { bg:'#F3F4F6', color:'#6B7280', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>` },
+    eplus:      { bg:'#EEF2FF', color:'#4338CA', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>` },
     hortifruti: { bg:'#DCFCE7', color:'#16A34A', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 010 20M12 2C6.5 2 2 6.5 2 12M12 12c0-5 3-9 6-10M12 12c2 3 2 7 0 10"/></svg>` },
     laticinios: { bg:'#DBEAFE', color:'#2563EB', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8 2h8l2 6H6L8 2z"/><path d="M6 8v12a2 2 0 002 2h8a2 2 0 002-2V8"/><path d="M10 12h4"/></svg>` },
     carnes:     { bg:'#FEE2E2', color:'#DC2626', icon:`<svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>` },
@@ -1175,9 +1247,12 @@
     { id:13, nome:'Detergente 500ml',    cat:'limpeza',    unit:'frasco',  preco:2.49,  bestseller:false, img: makeImg({c1:'#06B6D4',c2:'#0E7490',shape:'bottle'}) },
     { id:14, nome:'Pão Francês',         cat:'padaria',    unit:'kg',      preco:12.90, bestseller:true,  img: makeImg({c1:'#D97706',c2:'#78350F',shape:'rect'}) },
     { id:15, nome:'Pão de Forma',        cat:'padaria',    unit:'pcte',    preco:6.90,  bestseller:false, img: makeImg({c1:'#F59E0B',c2:'#B45309',shape:'bag'}) },
+    { id:16, nome:'Sabonete Líquido 250ml', cat:'eplus',  unit:'unid.',   preco:5.90,  bestseller:false, img: makeImg({c1:'#6366F1',c2:'#4338CA',shape:'bottle'}) },
+    { id:17, nome:'Esponja de Cozinha 3un', cat:'eplus',  unit:'pcte',    preco:4.90,  bestseller:false, img: makeImg({c1:'#F472B6',c2:'#BE185D',shape:'rect'}) },
   ];
 
   let cart = [];
+  let _newCartId = null;
   let activeCat = 'todos';
   let tipo = 'retirada';
   let pay  = 'credito';
@@ -1240,6 +1315,7 @@
           <div class="products-grid stagger">${productCards(preview)}</div>
         </div>`;
       }).join('');
+    g.querySelectorAll('.product-card').forEach(el => observer.unobserve(el));
     g.innerHTML = html || '<p class="no-results">Nenhum produto encontrado.</p>';
     g.querySelectorAll('.product-card').forEach(el => observer.observe(el));
     g.querySelectorAll('.products-grid').forEach((grid, i) => {
@@ -1319,6 +1395,65 @@
     renderGrid(list);
   }
 
+  // ── DEBOUNCE / TOAST / CART PERSISTENCE ───────────────
+  const debouncedBuscar = (function() {
+    let t;
+    return v => { clearTimeout(t); t = setTimeout(() => buscar(v), 300); };
+  })();
+
+  function showToast(msg, type) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = 'show' + (type === 'error' ? ' error' : '');
+    clearTimeout(el._to);
+    el._to = setTimeout(() => { el.className = ''; }, 2500);
+  }
+
+  function saveCart() {
+    try { localStorage.setItem('emporio_cart', JSON.stringify(cart)); } catch(e) {}
+  }
+
+  function loadCart() {
+    try {
+      const raw = localStorage.getItem('emporio_cart');
+      if (raw) cart = JSON.parse(raw);
+    } catch(e) {}
+  }
+
+  function saveProfile() {
+    try {
+      const d = {
+        nome: document.getElementById('fNome').value.trim(),
+        tel:  document.getElementById('fTel').value.trim(),
+        end:  document.getElementById('fEnd').value.trim()
+      };
+      if (d.nome || d.tel) localStorage.setItem('emporio_profile', JSON.stringify(d));
+    } catch(e) {}
+  }
+
+  function loadProfile() {
+    try {
+      const raw = localStorage.getItem('emporio_profile');
+      if (!raw) return;
+      const d = JSON.parse(raw);
+      if (d.nome) document.getElementById('fNome').value = d.nome;
+      if (d.tel)  document.getElementById('fTel').value  = d.tel;
+      if (d.end)  document.getElementById('fEnd').value  = d.end;
+      const hint = document.getElementById('profileHint');
+      if (hint && (d.nome || d.tel)) hint.style.display = 'flex';
+    } catch(e) {}
+  }
+
+  function clearProfile() {
+    localStorage.removeItem('emporio_profile');
+    document.getElementById('fNome').value = '';
+    document.getElementById('fTel').value  = '';
+    document.getElementById('fEnd').value  = '';
+    const hint = document.getElementById('profileHint');
+    if (hint) hint.style.display = 'none';
+    showToast('Dados apagados.');
+  }
+
   // ── COUNTDOWN ──────────────────────────────────────────
   function getPromoEnd() {
     const d = new Date();
@@ -1392,18 +1527,27 @@
     setInterval(tickCountdown, 1000);
 
     // back to top
-    let _lastY = 0;
+    const _wmWrap = document.querySelector('.brand-watermark-wrap');
+    const _elBtnTop = document.getElementById('btnTop');
+    const _elFabWa = document.getElementById('fabWa');
+    const _elTopBar = document.getElementById('topBar');
+    const _elFloatNav = document.getElementById('floatNav');
+    let _scrollTicking = false;
     window.addEventListener('scroll', () => {
-      const y = window.scrollY;
-      const scrolled = y > 400;
-      const topBarHidden = y > 80;
-      document.getElementById('btnTop').classList.toggle('show', scrolled);
-      document.getElementById('fabWa').classList.toggle('show', scrolled);
-      document.getElementById('topBar').classList.toggle('hidden', topBarHidden);
-      document.getElementById('floatNav').classList.toggle('visible', topBarHidden);
-      document.querySelector('.brand-watermark-wrap').classList.toggle('visible', topBarHidden);
-      _lastY = y;
-    });
+      if (_scrollTicking) return;
+      _scrollTicking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const scrolled = y > 400;
+        const topBarHidden = y > 80;
+        _elBtnTop.classList.toggle('show', scrolled);
+        _elFabWa.classList.toggle('show', scrolled);
+        _elTopBar.classList.toggle('hidden', topBarHidden);
+        _elFloatNav.classList.toggle('visible', topBarHidden);
+        _wmWrap.classList.toggle('visible', topBarHidden);
+        _scrollTicking = false;
+      });
+    }, { passive: true });
   }
 
   function productCards(list) {
@@ -1444,6 +1588,7 @@
     currentList = list;
     shownCount  = 0;
     const g = document.getElementById('grid');
+    g.querySelectorAll('.product-card').forEach(el => observer.unobserve(el));
     g.className = 'products-grid stagger';
     const page = currentList.slice(0, PAGE_SIZE);
     shownCount  = page.length;
@@ -1470,7 +1615,7 @@
 
   // ── CART ───────────────────────────────────────────────
   function addToCart(id) {
-    const p = items.find(i => i.id === id);
+    const p = items.find(i => String(i.id) === String(id));
     if (p.unit === 'kg') {
       const inp = document.getElementById(`gram-${id}`);
       let grams;
@@ -1486,17 +1631,20 @@
         const g = prompt(`Quantos gramas de "${p.nome}"?\n\nDigite apenas o número (ex: 500 para 500g).\nAtenção: pode haver pequena margem de erro na pesagem.`);
         if (!g) return;
         grams = parseInt(g);
-        if (!grams || grams < 50) { alert('Informe uma quantidade válida (mínimo 50g).'); return; }
+        if (!grams || grams < 50) { showToast('Informe uma quantidade válida (mínimo 50g).', 'error'); return; }
       }
-      const existing = cart.find(i => i.id === id);
+      const existing = cart.find(i => String(i.id) === String(id));
       if (existing) { existing.grams = grams; }
       else { cart.push({...p, qty:1, grams}); }
     } else {
-      const c = cart.find(i => i.id === id);
+      const c = cart.find(i => String(i.id) === String(id));
       c ? c.qty++ : cart.push({...p, qty:1});
     }
+    saveCart();
+    _newCartId = p.id;
     refreshBadge();
     refreshCartBody();
+    showToast('Adicionado ao carrinho ✓');
     const btn = document.getElementById('btnCart');
     btn.classList.remove('bump');
     void btn.offsetWidth;
@@ -1504,17 +1652,19 @@
   }
 
   function adjustGrams(id, delta) {
-    const c = cart.find(i => i.id === id);
+    const c = cart.find(i => String(i.id) === String(id));
     if (!c) return;
     c.grams = Math.max(50, (c.grams || 50) + delta);
+    saveCart();
     refreshBadge();
     refreshCartBody();
   }
 
   function dec(id) {
-    const idx = cart.findIndex(i => i.id === id);
+    const idx = cart.findIndex(i => String(i.id) === String(id));
     if (idx < 0) return;
     cart[idx].qty > 1 ? cart[idx].qty-- : cart.splice(idx, 1);
+    saveCart();
     refreshBadge();
     refreshCartBody();
   }
@@ -1550,35 +1700,68 @@
 
     foot.style.display = 'block';
     body.innerHTML = cart.map(c => c.unit === 'kg' ? `
-      <div class="cart-item">
+      <div class="cart-item" data-cid="${c.id}">
         <div class="cart-item-thumb"><img src="${c.img}" alt="${c.nome}" width="48" height="48" style="width:100%;height:100%;object-fit:cover"/></div>
         <div class="cart-item-info"><b>${c.nome}</b><small>${c.grams}g (aprox.) — ${fmt(itemTotal(c))}</small></div>
         <div class="qty-ctrl">
-          <button class="btn-q" onclick="adjustGrams(${c.id},-50)">−</button>
+          <button class="btn-q" onclick="adjustGrams('${c.id}',-50)">−</button>
           <span style="font-size:11px;min-width:32px;text-align:center">${c.grams}g</span>
-          <button class="btn-q" onclick="adjustGrams(${c.id},50)">+</button>
+          <button class="btn-q" onclick="adjustGrams('${c.id}',50)">+</button>
         </div>
       </div>` : `
-      <div class="cart-item">
+      <div class="cart-item" data-cid="${c.id}">
         <div class="cart-item-thumb"><img src="${c.img}" alt="${c.nome}" width="48" height="48" style="width:100%;height:100%;object-fit:cover"/></div>
         <div class="cart-item-info"><b>${c.nome}</b><small>${fmt(c.preco*c.qty)}</small></div>
         <div class="qty-ctrl">
-          <button class="btn-q" onclick="dec(${c.id})">−</button>
+          <button class="btn-q" onclick="dec('${c.id}')">−</button>
           <span>${c.qty}</span>
-          <button class="btn-q" onclick="addToCart(${c.id})">+</button>
+          <button class="btn-q" onclick="addToCart('${c.id}')">+</button>
         </div>
       </div>`).join('');
-
-    document.getElementById('cartTotal').textContent = fmt(total);
-
-    // min order warning (only for delivery)
-    const warn = document.getElementById('minWarn');
-    if (tipo === 'entrega' && total < MIN_ORDER) {
-      warn.classList.add('show');
-      warn.innerHTML = `Faltam <strong>${fmt(MIN_ORDER - total)}</strong> para o pedido mínimo de entrega (R$ 69,00).`;
-    } else {
-      warn.classList.remove('show');
+    if (_newCartId != null) {
+      const newEl = body.querySelector(`[data-cid="${_newCartId}"]`);
+      if (newEl) newEl.classList.add('new');
+      _newCartId = null;
     }
+
+    if (cart.length) body.insertAdjacentHTML('beforeend', renderGondola());
+    document.getElementById('cartTotal').textContent = fmt(total);
+    updateProgressBar();
+  }
+
+  function updateProgressBar() {
+    const prog = document.getElementById('cartProgress');
+    if (!prog) return;
+    if (!cart.length) { prog.style.display = 'none'; return; }
+    const min   = getMinOrder();
+    const total = totalCart();
+    const pct   = Math.min(100, Math.round((total / min) * 100));
+    const done  = pct >= 100;
+    prog.style.display = 'block';
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressFill').classList.toggle('done', done);
+    document.getElementById('progressPct').textContent = pct + '%';
+    document.getElementById('progressLabel').textContent = done
+      ? 'Mínimo alcançado! ✓'
+      : `Faltam ${fmt(min - total)} para entrega`;
+    const hasEplus = cart.some(c => c.cat === 'eplus');
+    document.getElementById('progressTip').style.display = (!done && !hasEplus) ? 'block' : 'none';
+  }
+
+  function renderGondola() {
+    const suggestions = items
+      .filter(p => p.preco < 10 && !cart.some(c => String(c.id) === String(p.id)))
+      .slice(0, 2);
+    if (!suggestions.length) return '';
+    return `<div class="gondola">
+      <div class="gondola-title">Aproveite e leve também</div>
+      ${suggestions.map(p => `
+        <div class="gondola-item">
+          <img src="${p.img}" width="40" height="40" alt="${p.nome}" />
+          <div class="gondola-info"><b>${p.nome}</b><span>${fmt(p.preco)}</span></div>
+          <button class="gondola-btn" onclick="addToCart('${p.id}')">+</button>
+        </div>`).join('')}
+    </div>`;
   }
 
   function toggleSearch() {
@@ -1616,12 +1799,13 @@
 
   // ── CHECKOUT ───────────────────────────────────────────
   function openCheckout() {
-    if (tipo === 'entrega' && totalCart() < MIN_ORDER) {
-      alert(`Pedido mínimo para entrega é R$ 69,00. Adicione mais ${fmt(MIN_ORDER - totalCart())} para continuar.`);
+    if (tipo === 'entrega' && totalCart() < getMinOrder()) {
+      showToast(`Pedido mínimo de ${fmt(getMinOrder())}. Faltam ${fmt(getMinOrder() - totalCart())}.`, 'error');
       return;
     }
     closeCart();
     renderSummary();
+    loadProfile();
     document.getElementById('modalBg').classList.add('open');
   }
 
@@ -1666,12 +1850,13 @@
     const end  = document.getElementById('fEnd').value.trim();
     const obs  = document.getElementById('fObs').value.trim();
 
-    if (!nome) { alert('Informe seu nome.'); return; }
-    if (!tel)  { alert('Informe seu WhatsApp.'); return; }
-    if (tipo==='entrega' && !end) { alert('Informe o endereço de entrega.'); return; }
-    if (tipo==='entrega' && totalCart() < MIN_ORDER) { alert(`Pedido mínimo de R$ 69,00 para entrega. Faltam ${fmt(MIN_ORDER-totalCart())}.`); return; }
-    if (!cart.length) { alert('Carrinho vazio!'); return; }
+    if (!nome) { showToast('Informe seu nome.', 'error'); return; }
+    if (!tel)  { showToast('Informe seu WhatsApp.', 'error'); return; }
+    if (tipo==='entrega' && !end) { showToast('Informe o endereço de entrega.', 'error'); return; }
+    if (tipo==='entrega' && totalCart() < getMinOrder()) { showToast(`Pedido mínimo de ${fmt(getMinOrder())}. Faltam ${fmt(getMinOrder()-totalCart())}.`, 'error'); return; }
+    if (!cart.length) { showToast('Carrinho vazio!', 'error'); return; }
 
+    saveProfile();
     const free = tipo==='retirada' || isFreeArea(end);
     const payLabel = { credito:'Cartão de Crédito', debito:'Cartão de Débito', pix:'Pix', dinheiro:'Dinheiro' };
     let msg = `*PEDIDO – EMPÓRIO ESPERANÇA*\n\n`;
@@ -1689,7 +1874,7 @@
     msg += `\n💰 Total: ${fmt(totalCart())}`;
     if (obs) msg += `\n\n📝 Obs: ${obs}`;
 
-    registrarVendaOnline(nome, totalCart(), pay, cart);
+    registrarVendaOnline(nome, totalCart(), pay, cart, tel, end, obs, tipo);
     window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`, '_blank');
   }
 
@@ -1702,6 +1887,8 @@
     document.querySelectorAll('.reveal, .stagger').forEach(el => observer.observe(el));
   }
 
+  loadCart();
+  refreshBadge();
   loadProducts().then(() => init());
 
   function updateOpenStatus() {
@@ -1723,24 +1910,13 @@
   updateOpenStatus();
   setInterval(updateOpenStatus, 60000);
 
-  /* ── TILT 3D ESPERANÇA+ ── */
+  /* ── PAUSE floatImg WHEN OFF-SCREEN ── */
   (function(){
     const col = document.querySelector('.eplus-img-col');
-    const img = document.querySelector('.eplus-img');
-    if (!col || !img) return;
-
-    col.addEventListener('mousemove', e => {
-      const r = col.getBoundingClientRect();
-      const x = (e.clientX - r.left) / r.width  - 0.5;
-      const y = (e.clientY - r.top)  / r.height - 0.5;
-      const rotY =  x * 22;
-      const rotX = -y * 16;
-      img.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.06)`;
-    });
-
-    col.addEventListener('mouseleave', () => {
-      img.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
-    });
+    if (!col) return;
+    new IntersectionObserver(([e]) => {
+      col.style.animationPlayState = e.isIntersecting ? 'running' : 'paused';
+    }, { threshold: 0 }).observe(col);
   })();
 
   /* ── HERO FLOATING PARALLAX ── */
@@ -1777,24 +1953,36 @@
     const lerp = (a, b, t) => a + (b - a) * t;
     const els = [...document.querySelectorAll('.hfb-el')];
     const pos = els.map(() => ({ x: 0, y: 0 }));
-    let mx = 0, my = 0;
+    let mx = 0, my = 0, rafId = null, idleTimer = null;
+    let heroRect = hero.getBoundingClientRect();
 
-    hero.addEventListener('mousemove', e => {
-      const r = hero.getBoundingClientRect();
-      mx = (e.clientX - r.left  - r.width  / 2) / r.width  * 2;
-      my = (e.clientY - r.top   - r.height / 2) / r.height * 2;
-    });
-    hero.addEventListener('mouseleave', () => { mx = 0; my = 0; });
+    hero.addEventListener('mouseenter', () => { heroRect = hero.getBoundingClientRect(); });
+    window.addEventListener('resize', () => { heroRect = hero.getBoundingClientRect(); }, { passive: true });
 
-    (function tick() {
+    function tick() {
+      let active = false;
       els.forEach((el, i) => {
         const s = parseFloat(el.dataset.depth) / 20;
         pos[i].x = lerp(pos[i].x, mx * s * 120, 0.05);
         pos[i].y = lerp(pos[i].y, my * s * 120, 0.05);
         el.style.transform = `translate3d(${pos[i].x}px,${pos[i].y}px,0)`;
+        if (Math.abs(pos[i].x) > 0.1 || Math.abs(pos[i].y) > 0.1) active = true;
       });
-      requestAnimationFrame(tick);
-    })();
+      rafId = active ? requestAnimationFrame(tick) : null;
+    }
+
+    function startTick() {
+      clearTimeout(idleTimer);
+      if (!rafId) rafId = requestAnimationFrame(tick);
+      idleTimer = setTimeout(() => { mx = 0; my = 0; }, 300);
+    }
+
+    hero.addEventListener('mousemove', e => {
+      mx = (e.clientX - heroRect.left  - heroRect.width  / 2) / heroRect.width  * 2;
+      my = (e.clientY - heroRect.top   - heroRect.height / 2) / heroRect.height * 2;
+      startTick();
+    });
+    hero.addEventListener('mouseleave', () => { mx = 0; my = 0; startTick(); });
   })();
 
 </script>
